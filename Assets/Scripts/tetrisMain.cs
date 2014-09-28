@@ -11,8 +11,7 @@ public class tetrisMain : MonoBehaviour
 	public int maxBlockSize = 5;
 	public GameObject[] briks;
 	public GameObject ghost;
-	//public bool isghost = true;
-	//public Transform ghost;
+	public bool useGhost = true;
 	public int fieldWidth = 10;
 	public int fieldHeight = 20;
 	public int rowsClearedToSpeedup = 10;

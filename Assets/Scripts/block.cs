@@ -15,12 +15,12 @@ public class block : MonoBehaviour
 	private int _size;								//размер матрицы кирпичика
 	private Transform _brick;
 	//private Transform _ghostcube;
-	//private Transform _ghostbrick;
+	private Transform _ghost;
 	private float _fallSpeed;
 	private tetrisMain _main;
 	private float _halfSizeFloat;
 	private Color _color;
-	private ghost _ghost;
+	//private ghost _ghost;
 
 	void Start () 
 	{
@@ -40,10 +40,14 @@ public class block : MonoBehaviour
 					_brick.renderer.material.color = color;
 					_brick.parent = transform;		//делаем созданные кубики дочерними
 					transform.tag = "block";
+					
+					//_ghost = Instantiate(_main.ghostCube, new Vector3(x - _halfSizeFloat, (_size - y) + _halfSizeFloat - _size, 0.0f), Quaternion.identity) as Transform;
 				}
 		transform.position = new Vector3 (_main._fieldWidth / 2 + (_size%2 == 0? 0.0f : 0.5f), _main._fieldHeight - _halfSizeFloat, 0);	//выставляем кирпичик сверху и по центру
 		_yPosition = _main._fieldHeight - 1;
 		_xPosition = (int)transform.position.x - (int) _halfSizeFloat;
+		if (_main.useGhost)
+			Instantiate (_main.ghost);
 		StartCoroutine (Fall ());
 	}
 
@@ -87,8 +91,9 @@ public class block : MonoBehaviour
 			if (functions.checkBrick(_brickMatrix, _xPosition, _yPosition, _main._field))
 			{
 				_main.setBrick(_brickMatrix, _xPosition, _yPosition + 1, color);
-				Destroy(GameObject.Find("ghost"));
 				Destroy(gameObject);
+				if (_main.useGhost)
+					Destroy(GameObject.Find("ghost(Clone)"));
 				break;	
 			}
 			for (float i = _yPosition + 1; i > _yPosition; i -= Time.deltaTime * _fallSpeed)
