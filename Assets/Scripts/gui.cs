@@ -7,5 +7,6 @@ public class gui : MonoBehaviour
 	{
 		tetrisMain _main = this.GetComponent<tetrisMain>();
 		GUI.Label (new Rect (Screen.width-Screen.width/4, 25, 100, 30), "Score: "+ _main.score);
+		Debug.Log("1");
 	}
 }
