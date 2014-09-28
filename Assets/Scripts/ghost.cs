@@ -23,6 +23,13 @@ public class ghost : MonoBehaviour
 
 	void Update () 
 	{
+		if (functions.checkBrick(_block._brickMatrix, (int) transform.position.x, (int) transform.position.y, _main._field))
+				Debug.Log("done");
+		//if (functions.checkBrick(_block._brickMatrix, 0, i, _main._field))
+		//{
+			//Debug.Log(i);
+			//transform.position = new Vector3 (_block.transform.position.x, i + _size * 0.5f, 0);
+		//}
 		transform.position = new Vector3 (_block.transform.position.x, 3 - _size * 0.5f, 0);
 		transform.rotation = _block.transform.rotation;
 		//if (Input.GetKeyDown (KeyCode.Space))
