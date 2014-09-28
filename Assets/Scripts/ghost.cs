@@ -24,7 +24,7 @@ public class ghost : MonoBehaviour
 
 	void Update () 
 	{
-		transform.position = new Vector3 (_block.transform.position.x, transform.position.y, 0);
+		//transform.position = new Vector3 (_block.transform.position.x, transform.position.y, 0);
 		//if (_block.transform.position.y < 2)
 		//	Destroy (gameObject);
 	}

@@ -58,7 +58,7 @@ public class tetrisMain : MonoBehaviour
 			_secondBrick = Random.Range(0, briks.Length);
 		}
 		Instantiate (briks [_firstBrick]);
-		Instantiate (ghost);
+		//Instantiate (ghost);
 		functions.printNextBrick (briks [_secondBrick], cube);
 	}
 	
@@ -74,7 +74,7 @@ public class tetrisMain : MonoBehaviour
 					_field[(int) xPosition + x, (int) yPosition - y] = true;		
 				}
 		checkRows (yPosition - size, size);
-		//Destroy(GameObject.FindGameObjectsWithTag("ghost"));	
+		//Destroy(GameObject.Find("ghost(Clone)"));
 		spawnBrick (false);
 	}
 	
@@ -119,11 +119,12 @@ public class tetrisMain : MonoBehaviour
 			}
 			else if (cube.transform.position.y == yStart) 
 			{
-				cube.AddComponent("Rigidbody");
+				if (!cube.rigidbody)
+					cube.AddComponent("Rigidbody");
 				cube.collider.enabled = true;
 				cube.rigidbody.velocity = new Vector3(Random.Range(-15, 15), Random.Range(-10, 10), Random.Range(-3, -10));
 				cube.rigidbody.MoveRotation(new Quaternion(Random.Range(-10, 10), Random.Range(-10, 10), Random.Range(-10, 10), Random.Range(-10, 10)));
-				Destroy(cube, 3f);
+				Destroy(cube, 4f);
 			}
 		}
 		StartCoroutine(fallEnd(_cubeReferences, _cubePositions, cubesToMove));
