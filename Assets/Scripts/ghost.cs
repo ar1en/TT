@@ -16,7 +16,7 @@ public class ghost : MonoBehaviour
 			for (int i=0; i < _size; i++)
 				if (_block._brickMatrix[i, j])
 				{
-					_ghost = Instantiate(_main.ghostCube, new Vector3(i - _size*0.5f, j, 0.0f), Quaternion.identity) as Transform;
+					_ghost = Instantiate(_main.ghostCube, new Vector3(i - _size*0.5f, (_size - j) + _size * 0.5f - _size, 0.0f), Quaternion.identity) as Transform;
 					_ghost.parent = transform;	
 				}
 	}
@@ -25,6 +25,7 @@ public class ghost : MonoBehaviour
 	void Update () 
 	{
 		transform.position = new Vector3 (_block.transform.position.x, transform.position.y, 0);
+		transform.rotation = _block.transform.rotation;
 		//if (_block.transform.position.y < 2)
 		//	Destroy (gameObject);
 	}

@@ -45,11 +45,13 @@ public class functions : MonoBehaviour
 		foreach (GameObject _cube in GameObject.FindGameObjectsWithTag("preview")) 
 			Destroy(_cube);
 		block _block = brick.GetComponent<block>();
-		for (int y = 0; y < _block.brick.Length; y++)
-			for (int x = 0; x < _block.brick.Length; x++)
+		var _size = _block.brick.Length;
+		for (int y = 0; y < _size; y++)
+			for (int x = 0; x < _size; x++)
 				if (_block.brick[x][y] == "1"[0])				
 				{
-					var _brick = Instantiate(cube, new Vector3(x+21,y+15, 0), Quaternion.identity) as Transform;
+					//var _brick = Instantiate(cube, new Vector3(x+21,y+15, 0), Quaternion.identity) as Transform;
+					var _brick = Instantiate(cube, new Vector3(y - _size*0.5f + 24, (_size - x) + _size * 0.5f - _size + 16, 0.0f), Quaternion.identity) as Transform;
 					_brick.tag = "preview";
 					_brick.renderer.material.color = _block.color;
 				}
