@@ -11,7 +11,7 @@ public class block : MonoBehaviour
 	//[HideInInspector]
 	//public bool isset = true;
 	private int _yPosition;
-	public int _xPosition;
+	private int _xPosition;
 	private int _size;								//размер матрицы кирпичика
 	private Transform _brick;
 	//private Transform _ghostcube;
