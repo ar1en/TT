@@ -6,6 +6,7 @@ public class tetrisMain : MonoBehaviour
 	public Transform cube;
 	public Transform areaCube;
 	public Transform ghostCube;
+	public bool useArea = true;
 	public float fallSpeed = 2.0f;							//скорость падения кирпичика
 	public float fallSpeedUltra = 35.0f;						//скорость во время ускорения при падении
 	public int maxBlockSize = 5;
@@ -37,7 +38,8 @@ public class tetrisMain : MonoBehaviour
 		_fieldWidth = fieldWidth + maxBlockSize * 2;
 		_fieldHeight = fieldHeight + maxBlockSize;
 		_field = functions.createAreaMatrix (_fieldWidth, _fieldHeight, maxBlockSize);
-		functions.generateArea (_field, _fieldWidth, _fieldHeight, areaCube);			//вывод поля для наглядности
+		if (useArea)
+			functions.generateArea (_field, _fieldWidth, _fieldHeight, areaCube);			//вывод поля для наглядности
 		_cubeReferences = new Transform[_fieldWidth * _fieldHeight];
 		_cubePositions = new int[_fieldWidth * _fieldHeight];
 		spawnBrick (true);
