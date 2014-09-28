@@ -50,7 +50,6 @@ public class functions : MonoBehaviour
 			for (int x = 0; x < _size; x++)
 				if (_block.brick[x][y] == "1"[0])				
 				{
-					//var _brick = Instantiate(cube, new Vector3(x+21,y+15, 0), Quaternion.identity) as Transform;
 					var _brick = Instantiate(cube, new Vector3(y - _size*0.5f + 24, (_size - x) + _size * 0.5f - _size + 16, 0.0f), Quaternion.identity) as Transform;
 					_brick.tag = "preview";
 					_brick.renderer.material.color = _block.color;
