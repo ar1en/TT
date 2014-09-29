@@ -69,12 +69,11 @@ public class block : MonoBehaviour
 			for (int x = 0; x < _size; x++)
 				tempMatrix[y, x] = _brickMatrix[x, (_size-1) - y];
 
-		if (!functions.checkBrick(_brickMatrix, _xPosition, _yPosition, _main._field))
-			if (!functions.checkBrick(tempMatrix, _xPosition, _yPosition, _main._field))
-			{
+		if ((!functions.checkBrick(_brickMatrix, _xPosition, _yPosition, _main._field)) && (!functions.checkBrick(tempMatrix, _xPosition, _yPosition, _main._field)))
+		{
 				System.Array.Copy (tempMatrix, _brickMatrix, _size * _size);
 				transform.Rotate(Vector3.forward * - 90.0f );
-			}
+		}
 	}
 
 	IEnumerator  Fall ()
