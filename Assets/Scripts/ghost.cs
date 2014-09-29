@@ -33,7 +33,7 @@ public class ghost : MonoBehaviour
 			if (functions.checkBrick (_block._brickMatrix, _c, i, _main._field))
 			{
 				Debug.Log("done  " + i);
-				transform.position = new Vector3 (transform.position.x, i - 2 + _size*0.5f, 0);
+				transform.position = new Vector3 (_block.transform.position.x, i - 2 + _size*0.5f, 0);
 				break;
 			}
 		}
@@ -45,7 +45,7 @@ public class ghost : MonoBehaviour
 			//Debug.Log(i);
 			//transform.position = new Vector3 (_block.transform.position.x, i + _size * 0.5f, 0);
 		//}
-		transform.position = new Vector3 (_block.transform.position.x, transform.position.y, 0);
+		//transform.position = new Vector3 (_block.transform.position.x, transform.position.y, 0);
 		transform.rotation = _block.transform.rotation;
 		//Debug.Log ("x=" + transform.position.x + "   y=" + transform.position.y);
 		//if (Input.GetKeyDown (KeyCode.Space))
