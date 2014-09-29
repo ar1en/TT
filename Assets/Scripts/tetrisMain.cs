@@ -59,7 +59,6 @@ public class tetrisMain : MonoBehaviour
 			_secondBrick = Random.Range(0, briks.Length);
 		}
 		Instantiate (briks [_firstBrick]);
-		//Instantiate (ghost);
 		functions.printNextBrick (briks [_secondBrick], cube);
 	}
 	
@@ -75,7 +74,6 @@ public class tetrisMain : MonoBehaviour
 					_field[(int) xPosition + x, (int) yPosition - y] = true;		
 				}
 		checkRows (yPosition - size, size);
-		//Destroy(GameObject.Find("ghost(Clone)"));
 		spawnBrick (false);
 	}
 	

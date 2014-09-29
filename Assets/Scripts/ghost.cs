@@ -18,24 +18,19 @@ public class ghost : MonoBehaviour
 				{
 					_ghost = Instantiate(_main.ghostCube, new Vector3(i - _size*0.5f, (_size - j) + _size*0.5f - _size, 0.0f), Quaternion.identity) as Transform;
 					_ghost.parent = transform;	
+					_ghost.renderer.material.color =_block.color;
 				}
-		transform.position = new Vector3 (10, 10, 0);
+		transform.position = new Vector3 (10, 10, 0);		//что-бы в первое мгновение после создания position.x не был равен нулю
 	}
 
 	void Update () 
 	{
 		for (int i= _main.fieldHeight; i>0; i--)
-		{
-			//Debug.Log((int)transform.position.x - (int)(_size * 0.5f));
-			//if (functions.checkBrick (_block._brickMatrix, (int)transform.position.x - (int)(_size * 0.5f), i, _main._field))
 			if (functions.checkBrick (_block._brickMatrix, (int)transform.position.x - (int)(_size * 0.5f), i, _main._field))
 			{
-				//Debug.Log("done  " + i);
-				//transform.position = new Vector3 (_block.transform.position.x, i - 2 + _size*0.5f, 0);
 				transform.position = new Vector3 (_block.transform.position.x, i - _size * 0.5f + 1, 0);
 				break;
 			}
-		}
 		transform.rotation = _block.transform.rotation;
 	}
 }
