@@ -19,36 +19,23 @@ public class ghost : MonoBehaviour
 					_ghost = Instantiate(_main.ghostCube, new Vector3(i - _size*0.5f, (_size - j) + _size*0.5f - _size, 0.0f), Quaternion.identity) as Transform;
 					_ghost.parent = transform;	
 				}
+		transform.position = new Vector3 (10, 10, 0);
 	}
 
 	void Update () 
 	{
-		//if (functions.checkBrick(_block._brickMatrix, (int) transform.position.x, (int) transform.position.y, _main._field))
-		//		Debug.Log("done");
-		//var _halfsize = _size * 0.5f;
-		var _c = (int)transform.position.x - (int)(_size * 0.5f);
-		//Debug.Log ((int)transform.position.y);
-		for (int i= _main.fieldHeight; i>1; i--)
+		for (int i= _main.fieldHeight; i>0; i--)
 		{
-			if (functions.checkBrick (_block._brickMatrix, _c, i, _main._field))
+			//Debug.Log((int)transform.position.x - (int)(_size * 0.5f));
+			//if (functions.checkBrick (_block._brickMatrix, (int)transform.position.x - (int)(_size * 0.5f), i, _main._field))
+			if (functions.checkBrick (_block._brickMatrix, (int)transform.position.x - (int)(_size * 0.5f), i, _main._field))
 			{
-				Debug.Log("done  " + i);
-				transform.position = new Vector3 (_block.transform.position.x, i - 2 + _size*0.5f, 0);
+				//Debug.Log("done  " + i);
+				//transform.position = new Vector3 (_block.transform.position.x, i - 2 + _size*0.5f, 0);
+				transform.position = new Vector3 (_block.transform.position.x, i - _size * 0.5f + 1, 0);
 				break;
 			}
 		}
-			//{
-		//	Debug.Log("working");
-		//	transform.position = new Vector3 (transform.position.x, transform.position.y + 20, 0);
-		//}
-			//{
-			//Debug.Log(i);
-			//transform.position = new Vector3 (_block.transform.position.x, i + _size * 0.5f, 0);
-		//}
-		//transform.position = new Vector3 (_block.transform.position.x, transform.position.y, 0);
 		transform.rotation = _block.transform.rotation;
-		//Debug.Log ("x=" + transform.position.x + "   y=" + transform.position.y);
-		//if (Input.GetKeyDown (KeyCode.Space))
-		//	transform.Rotate(Vector3.forward * - 90.0f );
 	}
 }
