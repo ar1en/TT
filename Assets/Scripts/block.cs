@@ -7,13 +7,14 @@ public class block : MonoBehaviour
 	public Color color;
 
 	[HideInInspector]
-	public bool[,] _brickMatrix;					//матрица для кирпичика
+	public bool[,] _brickMatrix;						//матрица для кирпичика
 	private int _yPosition;
 	private int _xPosition;
 	private int _size;								//размер матрицы кирпичика
 	private Transform _brick;
 	private Transform _ghost;
-	private float _fallSpeed;
+	[HideInInspector]
+	public float _fallSpeed;
 	private tetrisMain _main;
 	private float _halfSizeFloat;
 	private Color _color;
@@ -44,38 +45,6 @@ public class block : MonoBehaviour
 		StartCoroutine (Fall ());
 	}
 
-	void Update () 
-	{
-		//горизонтальное смещение
-		if (Input.GetKeyDown (KeyCode.RightArrow))
-			StartCoroutine (horizontalMove (1));
-		else if (Input.GetKeyDown (KeyCode.LeftArrow))
-			StartCoroutine (horizontalMove (-1));
-		//\горизонтальное смещение
-
-		if (Input.GetKeyDown (KeyCode.Space))
-			Rotate ();
-
-		if (Input.GetKey (KeyCode.DownArrow))
-			_fallSpeed = _main.fallSpeedUltra;
-		else
-			_fallSpeed = _main.fallSpeed;
-	}
-
-	void Rotate()
-	{
-		bool[,] tempMatrix = new bool[_size, _size];
-		for (int y = 0; y < _size; y++)
-			for (int x = 0; x < _size; x++)
-				tempMatrix[y, x] = _brickMatrix[x, (_size-1) - y];
-
-		if ((!functions.checkBrick(_brickMatrix, _xPosition, _yPosition, _main._field)) && (!functions.checkBrick(tempMatrix, _xPosition, _yPosition, _main._field)))
-		{
-				System.Array.Copy (tempMatrix, _brickMatrix, _size * _size);
-				transform.Rotate(Vector3.forward * - 90.0f );
-		}
-	}
-
 	IEnumerator  Fall ()
 	{
 		while (true) 
@@ -97,13 +66,28 @@ public class block : MonoBehaviour
 		}
 	}
 
-	IEnumerator horizontalMove (int dir)
+	public void horizontalMove (int dir)
+	//IEnumerator horizontalMove (int dir)
 	{
 		if (!functions.checkBrick(_brickMatrix, _xPosition + dir, _yPosition,_main._field))
 		{
 			transform.position = new Vector3 (transform.position.x + dir, _brick.transform.position.y, 0);
 			_xPosition += dir;
-			yield return 0;
+			//yield return 0;
 		}
-	}	
+	}
+
+	public void Rotate()
+	{
+		bool[,] tempMatrix = new bool[_size, _size];
+		for (int y = 0; y < _size; y++)
+			for (int x = 0; x < _size; x++)
+				tempMatrix[y, x] = _brickMatrix[x, (_size-1) - y];
+		
+		if ((!functions.checkBrick(_brickMatrix, _xPosition, _yPosition, _main._field)) && (!functions.checkBrick(tempMatrix, _xPosition, _yPosition, _main._field)))
+		{
+			System.Array.Copy (tempMatrix, _brickMatrix, _size * _size);
+			transform.Rotate(Vector3.forward * - 90.0f );
+		}
+	}
 }

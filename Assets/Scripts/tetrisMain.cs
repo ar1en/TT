@@ -17,6 +17,7 @@ public class tetrisMain : MonoBehaviour
 	public int fieldHeight = 20;
 	public int rowsClearedToSpeedup = 10;
 	public float speedupAmount = 0.5f;
+	public bool useMobileControl = false;
 
 	[HideInInspector]
 	public float score;
@@ -32,9 +33,23 @@ public class tetrisMain : MonoBehaviour
 	private int _firstBrick;
 	private int _secondBrick;
 	private int _scoreLvl;
+	private pcControl _pcControl;
+	private mobileControl _mobileControl;
 	
 	void Start () 
 	{
+		_pcControl = GameObject.Find ("main").GetComponent<pcControl>();
+		_mobileControl = GameObject.Find ("main").GetComponent<mobileControl>();
+		if (useMobileControl)
+		{
+			_mobileControl.enabled = true;
+			_pcControl.enabled = false;
+		}
+		else
+		{
+			_mobileControl.enabled = false;
+			_pcControl.enabled = true;
+		}
 		_fieldWidth = fieldWidth + maxBlockSize * 2;
 		_fieldHeight = fieldHeight + maxBlockSize;
 		_field = functions.createAreaMatrix (_fieldWidth, _fieldHeight, maxBlockSize);
