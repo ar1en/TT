@@ -162,4 +162,16 @@ public class tetrisMain : MonoBehaviour
 		score += 100*Mathf.Pow (2, scoreLvl) - 100; //миленько, красиво и изящно, спасибо Коляше)
 		_scoreLvl = 0;
 	}
+	void Update()
+	{
+		for (int i= _fieldWidth/maxBlockSize + 1; i<_fieldWidth/maxBlockSize + fieldWidth + 1; i++)
+		{
+			if (_field[i,fieldHeight] == true)
+			{
+				Destroy(this);
+				Application.LoadLevel(0);
+			}
+		}
+	}
+
 }
