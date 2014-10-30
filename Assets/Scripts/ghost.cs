@@ -18,10 +18,10 @@ public class ghost : MonoBehaviour
 				{
 					_ghost = Instantiate(_main.ghostCube, new Vector3(i - _size*0.5f, (_size - j) + _size*0.5f - _size, 0.0f), Quaternion.identity) as Transform;
 					_ghost.parent = transform;	
-					_ghost.renderer.material.color =_block.color;
+					//_ghost.renderer.material.color =_block.color;
 					//_ghost.renderer.material.shader = Shader.Find("Custom/transparent");
 					//_ghost.renderer.material.SetFloat(_Trans, 1f);
-					//_ghost.renderer.material.SetColor(_MainColor11, _block.color);
+					_ghost.renderer.material.SetColor("_MainColor11", _block.color);
 					//_ghost.renderer.shader.color = _block.color;
 					//_ghost
 					//_ghost.renderer.material.

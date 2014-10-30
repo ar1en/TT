@@ -16,11 +16,13 @@
 		float _Trans;
 		
 
-		struct Input {
+		struct Input 
+		{
 			float2 uv_MainTex;
 		};
 
-		void surf (Input IN, inout SurfaceOutput o) {
+		void surf (Input IN, inout SurfaceOutput o) 
+		{
 
 			o.Albedo = _MainColor11.rgb;
 			o.Alpha = _Trans;

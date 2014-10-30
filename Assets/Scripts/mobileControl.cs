@@ -51,7 +51,8 @@ public class mobileControl : MonoBehaviour {
 					}
 					else
 					{
-						_block.Rotate();
+						//_block.Rotate();
+						_block._fallSpeed = _main.fallSpeed;
 					}
 					break;
 				//case TouchPhase.Stationary:
