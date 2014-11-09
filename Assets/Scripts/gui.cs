@@ -1,13 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
-
 public class gui : MonoBehaviour 
 {
+	private float accum;
+	private int frames;
+
 	void OnGUI()
 	{
-		tetrisMain _main = this.GetComponent<tetrisMain>();
+		tetrisMain _main = this.GetComponent<tetrisMain> ();
 
-		GUI.Label (new Rect (Screen.width-Screen.width/4-20, 5, 100, 30), "Score: "+ _main.score);
+		accum += Time.timeScale/Time.deltaTime;
+		++frames;
+		float fps = accum / frames;
+
+		GUI.Label (new Rect (Screen.width-Screen.width/4-20, 5, 100, 50), "Score: "+ _main.score + " FPS " + fps);
 		if (Time.timeScale == 0)
 			GUI.Label (new Rect (Screen.width/2, Screen.height/2, 100, 30), "Pause");
 	}
