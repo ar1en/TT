@@ -18,6 +18,7 @@ public class tetrisMain : MonoBehaviour
 	public int rowsClearedToSpeedup = 10;
 	public float speedupAmount = 0.5f;
 	public bool useMobileControl = false;
+	public int frameRate = 60;
 
 	[HideInInspector]
 	public float score;
@@ -162,6 +163,7 @@ public class tetrisMain : MonoBehaviour
 		score += 100*Mathf.Pow (2, scoreLvl) - 100; //миленько, красиво и изящно, спасибо Коляше)
 		_scoreLvl = 0;
 	}
+
 	void Update()
 	{
 		for (int i= _fieldWidth/maxBlockSize + 1; i<_fieldWidth/maxBlockSize + fieldWidth + 1; i++)
@@ -173,5 +175,9 @@ public class tetrisMain : MonoBehaviour
 			}
 		}
 	}
-
+	
+	void Awake() 
+	{
+		Application.targetFrameRate = frameRate;
+	}
 }
