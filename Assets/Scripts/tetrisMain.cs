@@ -178,6 +178,7 @@ public class tetrisMain : MonoBehaviour
 	
 	void Awake() 
 	{
-		Application.targetFrameRate = frameRate;
+		if (frameRate > 0)
+			Application.targetFrameRate = frameRate;
 	}
 }
