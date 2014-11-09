@@ -33,7 +33,7 @@ public class block : MonoBehaviour
 				{
 					_brickMatrix[x, y] = true;
 					_brick = Instantiate(_main.cube, new Vector3(x - _halfSizeFloat, (_size - y) + _halfSizeFloat - _size, 0.0f), Quaternion.identity) as Transform;
-					_brick.GetComponent<Renderer>().material.color = color;
+					_brick.renderer.material.color = color;
 					_brick.parent = transform;		//делаем созданные кубики дочерними
 					transform.tag = "block";
 				}

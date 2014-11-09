@@ -52,7 +52,7 @@ public class functions : MonoBehaviour
 				{
 					var _brick = Instantiate(cube, new Vector3(y - _size*0.5f + 18, (_size - x) + _size * 0.5f - _size + 16, -0.3f), Quaternion.identity) as Transform;
 					_brick.tag = "preview";
-					_brick.GetComponent<Renderer>().material.color = _block.color;
+					_brick.renderer.material.color = _block.color;
 				}
 	}
 }

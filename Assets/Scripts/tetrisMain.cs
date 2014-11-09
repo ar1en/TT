@@ -85,7 +85,7 @@ public class tetrisMain : MonoBehaviour
 				if (brickMatrix[x, y])
 				{
 					Transform cubeOnField = Instantiate(cube, new Vector3(xPosition + x, yPosition - y, 0), Quaternion.identity) as Transform;
-					cubeOnField.GetComponent<Renderer>().material.color = color;
+					cubeOnField.renderer.material.color = color;
 					_field[(int) xPosition + x, (int) yPosition - y] = true;		
 				}
 		checkRows (yPosition - size, size);
@@ -133,11 +133,11 @@ public class tetrisMain : MonoBehaviour
 			}
 			else if (cube.transform.position.y == yStart) 
 			{
-				if (!cube.GetComponent<Rigidbody>())
-					cube.AddComponent<Rigidbody>();
-				cube.GetComponent<Collider>().enabled = true;
-				cube.GetComponent<Rigidbody>().velocity = new Vector3(Random.Range(-15, 15), Random.Range(-10, 10), Random.Range(-3, -10));
-				cube.GetComponent<Rigidbody>().MoveRotation(new Quaternion(Random.Range(-10, 10), Random.Range(-10, 10), Random.Range(-10, 10), Random.Range(-10, 10)));
+				if (!cube.rigidbody)
+					cube.AddComponent("Rigidbody");
+				cube.collider.enabled = true;
+				cube.rigidbody.velocity = new Vector3(Random.Range(-15, 15), Random.Range(-10, 10), Random.Range(-3, -10));
+				cube.rigidbody.MoveRotation(new Quaternion(Random.Range(-10, 10), Random.Range(-10, 10), Random.Range(-10, 10), Random.Range(-10, 10)));
 				Destroy(cube, 4f);
 			}
 		}
