@@ -1,14 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class mobileControl : MonoBehaviour {
+public class mobileControl : MonoBehaviour 
+{
 
-	private block _block;
-	private tetrisMain _main;
+	private block _block;// = GameObject.FindGameObjectWithTag("block").GetComponent<block>();
+	private tetrisMain _main;// = GameObject.Find ("main").GetComponent<tetrisMain>();
+	//private bool inSwipe = false;
 	//private Touch initialTouch = new Touch();
 	//private bool hasSwiped = false;
 	private Vector2 startPos;
-	
+	public float swipeValue1;
+	//void Start()
+	//{
+
+	//}
+
 	void Update () 
 	{
 		_block = GameObject.FindGameObjectWithTag("block").GetComponent<block>();
@@ -23,6 +30,27 @@ public class mobileControl : MonoBehaviour {
 				case TouchPhase.Began:
 					startPos = touch.position;
 					break;
+///////////////////////////
+				case TouchPhase.Moved:
+					//float distY1 = (new Vector3(0, touch.position.y, 0) - new Vector3(0,startPos.y, 0)).magnitude;
+					float distY1 = new Vector3(0, touch.position.y - startPos.y, 0).magnitude;
+					float distX1 = new Vector3(0, touch.position.x - startPos.x, 0).magnitude;
+					//swipeValue1 = Mathf.Sign (touch.position.x - startPos.x);
+					//magnitude = distX1;
+					//float distX1 = (new Vector3(0, touch.position.x, 0) - new Vector3(0,startPos.x, 0)).magnitude;
+					//Mathf.Sign (touch.position.x - startPos.x);
+					if (distX1 > distY1)
+					{
+						float swipeValue1 = Mathf.Sign (touch.position.x - startPos.x);
+						if ((swipeValue1 > 0)&&(distX1 > 200))
+							StartCoroutine(move(1));
+							//_block.horizontalMove(1);
+						else if ((swipeValue1 < 0)&&(distX1 > 200))
+							StartCoroutine(move(-1));
+					}
+					break;
+//////////////////////////
+				//case TouchPhase.Ended:
 				case TouchPhase.Ended:
 					float distY = (new Vector3(0, touch.position.y, 0) - new Vector3(0,startPos.y, 0)).magnitude;
 					float distX = (new Vector3(0, touch.position.x, 0) - new Vector3(0,startPos.x, 0)).magnitude;
@@ -112,5 +140,14 @@ public class mobileControl : MonoBehaviour {
 			else
 				Time.timeScale = 1;
 		}
+
+		//if (inSwipe)
+			//_block.horizontalMove(-1);
+	}
+
+	IEnumerator move(int pos)
+	{
+		yield return new WaitForSeconds(1f);
+		_block.horizontalMove (pos);
 	}
 }
