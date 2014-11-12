@@ -11,6 +11,7 @@ public class mobileControl : MonoBehaviour
 	//private bool hasSwiped = false;
 	private Vector2 startPos;
 	public float swipeValue1;
+	private int count = 0;
 	//void Start()
 	//{
 
@@ -18,6 +19,8 @@ public class mobileControl : MonoBehaviour
 
 	void Update () 
 	{
+		if (count >= 300*Time.deltaTime)
+			count = 0;
 		_block = GameObject.FindGameObjectWithTag("block").GetComponent<block>();
 		_main = GameObject.Find ("main").GetComponent<tetrisMain>();
 
@@ -42,11 +45,11 @@ public class mobileControl : MonoBehaviour
 					if (distX1 > distY1)
 					{
 						float swipeValue1 = Mathf.Sign (touch.position.x - startPos.x);
-						if ((swipeValue1 > 0)&&(distX1 > 200))
-							StartCoroutine(move(1));
+						if ((swipeValue1 > 0)&&(count == 0))
+							_block.horizontalMove(1);
 							//_block.horizontalMove(1);
-						else if ((swipeValue1 < 0)&&(distX1 > 200))
-							StartCoroutine(move(-1));
+					else if ((swipeValue1 < 0)&&(count == 0))
+							_block.horizontalMove(-1);
 					}
 					break;
 //////////////////////////
@@ -143,6 +146,7 @@ public class mobileControl : MonoBehaviour
 
 		//if (inSwipe)
 			//_block.horizontalMove(-1);
+		count++;
 	}
 
 	IEnumerator move(int pos)
