@@ -12,6 +12,13 @@ public class mobileControl : MonoBehaviour
 	private Vector2 startPos;
 	public float swipeValue1;
 	private int count = 0;
+
+	private bool inSwipe = false;
+	private float lengthOnPreviousFrame = 0;
+	private float buffer = 0;
+	private float sensivity = 70;
+	private float buffer2 = 0;
+	private float a;
 	//void Start()
 	//{
 
@@ -31,6 +38,7 @@ public class mobileControl : MonoBehaviour
 			switch (touch.phase)
 			{
 				case TouchPhase.Began:
+					inSwipe = false;
 					startPos = touch.position;
 					break;
 ///////////////////////////
@@ -38,23 +46,57 @@ public class mobileControl : MonoBehaviour
 					//float distY1 = (new Vector3(0, touch.position.y, 0) - new Vector3(0,startPos.y, 0)).magnitude;
 					float distY1 = new Vector3(0, touch.position.y - startPos.y, 0).magnitude;
 					float distX1 = new Vector3(0, touch.position.x - startPos.x, 0).magnitude;
-					//swipeValue1 = Mathf.Sign (touch.position.x - startPos.x);
-					//magnitude = distX1;
-					//float distX1 = (new Vector3(0, touch.position.x, 0) - new Vector3(0,startPos.x, 0)).magnitude;
-					//Mathf.Sign (touch.position.x - startPos.x);
 					if (distX1 > distY1)
 					{
-						float swipeValue1 = Mathf.Sign (touch.position.x - startPos.x);
-						if ((swipeValue1 > 0)&&(count == 0))
+						float swipeValue = Mathf.Sign (touch.position.x - startPos.x);
+						if (swipeValue > 0)
+							buffer += distX1 - lengthOnPreviousFrame;
+						else
+							buffer -= distX1 - lengthOnPreviousFrame;
+						
+						if (buffer > sensivity)
+						{
 							_block.horizontalMove(1);
-							//_block.horizontalMove(1);
-					else if ((swipeValue1 < 0)&&(count == 0))
+							buffer = 0;
+							inSwipe = true;
+						}
+						else if (buffer < -sensivity)
+						{
+							_block.horizontalMove(-1);
+							inSwipe = true;
+							buffer = 0;
+						}
+					}
+					lengthOnPreviousFrame = distX1;
+					swipeValue1 = buffer;
+					break;
+				case TouchPhase.Ended:
+					buffer = 0;
+					lengthOnPreviousFrame = 0;
+					float distY = new Vector3(0, touch.position.y - startPos.y, 0).magnitude;
+					float distX = new Vector3(0, touch.position.x - startPos.x, 0).magnitude;
+					if (distY > distX)
+					{
+						float swipeValue = Mathf.Sign (touch.position.y - startPos.y);
+						if (swipeValue > 0)
+							_block.Rotate();
+						else if (swipeValue < 0)
+							_block._fallSpeed = _main.fallSpeedUltra;
+					}
+					else if (distY == distX)
+					{
+						_block._fallSpeed = _main.fallSpeed;
+					}
+					else if ((distX > distY) && !inSwipe)
+					{
+						float swipeValue = Mathf.Sign (touch.position.x - startPos.x);
+						if (swipeValue > 0)
+							_block.horizontalMove(1);
+						else if (swipeValue < 0)
 							_block.horizontalMove(-1);
 					}
 					break;
-//////////////////////////
-				//case TouchPhase.Ended:
-				case TouchPhase.Ended:
+				/*case TouchPhase.Ended:
 					float distY = (new Vector3(0, touch.position.y, 0) - new Vector3(0,startPos.y, 0)).magnitude;
 					float distX = (new Vector3(0, touch.position.x, 0) - new Vector3(0,startPos.x, 0)).magnitude;
 					if (distY > distX)
@@ -85,7 +127,7 @@ public class mobileControl : MonoBehaviour
 						//_block.Rotate();
 						_block._fallSpeed = _main.fallSpeed;
 					}
-					break;
+					break;*/
 				//case TouchPhase.Stationary:
 				//	_block.Rotate();
 				//	break;
