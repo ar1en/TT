@@ -19,6 +19,7 @@ public class tetrisMain : MonoBehaviour
 	public float speedupAmount = 0.5f;
 	public bool useMobileControl = false;
 	public int frameRate = 60;
+	public int sensivity = 70;
 
 	[HideInInspector]
 	public float score;

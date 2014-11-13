@@ -14,7 +14,7 @@ public class gui : MonoBehaviour
 		++frames;
 		float fps = accum / frames;
 
-		GUI.Label (new Rect (Screen.width-Screen.width/4-20, 5, 100, 50), "Score: "+ _main.score + " FPS " + " X " + _mobC.swipeValue1);
+		GUI.Label (new Rect (Screen.width-Screen.width/4-20, 5, 100, 50), "Score: "+ _main.score + "\nFPS " + fps);
 		if (Time.timeScale == 0)
 			GUI.Label (new Rect (Screen.width/2, Screen.height/2, 100, 30), "Pause");
 	}
