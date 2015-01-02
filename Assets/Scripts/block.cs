@@ -17,7 +17,7 @@ public class block : MonoBehaviour
 	public float _fallSpeed;
 	private tetrisMain _main;
 	private float _halfSizeFloat;
-	private Color _color;
+	//private Color _color;
 
 	void Start () 
 	{
@@ -33,7 +33,10 @@ public class block : MonoBehaviour
 				{
 					_brickMatrix[x, y] = true;
 					_brick = Instantiate(_main.cube, new Vector3(x - _halfSizeFloat, (_size - y) + _halfSizeFloat - _size, 0.0f), Quaternion.identity) as Transform;
-					_brick.renderer.material.color = color;
+					//задание цвета
+					//_brick.renderer.material.color = color;
+					_brick.renderer.material.SetColor("_Color1", color);
+					//\задание цвета
 					_brick.parent = transform;		//делаем созданные кубики дочерними
 					transform.tag = "block";
 				}
