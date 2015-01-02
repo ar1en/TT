@@ -3,9 +3,7 @@ using System.Collections;
 
 public class functions : MonoBehaviour 
 {
-	public Color colormain;
 	public static bool[,] createAreaMatrix(int width, int height, int maxBlockSize)
-
 	{
 		bool[,] field = new bool[width, height];
 		
@@ -54,7 +52,7 @@ public class functions : MonoBehaviour
 				{
 					var _brick = Instantiate(cube, new Vector3(y - _size*0.5f + 18, (_size - x) + _size * 0.5f - _size + 16, -0.3f), Quaternion.identity) as Transform;
 					_brick.tag = "preview";
-					_brick.renderer.material.SetColor("_Color2", _colormain);
+					_brick.renderer.material.color = _block.color;
 				}
 	}
 }

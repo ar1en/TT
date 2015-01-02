@@ -75,7 +75,8 @@ public class mobileControl : MonoBehaviour
 					if (distY > distX)
 					{
 						float swipeValue = Mathf.Sign (touch.position.y - startPos.y);
-						if ((swipeValue > 0)  && !inSwipe)
+						//if ((swipeValue > 0)  && !inSwipe)
+						if (swipeValue > 0)
 							_block.Rotate();
 						else if (swipeValue < 0)
 							_block._fallSpeed = _main.fallSpeedUltra;

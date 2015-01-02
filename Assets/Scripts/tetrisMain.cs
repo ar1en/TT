@@ -20,7 +20,6 @@ public class tetrisMain : MonoBehaviour
 	public bool useMobileControl = false;
 	public int frameRate = 60;
 	public int sensivity = 70;
-	public Color _colormain;
 
 	[HideInInspector]
 	public float score;
@@ -88,7 +87,7 @@ public class tetrisMain : MonoBehaviour
 				if (brickMatrix[x, y])
 				{
 					Transform cubeOnField = Instantiate(cube, new Vector3(xPosition + x, yPosition - y, 0), Quaternion.identity) as Transform;
-					cubeOnField.renderer.material.SetColor ("_Color2", _colormain);
+					cubeOnField.renderer.material.color = color;
 					_field[(int) xPosition + x, (int) yPosition - y] = true;		
 				}
 		checkRows (yPosition - size, size);

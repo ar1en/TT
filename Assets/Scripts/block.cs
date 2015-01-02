@@ -4,7 +4,7 @@ using System.Collections;
 public class block : MonoBehaviour 
 {
 	public string[] brick;
-	public Color colormain;
+	public Color color;
 
 	[HideInInspector]
 	public bool[,] _brickMatrix;						//матрица для кирпичика
@@ -17,8 +17,7 @@ public class block : MonoBehaviour
 	public float _fallSpeed;
 	private tetrisMain _main;
 	private float _halfSizeFloat;
-	private Color _colormain;
-	
+	private Color _color;
 
 	void Start () 
 	{
@@ -27,14 +26,14 @@ public class block : MonoBehaviour
 		_size = brick.Length;						//число элементов текстового массива
 		_halfSizeFloat = _size * 0.5f;
 		_brickMatrix = new bool[_size, _size];		//создание логической матрицы заданной размерности
-		_colormain = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f), 1);
+		//_color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f), 1);
 		for (int y = 0; y < _size; y++)
 			for (int x = 0; x < _size; x++)
 				if (brick[y][x] == "1"[0])				
 				{
 					_brickMatrix[x, y] = true;
 					_brick = Instantiate(_main.cube, new Vector3(x - _halfSizeFloat, (_size - y) + _halfSizeFloat - _size, 0.0f), Quaternion.identity) as Transform;
-					_brick.renderer.material.SetColor("_Color2", _colormain);
+					_brick.renderer.material.color = color;
 					_brick.parent = transform;		//делаем созданные кубики дочерними
 					transform.tag = "block";
 				}
@@ -53,7 +52,7 @@ public class block : MonoBehaviour
 			_yPosition --;
 			if (functions.checkBrick(_brickMatrix, _xPosition, _yPosition, _main._field))
 			{
-				_main.setBrick(_brickMatrix, _xPosition, _yPosition + 1, colormain);
+				_main.setBrick(_brickMatrix, _xPosition, _yPosition + 1, color);
 				Destroy(gameObject);
 				if (_main.useGhost)
 					Destroy(GameObject.Find("ghost(Clone)"));

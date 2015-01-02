@@ -1,14 +1,11 @@
-﻿Shader "cubik" 
-	{
-	Properties 
-	{
-		_Color1 ("diffuse", Color) = (1,1,1,1)
-		_Color2 ("ramka", Color) = (1,1,1,1)
-		_Color3 ("granica", Color) = (1,1,1,1)
-		_MainTex ("Base (RGB)", 2D) = "white" {}	
+﻿Shader "Custom/cubik" {
+	Properties {
+		_Color1("ramka", color) = (1,1,1,1)
+		_Color2("maincube", color) = (1,1,1,1)
+		_Color3("signal", color) = (1,1,1,1)
+		_MainTex ("Base (RGB)", 2D) = "white" {}
 	}
-	SubShader 
-	{
+	SubShader {
 		Tags { "RenderType"="Opaque" }
 		LOD 200
 		
@@ -17,32 +14,34 @@
 
 		sampler2D _MainTex;
 		float4 _Color1, _Color2, _Color3;
-		float i;
-		  
-		struct Input 
-		{
+
+		struct Input {
 			float2 uv_MainTex;
-		};	
-					
-		void surf (Input IN, inout SurfaceOutput o) 
-		{
-			fixed2 scrolledUV = IN.uv_MainTex;
-			fixed xscroll = scrolledUV.x;
-			fixed yscroll = scrolledUV.y;
+		};
+
+
+		void surf (Input IN, inout SurfaceOutput o) {
+		
 			
-			half4 c = tex2D (_MainTex, fixed2(xscroll,yscroll));
-				
-			if (scrolledUV.x > 0.5) 
+			fixed2 scrUV = IN.uv_MainTex;
+			half scrX, scrY;
+			scrX = scrUV.x;
+			scrY = scrUV.y;
+			
+			half4 c = tex2D (_MainTex, fixed2(scrX , scrY));
+			
+			
+			if (scrUV.x > 0.7 && scrUV.y > 0.6)
 				{
-					if (scrolledUV.x > 0.7)
-						{
-							o.Emission = _Color2.rgb;
-						}
-					else o.Emission = _Color3.rgb ;
+				if (scrUV.y > 0.7)
+					{
+					o.Emission = _Color1.rgb;
+					}
+				else o.Emission = _Color3.rgb;
 				}
-				else o.Albedo = _Color1.rgb;
+				else o.Albedo = _Color2.rgb;
 			o.Alpha = c.a;
-				}
+		}
 		ENDCG
 	} 
 	FallBack "Diffuse"
