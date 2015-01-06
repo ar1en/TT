@@ -13,10 +13,10 @@
 		
 		CGPROGRAM
 		#pragma surface surf Lambert
+		#pragma target 3.0
 
 		sampler2D _MainTex;
 		float4 _Color1, _Color2;
-		float i;
 		  
 		struct Input 
 		{
@@ -28,16 +28,23 @@
 			fixed2 coordUV = IN.uv_MainTex;
 			fixed xcoord = coordUV.x;
 			fixed ycoord = coordUV.y;
-			//float i= 0.5 + 0.5*sin(_Time.y);
+		//	float aa, ycordscrl;
+		//	int mass[10],i,cc;
+		//	for (i = 1; i != 10; i++ ) mass[i] = i/10;
+		//	aa = 0.01 + frac(_Time);
+		//	ycordscrl = 0.5*frac(_Time);
 			
-			float4 c = tex2D (_MainTex, fixed2(xcoord,ycoord));
-		
-		if (coordUV.x > 0.6)
-			{
-			o.Emission = c.rgb;
-			}
-		else o.Albedo = _Color2.rgb;
-			 o.Alpha = c.a;
+		//	half4 c = tex2D (_MainTex, fixed2(xcoord,ycoord));
+		//	for (cc = 1; cc != 100; cc++)
+		//	{
+		//	if (coordUV.x > 0.6 && coordUV.y < cc*0.01 + 0.01 && coordUV.y > cc*0.01) 
+		//		{
+		//		o.Emission = _Color1.rgb*cc*0.1;
+		//		}
+		//	else o.Albedo = _Color2.rgb;
+		//	}
+		//	cc = 0;
+		//	o.Alpha = c.a;
 				}
 		ENDCG
 	} 

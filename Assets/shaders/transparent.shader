@@ -24,7 +24,7 @@
 		void surf (Input IN, inout SurfaceOutput o) 
 		{
 
-			o.Albedo = _MainColor11.rgb;
+			o.Emission = _MainColor11.rgb; 
 			o.Alpha = _Trans;
 		}
 		ENDCG

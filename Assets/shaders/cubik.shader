@@ -5,6 +5,7 @@
 		_Color1 ("Area", Color) = (1,1,1,1)
 		_Color2 ("Signal", Color) = (1,1,1,1)
 		_Color3 ("Diffuse", Color) = (1,1,1,1)
+		//_Power1 ("Power", Float) = 1
 		_MainTex ("Base (RGB)", 2D) = "white" {}	
 	}
 	SubShader 
@@ -17,6 +18,7 @@
 
 		sampler2D _MainTex;
 		float4 _Color1, _Color2, _Color3;
+		//int _Power1;
 		  
 		struct Input 
 		{
@@ -32,12 +34,10 @@
 			half4 c = tex2D (_MainTex, fixed2(xscroll,yscroll));
 							
 
-			if (scrolledUV.x > 0.5) 
-						{
-						if (scrolledUV.x > 0.7) 
-							o.Emission = _Color1.rgb;
-							else o.Emission = _Color2.rgb;
-						}
+			if (scrolledUV.x > 0.3) 
+				{
+				o.Albedo = _Color1.rgb;
+				}
 				else o.Albedo = _Color3.rgb;
 			o.Alpha = c.a;
 				}
