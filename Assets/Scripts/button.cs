@@ -4,6 +4,7 @@ using System.Collections;
 public class button : MonoBehaviour {
 
 	private int move = 0;
+	private bool flag;
 
 	// Use this for initialization
 	void Start () 
@@ -13,20 +14,24 @@ public class button : MonoBehaviour {
 	void Update () 
 	{
 		if ((move == 1) && (transform.position.y < -5.6f))
-			transform.position = new Vector3 (transform.position.x, transform.position.y + 6 * Time.deltaTime, transform.position.z);
+			transform.position = new Vector3 (transform.position.x, transform.position.y + 20f * Time.deltaTime, transform.position.z);
 		else if ((move == -1) && (transform.position.y > -8.6f))
-			transform.position = new Vector3 (transform.position.x, transform.position.y - 3.5f * Time.deltaTime, transform.position.z);
+			transform.position = new Vector3 (transform.position.x, transform.position.y - 20f * Time.deltaTime, transform.position.z);
 		else
 			move = 0;
 	}
 
-	void OnTriggerEnter(Collider other)
+	void OnCollisionEnter(Collision collision)
 	{
-		Debug.Log ("working");
-		move = -1;
+		if (flag)
+		{
+			Debug.Log ("working");
+			move = -1;
+			flag = false;
+		}
 	}
 
-	void OnTriggerExit(Collider other)
+	void OnCollisionExit(Collision collision)
 	{
 		move = 1;
 	}
