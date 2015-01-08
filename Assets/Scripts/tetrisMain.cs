@@ -87,6 +87,7 @@ public class tetrisMain : MonoBehaviour
 				if (brickMatrix[x, y])
 				{
 					Transform cubeOnField = Instantiate(cube, new Vector3(xPosition + x, yPosition - y, 0), Quaternion.identity) as Transform;
+					cubeOnField.GetChild(0).light.enabled = true;
 					//задание цвета
 					//cubeOnField.renderer.material.color = color;
 					cubeOnField.renderer.material.SetColor("_Color1", color);
