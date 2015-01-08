@@ -13,9 +13,9 @@ public class button : MonoBehaviour {
 	void Update () 
 	{
 		if ((move == 1) && (transform.position.y < -5.6f))
-			transform.position = new Vector3 (transform.position.x, transform.position.y + 1 * Time.deltaTime, transform.position.z);
-		else if (move == -1)
-			transform.position = new Vector3 (transform.position.x, transform.position.y - 3 * Time.deltaTime, transform.position.z);
+			transform.position = new Vector3 (transform.position.x, transform.position.y + 6 * Time.deltaTime, transform.position.z);
+		else if ((move == -1) && (transform.position.y > -8.6f))
+			transform.position = new Vector3 (transform.position.x, transform.position.y - 3.5f * Time.deltaTime, transform.position.z);
 		else
 			move = 0;
 	}
