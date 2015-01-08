@@ -9,8 +9,6 @@ public class planeTest : MonoBehaviour
 	public float height2 = 2;
 	public float height3 = 3;
 
-	private bool flag = true;
-
 	void Start () 
 	{
 	
@@ -18,11 +16,10 @@ public class planeTest : MonoBehaviour
 
 	void Update () 
 	{
-		if ((this.transform.position.y < height) && (flag))
+		if (this.transform.position.y < height)
 		{
 			Debug.Log ("Working");
 			Instantiate(plane);
-			flag = false;
 		}
 	}
 }
