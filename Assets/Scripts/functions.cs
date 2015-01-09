@@ -42,6 +42,7 @@ public class functions : MonoBehaviour
 
 	public static void printNextBrick(GameObject brick, Transform cube)
 	{
+		tetrisMain _main = GameObject.Find ("main").GetComponent<tetrisMain>();
 		foreach (GameObject _cube in GameObject.FindGameObjectsWithTag("preview")) 
 			Destroy(_cube);
 		block _block = brick.GetComponent<block>();
@@ -50,13 +51,14 @@ public class functions : MonoBehaviour
 			for (int x = 0; x < _size; x++)
 				if (_block.brick[x][y] == "1"[0])				
 				{
-					var _brick = Instantiate(cube, new Vector3(y - _size*0.5f + 18, (_size - x) + _size * 0.5f - _size + 16, -0.3f), Quaternion.identity) as Transform;
+					var _brick = Instantiate(cube, new Vector3(y - _size*0.5f + _main.previewX, (_size - x) + _size * 0.5f - _size + _main.previewY, -0.3f), Quaternion.identity) as Transform;
 					_brick.tag = "preview";
-
 					//задание цвета
 					//_brick.renderer.material.color = _block.color;
 					_brick.renderer.material.SetColor("_Color1", _block.color);
 					//\задание цвета
+					//_brick.parent = _transform;
 				}
+//		_transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
 	}
 }

@@ -33,6 +33,7 @@ public class block : MonoBehaviour
 				{
 					_brickMatrix[x, y] = true;
 					_brick = Instantiate(_main.cube, new Vector3(x - _halfSizeFloat, (_size - y) + _halfSizeFloat - _size, 0.0f), Quaternion.identity) as Transform;
+					_brick.GetChild(0).light.range = _main.fallingCubeLight;
 					//задание цвета
 					//_brick.renderer.material.color = color;
 					_brick.renderer.material.SetColor("_Color1", color);

@@ -15,11 +15,16 @@ public class tetrisMain : MonoBehaviour
 	public bool useGhost = true;
 	public int fieldWidth = 10;
 	public int fieldHeight = 20;
-	public int rowsClearedToSpeedup = 10;
-	public float speedupAmount = 0.5f;
+	//public int rowsClearedToSpeedup = 10;
+	//public float speedupAmount = 0.5f;
 	public bool useMobileControl = false;
-	public int frameRate = 60;
-	public int sensivity = 70;
+	public int frameRate = 60;								//FPS
+	public int sensivity = 70;								//
+	public float fallingCubeLight = 0.56f;					//
+	public float cubeLight = 1.0f;							//
+
+	public float previewX = 20;
+	public float previewY = 16;
 
 	[HideInInspector]
 	public float score;
@@ -29,28 +34,32 @@ public class tetrisMain : MonoBehaviour
 	public int _fieldHeight;
 	[HideInInspector]
 	public bool[,] _field;
+
 	private Transform _ghost;
 	private Transform[] _cubeReferences;
 	private int[] _cubePositions;
 	private int _firstBrick;
 	private int _secondBrick;
 	private int _scoreLvl;
-	private pcControl _pcControl;
-	private mobileControl _mobileControl;
+	//private pcControl _pcControl;
+	//private mobileControl _mobileControl;
 	
 	void Start () 
 	{
-		_pcControl = GameObject.Find ("main").GetComponent<pcControl>();
-		_mobileControl = GameObject.Find ("main").GetComponent<mobileControl>();
+		//gameObject.AddComponent<block>();
+		//_pcControl = GameObject.Find ("main").GetComponent<pcControl>();
+		//_mobileControl = GameObject.Find ("main").GetComponent<mobileControl>();
 		if (useMobileControl)
 		{
-			_mobileControl.enabled = true;
-			_pcControl.enabled = false;
+			gameObject.AddComponent<mobileControl>();
+			//_mobileControl.enabled = true;
+			//_pcControl.enabled = false;
 		}
 		else
 		{
-			_mobileControl.enabled = false;
-			_pcControl.enabled = true;
+			gameObject.AddComponent<pcControl>();
+			//_mobileControl.enabled = false;
+			//_pcControl.enabled = true;
 		}
 		_fieldWidth = fieldWidth + maxBlockSize * 2;
 		_fieldHeight = fieldHeight + maxBlockSize;
@@ -87,7 +96,7 @@ public class tetrisMain : MonoBehaviour
 				if (brickMatrix[x, y])
 				{
 					Transform cubeOnField = Instantiate(cube, new Vector3(xPosition + x, yPosition - y, 0), Quaternion.identity) as Transform;
-					cubeOnField.GetChild(0).light.range = 1.0f;
+					cubeOnField.GetChild(0).light.range = cubeLight;
 					//задание цвета
 					//cubeOnField.renderer.material.color = color;
 					cubeOnField.renderer.material.SetColor("_Color1", color);
