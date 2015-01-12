@@ -94,7 +94,9 @@ public class block : MonoBehaviour
 			transform.Rotate(Vector3.forward * - 90.0f );
 			for (int i=0;  i< 4; i++)
 			{
-				transform.GetChild(i).Rotate(Vector3.forward * + 90.0f );
+				//transform.GetChild(i).Rotate(Vector3.forward * + 90.0f );
+				//float tmp = transform.GetChild(i).position.x - 0.5f;
+				//transform.GetChild(i).position = new Vector3 (transform.GetChild(i).position.x - _halfSizeFloat, transform.GetChild(i).position.y, transform.GetChild(i).position.z);
 			}
 		}
 	}
