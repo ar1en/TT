@@ -92,6 +92,10 @@ public class block : MonoBehaviour
 		{
 			System.Array.Copy (tempMatrix, _brickMatrix, _size * _size);
 			transform.Rotate(Vector3.forward * - 90.0f );
+			for (int i=0;  i< 4; i++)
+			{
+				transform.GetChild(i).Rotate(Vector3.forward * + 90.0f );
+			}
 		}
 	}
 }
