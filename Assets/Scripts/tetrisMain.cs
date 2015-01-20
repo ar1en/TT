@@ -88,7 +88,7 @@ public class tetrisMain : MonoBehaviour
 		functions.printNextBrick (briks [_secondBrick], cube);
 	}
 	
-	public void setBrick(bool[,] brickMatrix, int xPosition, int yPosition, Color color)
+	public void setBrick(bool[,] brickMatrix, int xPosition, int yPosition, Texture texture)
 	{
 		int size = brickMatrix.GetLength (0);
 		for (var y = 0; y < size; y++)
@@ -99,7 +99,8 @@ public class tetrisMain : MonoBehaviour
 					cubeOnField.GetChild(0).light.range = cubeLight;
 					//задание цвета
 					//cubeOnField.renderer.material.color = color;
-					cubeOnField.renderer.material.SetColor("_Color1", color);
+					//cubeOnField.renderer.material.SetColor("_Color1", color);
+					cubeOnField.renderer.material.mainTexture = texture;
 					//\задание цвета
 					_field[(int) xPosition + x, (int) yPosition - y] = true;		
 				}

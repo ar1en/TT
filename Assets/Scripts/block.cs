@@ -5,6 +5,7 @@ public class block : MonoBehaviour
 {
 	public string[] brick;
 	public Color color;
+	public Texture texture;
 
 	[HideInInspector]
 	public bool[,] _brickMatrix;						//матрица для кирпичика
@@ -36,7 +37,8 @@ public class block : MonoBehaviour
 					_brick.GetChild(0).light.range = _main.fallingCubeLight;
 					//задание цвета
 					//_brick.renderer.material.color = color;
-					_brick.renderer.material.SetColor("_Color1", color);
+					//_brick.renderer.material.SetColor("_Color1", color);
+					_brick.renderer.material.mainTexture = texture;
 					//\задание цвета
 					_brick.parent = transform;		//делаем созданные кубики дочерними
 					transform.tag = "block";
@@ -56,7 +58,7 @@ public class block : MonoBehaviour
 			_yPosition --;
 			if (functions.checkBrick(_brickMatrix, _xPosition, _yPosition, _main._field))
 			{
-				_main.setBrick(_brickMatrix, _xPosition, _yPosition + 1, color);
+				_main.setBrick(_brickMatrix, _xPosition, _yPosition + 1, texture);
 				Destroy(gameObject);
 				if (_main.useGhost)
 					Destroy(GameObject.Find("ghost(Clone)"));
