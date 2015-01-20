@@ -34,9 +34,9 @@
 			half4 c = tex2D (_MainTex, half2(scrolledUV.x, scrolledUV.y));
 							
 
-			if (scrolledUV.x > 0.3) 
+			if (scrolledUV.y > 0.6) 
 				{
-				o.Albedo = c.rgb * _Power1;
+				o.Emission = c.rgb * _Power1;
 				}
 				else o.Albedo = c.rgb;
 			//o.Albedo = c.rgb;
