@@ -26,10 +26,11 @@ public class pcControl : MonoBehaviour
 
 		if (Input.GetKeyDown (KeyCode.Escape)) 
 		{
-			if (Time.timeScale == 1)
-				Time.timeScale = 0;
+			if (_main.pause == true)
+				_main.pause = false;
 			else
-				Time.timeScale = 1;
+				_main.pause = true;
+
 		}
 	}
 }

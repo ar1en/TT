@@ -4,11 +4,8 @@ using System.Collections;
 public class mobileControl : MonoBehaviour 
 {
 
-	private block _block;// = GameObject.FindGameObjectWithTag("block").GetComponent<block>();
-	private tetrisMain _main;// = GameObject.Find ("main").GetComponent<tetrisMain>();
-	//private bool inSwipe = false;
-	//private Touch initialTouch = new Touch();
-	//private bool hasSwiped = false;
+	private block _block;
+	private tetrisMain _main;
 	private Vector2 startPos;
 	private bool inSwipe = false;
 	private float lengthOnPreviousFrame = 0;
@@ -75,7 +72,6 @@ public class mobileControl : MonoBehaviour
 					if (distY > distX)
 					{
 						float swipeValue = Mathf.Sign (touch.position.y - startPos.y);
-						//if ((swipeValue > 0)  && !inSwipe)
 						if (swipeValue > 0)
 							_block.Rotate();
 						else if (swipeValue < 0)
@@ -98,10 +94,10 @@ public class mobileControl : MonoBehaviour
 		}
 		if (Input.GetKeyDown (KeyCode.Escape)) 
 		{
-			if (Time.timeScale == 1)
-				Time.timeScale = 0;
+			if (_main.pause == true)
+				_main.pause = false;
 			else
-				Time.timeScale = 1;
+				_main.pause = true;
 		}
 	}
 }

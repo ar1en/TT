@@ -8,15 +8,13 @@ public class tetrisMain : MonoBehaviour
 	public Transform ghostCube;
 	public bool useArea = true;
 	public float fallSpeed = 2.0f;							//скорость падения кирпичика
-	public float fallSpeedUltra = 35.0f;						//скорость во время ускорения при падении
+	public float fallSpeedUltra = 50.0f;						//скорость во время ускорения при падении
 	public int maxBlockSize = 5;
 	public GameObject[] briks;
 	public GameObject ghost;
 	public bool useGhost = true;
 	public int fieldWidth = 10;
 	public int fieldHeight = 20;
-	//public int rowsClearedToSpeedup = 10;
-	//public float speedupAmount = 0.5f;
 	public bool useMobileControl = false;
 	public int frameRate = 60;								//FPS
 	public int sensivity = 70;								//
@@ -28,6 +26,8 @@ public class tetrisMain : MonoBehaviour
 
 	[HideInInspector]
 	public float score;
+	[HideInInspector]
+	public bool pause;
 	[HideInInspector]
 	public int _fieldWidth;
 	[HideInInspector]
@@ -41,31 +41,21 @@ public class tetrisMain : MonoBehaviour
 	private int _firstBrick;
 	private int _secondBrick;
 	private int _scoreLvl;
-	//private pcControl _pcControl;
-	//private mobileControl _mobileControl;
 	
 	void Start () 
 	{
-		//gameObject.AddComponent<block>();
-		//_pcControl = GameObject.Find ("main").GetComponent<pcControl>();
-		//_mobileControl = GameObject.Find ("main").GetComponent<mobileControl>();
 		if (useMobileControl)
-		{
 			gameObject.AddComponent<mobileControl>();
-			//_mobileControl.enabled = true;
-			//_pcControl.enabled = false;
-		}
 		else
-		{
 			gameObject.AddComponent<pcControl>();
-			//_mobileControl.enabled = false;
-			//_pcControl.enabled = true;
-		}
+
 		_fieldWidth = fieldWidth + maxBlockSize * 2;
 		_fieldHeight = fieldHeight + maxBlockSize;
 		_field = functions.createAreaMatrix (_fieldWidth, _fieldHeight, maxBlockSize);
+
 		if (useArea)
 			functions.generateArea (_field, _fieldWidth, _fieldHeight, areaCube);			//вывод поля для наглядности
+
 		_cubeReferences = new Transform[_fieldWidth * _fieldHeight];
 		_cubePositions = new int[_fieldWidth * _fieldHeight];
 		spawnBrick (true);
@@ -96,12 +86,8 @@ public class tetrisMain : MonoBehaviour
 				if (brickMatrix[x, y])
 				{
 					Transform cubeOnField = Instantiate(cube, new Vector3(xPosition + x, yPosition - y, 0), Quaternion.identity) as Transform;
-					//cubeOnField.GetChild(0).light.range = cubeLight;
-					//задание цвета
-					//cubeOnField.renderer.material.color = color;
 					//cubeOnField.renderer.material.SetColor("_Color1", color);
 					cubeOnField.renderer.material.mainTexture = texture;
-					//\задание цвета
 					_field[(int) xPosition + x, (int) yPosition - y] = true;		
 				}
 		checkRows (yPosition - size, size);
@@ -181,6 +167,11 @@ public class tetrisMain : MonoBehaviour
 
 	void Update()
 	{
+		if (pause) 
+			Time.timeScale = 0;
+		else
+			Time.timeScale = 1;
+
 		for (int i= _fieldWidth/maxBlockSize + 1; i<_fieldWidth/maxBlockSize + fieldWidth + 1; i++)
 		{
 			if (_field[i,fieldHeight] == true)

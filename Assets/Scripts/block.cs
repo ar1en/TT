@@ -18,7 +18,6 @@ public class block : MonoBehaviour
 	public float _fallSpeed;
 	private tetrisMain _main;
 	private float _halfSizeFloat;
-	//private Color _color;
 
 	void Start () 
 	{
@@ -27,19 +26,14 @@ public class block : MonoBehaviour
 		_size = brick.Length;						//число элементов текстового массива
 		_halfSizeFloat = _size * 0.5f;
 		_brickMatrix = new bool[_size, _size];		//создание логической матрицы заданной размерности
-		//_color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f), 1);
 		for (int y = 0; y < _size; y++)
 			for (int x = 0; x < _size; x++)
 				if (brick[y][x] == "1"[0])				
 				{
 					_brickMatrix[x, y] = true;
 					_brick = Instantiate(_main.cube, new Vector3(x - _halfSizeFloat, (_size - y) + _halfSizeFloat - _size, 0.0f), Quaternion.identity) as Transform;
-					//_brick.GetChild(0).light.range = _main.fallingCubeLight;
-					//задание цвета
-					//_brick.renderer.material.color = color;
 					//_brick.renderer.material.SetColor("_Color1", color);
 					_brick.renderer.material.mainTexture = texture;
-					//\задание цвета
 					_brick.parent = transform;		//делаем созданные кубики дочерними
 					transform.tag = "block";
 				}
@@ -73,13 +67,11 @@ public class block : MonoBehaviour
 	}
 
 	public void horizontalMove (int dir)
-	//IEnumerator horizontalMove (int dir)
 	{
 		if (!functions.checkBrick(_brickMatrix, _xPosition + dir, _yPosition,_main._field))
 		{
 			transform.position = new Vector3 (transform.position.x + dir, _brick.transform.position.y, 0);
 			_xPosition += dir;
-			//yield return 0;
 		}
 	}
 
