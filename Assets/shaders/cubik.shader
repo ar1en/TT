@@ -18,7 +18,7 @@
 
 		sampler2D _MainTex;
 		float4 _Color1, _Color2, _Color3;
-		float _Power1;
+		float _Power1, wer;
 		  
 		struct Input 
 		{
@@ -32,8 +32,8 @@
 			fixed yscroll = scrolledUV.y;
 			
 			half4 c = tex2D (_MainTex, half2(scrolledUV.x, scrolledUV.y));
-							
-
+			wer = c.r * 0.1;
+			
 			if (scrolledUV.y > 0.6) 
 				{
 				o.Emission = c.rgb * _Power1;
