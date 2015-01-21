@@ -32,7 +32,7 @@
 			fixed yscroll = scrolledUV.y;
 			
 			half4 c = tex2D (_MainTex, half2(scrolledUV.x, scrolledUV.y));
-			wer = c.r * 0.1;
+			wer = c.r;
 			
 			if (scrolledUV.y > 0.6) 
 				{

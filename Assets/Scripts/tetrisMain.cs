@@ -78,7 +78,7 @@ public class tetrisMain : MonoBehaviour
 		functions.printNextBrick (briks [_secondBrick], cube);
 	}
 	
-	public void setBrick(bool[,] brickMatrix, int xPosition, int yPosition, Texture texture)
+	public void setBrick(bool[,] brickMatrix, int xPosition, int yPosition, Color color)
 	{
 		int size = brickMatrix.GetLength (0);
 		for (var y = 0; y < size; y++)
@@ -86,8 +86,8 @@ public class tetrisMain : MonoBehaviour
 				if (brickMatrix[x, y])
 				{
 					Transform cubeOnField = Instantiate(cube, new Vector3(xPosition + x, yPosition - y, 0), Quaternion.identity) as Transform;
-					//cubeOnField.renderer.material.SetColor("_Color1", color);
-					cubeOnField.renderer.material.mainTexture = texture;
+					cubeOnField.renderer.material.SetColor("_Color1", color);
+					//cubeOnField.renderer.material.mainTexture = texture;
 					_field[(int) xPosition + x, (int) yPosition - y] = true;		
 				}
 		checkRows (yPosition - size, size);
