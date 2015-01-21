@@ -37,7 +37,7 @@
 			alpCtex = c.a;
 			_ClrMnBld = alpCtex * _Color1 * _Power1;
 			
-			if (scrolledUV.y > 0.6) 
+			if (scrolledUV.y > 0.5 && scrolledUV.x < 0.5) 
 				{
 				o.Emission = lerp(_ClrMnBld, d, _LerpSt);
 				}
