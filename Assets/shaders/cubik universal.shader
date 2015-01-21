@@ -35,15 +35,15 @@
 			half4 c = tex2D (_MainTex, half2(scrolledUV.x, scrolledUV.y));
 			half4 d = tex2D (_LightMap, half2(scrolledUV.x, scrolledUV.y));
 			alpCtex = c.a;
-			_ClrMnBld = alpCtex * _Color1 * _Power1;
+			_ClrMnBld = alpCtex * _Color1;
 			
-			if (scrolledUV.y > 0.5 && scrolledUV.x < 0.5) 
-				{
-				o.Emission = lerp(_ClrMnBld, d, _LerpSt);
-				}
-				else o.Albedo = lerp(c.rgb, d, _LerpSt) * _Power2;
+			if (scrolledUV.y > 0.4 && scrolledUV.x < 0.3) 
+				o.Emission = _ClrMnBld * _Power1;
+			else if (scrolledUV.y > 0.7 && scrolledUV.x > 0.3) o.Emission = _ClrMnBld * _Power2;
+			else o.Albedo = lerp(c.rgb, d, _LerpSt);
+			
 			o.Alpha = c.a;
-				}
+		}
 		ENDCG
 	} 
 	FallBack "Diffuse"
