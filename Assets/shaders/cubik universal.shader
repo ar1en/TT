@@ -47,9 +47,9 @@
 			alptex2 = d.a;
 			
 			if (scrolledUV1.y > 0.45 && scrolledUV1.x < 0.35) 
-				o.Emission = lerp ((_Color1 * alptex1 * _Power1),(alptex2 * _Color2 * _Power2),_LerpSt); //2 4 6 8 квадраты
+				o.Emission = _Color1 * alptex1 * _Power1; //2 4 6 8 квадраты
 			else if (scrolledUV1.y > 0.65 && scrolledUV1.x > 0.3) 
-				o.Emission = lerp ((_Color1 * alptex1 * _Power1),(alptex2 * _Color2 * _Power2),_LerpSt); // 1 3 5 7 9 квадраты и грани на них
+				o.Emission = _Color1 * alptex1 * _Power3; // 1 3 5 7 9 квадраты и грани на них
 			o.Albedo = c.rgb; // внешние грани
 			if (scrolledUV1.y > 0.5 && scrolledUV1.y < 0.6) 
 				o.Emission = lerp ((_Color1 * alptex1 * _Power1),(alptex2 * _Color2 * _Power2),_LerpSt); // внутренние грани
