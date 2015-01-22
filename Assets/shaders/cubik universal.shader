@@ -7,7 +7,7 @@
 		_Power2 ("Power2", Range (0,2)) = 1
 		_LerpSt ("Lerp Step", Range (0,1)) = 0.5
 		_MainTex ("Base (RGB)", 2D) = "white"
-		_LightMap ("Base (RGB)", 2D) = "white" {}	
+	//	_LightMap ("Base (RGB)", 2D) = "white" {}	
 	}
 	SubShader 
 	{
@@ -33,14 +33,14 @@
 			fixed yscroll = scrolledUV.y;
 			
 			half4 c = tex2D (_MainTex, half2(scrolledUV.x, scrolledUV.y));
-			half4 d = tex2D (_LightMap, half2(scrolledUV.x, scrolledUV.y));
-			alpCtex = c.a;
+			//half4 d = tex2D (_LightMap, half2(scrolledUV.x, scrolledUV.y));
+			alpCtex = c.a+0.2;
 			_ClrMnBld = alpCtex * _Color1;
 			
-			if (scrolledUV.y > 0.4 && scrolledUV.x < 0.3) 
+			if (scrolledUV.y > 0.45 && scrolledUV.x < 0.35) 
 				o.Emission = _ClrMnBld * _Power1;
-			else if (scrolledUV.y > 0.7 && scrolledUV.x > 0.3) o.Emission = _ClrMnBld * _Power2;
-			else o.Albedo = lerp(c.rgb, d, _LerpSt);
+			else if (scrolledUV.y > 0.65 && scrolledUV.x > 0.3) o.Emission = _ClrMnBld * _Power2;
+			else o.Albedo = c.rgb;
 			
 			o.Alpha = c.a;
 		}
