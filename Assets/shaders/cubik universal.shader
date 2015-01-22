@@ -4,9 +4,9 @@
 	{
 		_Color1 ("Main color", Color) = (1,1,1,1)
 		_Color2 ("Sec color", Color) = (1,1,1,1)
-		_Power1 ("PwMnCl", Range (0,2)) = 1
-		_Power2 ("PwScCl", Range (0,2)) = 1
-		_Power3 ("Power3", Range (0,2)) = 1
+		_Power1 ("PwMnCl", float) = 1
+		_Power2 ("PwScCl", Float) = 1
+		_Power3 ("Power3", Float) = 1
 		_LerpSt ("LerpSt", Float) = 0.5
 		_1stTex ("First Tex", 2D) = "white"
 		_2ndTex ("Second Tex", 2D) = "white" {}	
@@ -47,13 +47,13 @@
 			alptex2 = d.a;
 			
 			if (scrolledUV1.y > 0.45 && scrolledUV1.x < 0.35) 
-				o.Emission = _Color1 * alptex1 * _Power1; //2 4 6 8 квадраты
+				o.Emission = c.rgb * _Power1; //2 4 6 8 квадраты
 			else if (scrolledUV1.y > 0.65 && scrolledUV1.x > 0.3) 
-				o.Emission = _Color1 * alptex1 * _Power3; // 1 3 5 7 9 квадраты и грани на них
+				o.Emission = c.rgb * _Power3; // 1 3 5 7 9 квадраты и грани на них
 			o.Albedo = c.rgb; // внешние грани
 			if (scrolledUV1.y > 0.5 && scrolledUV1.y < 0.6) 
-				o.Emission = lerp ((_Color1 * alptex1 * _Power1),(alptex2 * _Color2 * _Power2),_LerpSt); // внутренние грани
-			
+				o.Emission = c.rgb * _Power2 * alptex2; // внутренние грани
+			//lerp ((_Color1 * alptex1 * _Power1),(alptex2 * _Color2 * _Power2),_LerpSt)
 			o.Alpha = c.a;
 		}
 		ENDCG
