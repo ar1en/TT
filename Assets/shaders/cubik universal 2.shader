@@ -8,6 +8,7 @@
 		_Power2 ("Pw 13579", Float) = 1
 		_Power3 ("Pw inGrani", Float) = 1
 		_Power4 ("Pw GrKvadr", Float) = 1
+		_Power5 ("Pw All", float) = 1
 		_LerpSt1 ("LerpSt inGrani", Float) = 0.5
 		_LerpSt2 ("LerpSt GrKvadr", Float) = 0.5
 		_1stTex ("First Tex", 2D) = "white"
@@ -24,7 +25,8 @@
 
 		sampler2D _1stTex, _2ndTex;
 		float4 _Color1, _Color2;
-		float _Power1, _Power2, _Power3, _Power4, alptex1, alptex2, _LerpSt1, _LerpSt2;
+		float _Power1, _Power2, _Power3, _Power4, _Power5,
+			  alptex1, alptex2, _LerpSt1, _LerpSt2;
 		  
 		struct Input 
 		{
@@ -47,6 +49,11 @@
 		//	half4 d = tex2D (_2ndTex, half2(scrolledUV2.x, scrolledUV2.y));
 			alptex1 = c.a;
 		//	alptex2 = d.a;
+			
+			_Power1 *= _Power5;
+			_Power2 *= _Power5;
+			_Power3 *= _Power5;
+			_Power4 *= _Power5;
 			
 			if (scrolledUV1.y > 0.45 && scrolledUV1.x < 0.35) 
 				o.Emission = _Color1 * _Power1 * alptex1; //2 4 6 8 квадраты
