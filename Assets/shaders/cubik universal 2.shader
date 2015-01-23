@@ -4,11 +4,12 @@
 	{
 		_Color1 ("Main color", Color) = (1,1,1,1)
 		_Color2 ("Sec color", Color) = (1,1,1,1)
-		_Power1 ("PwMnCl", float) = 1
-		_Power2 ("PwScCl", Float) = 1
-		_Power3 ("Power3", Float) = 1
-		_Power4 ("Power4", Float) = 1
-		_LerpSt ("LerpSt", Float) = 0.5
+		_Power1 ("Pw 2468", float) = 1
+		_Power2 ("Pw 13579", Float) = 1
+		_Power3 ("Pw inGrani", Float) = 1
+		_Power4 ("Pw GrKvadr", Float) = 1
+		_LerpSt1 ("LerpSt inGrani", Float) = 0.5
+		_LerpSt2 ("LerpSt GrKvadr", Float) = 0.5
 		_1stTex ("First Tex", 2D) = "white"
 		_2ndTex ("Second Tex", 2D) = "white" {}	
 	}
@@ -22,8 +23,8 @@
 		#pragma surface surf Lambert
 
 		sampler2D _1stTex, _2ndTex;
-		float4 _Color1, _Color2,_ClrMnBld;
-		float _Power1, _Power2, _Power3, _Power4, alptex1, alptex2, _LerpSt;
+		float4 _Color1, _Color2;
+		float _Power1, _Power2, _Power3, _Power4, alptex1, alptex2, _LerpSt1, _LerpSt2;
 		  
 		struct Input 
 		{
@@ -37,25 +38,28 @@
 			fixed xscroll1 = scrolledUV1.x;
 			fixed yscroll1 = scrolledUV1.y;
 			
-			fixed2 scrolledUV2 = IN.uv_2ndTex;
-			fixed xscroll2 = scrolledUV2.x;
-			fixed yscroll2 = scrolledUV2.y;
+		//	fixed2 scrolledUV2 = IN.uv_2ndTex;
+		//	fixed xscroll2 = scrolledUV2.x;
+		//	fixed yscroll2 = scrolledUV2.y;
 			
 			
 			half4 c = tex2D (_1stTex, half2(scrolledUV1.x, scrolledUV1.y));
-			half4 d = tex2D (_2ndTex, half2(scrolledUV2.x, scrolledUV2.y));
+		//	half4 d = tex2D (_2ndTex, half2(scrolledUV2.x, scrolledUV2.y));
 			alptex1 = c.a;
-			alptex2 = d.a;
+		//	alptex2 = d.a;
 			
 			if (scrolledUV1.y > 0.45 && scrolledUV1.x < 0.35) 
 				o.Emission = _Color1 * _Power1 * alptex1; //2 4 6 8 квадраты
 			else if (scrolledUV1.y > 0.65 && scrolledUV1.x > 0.3) 
-				o.Emission = _Color1 * _Power3 * alptex1; // 1 3 5 7 9 квадраты
+				o.Emission = _Color1 * _Power2 * alptex1; // 1 3 5 7 9 квадраты
+			
 			if (scrolledUV1.y > 0.5 && scrolledUV1.y < 0.6) 
-				o.Emission = lerp ((alptex1 * _Color2 * _Power2),(alptex1 * _Color1 * _Power1),_LerpSt); // внутренние грани
-			if (scrolledUV1.x > 0.7) o.Emission = _Color1 * _Power4 * alptex1; //грнаи внутренних квадратов
+				o.Emission = lerp ((alptex1 * _Color2 * _Power3),(alptex1 * _Color1 * _Power1),_LerpSt1); // внутренние грани
+			
+			//if (scrolledUV1.x > 0.7) o.Emission = _Color1 * _Power4 * alptex1 
+			if (scrolledUV1.x > 0.7) o.Emission = lerp((alptex1 * _Color2 * _Power3),(alptex1 * _Color1 * _Power4),_LerpSt2); // грнаи внутренних квадратов
 			else o.Albedo = c.rgb; // внешние грани
-			//lerp ((_Color1 * alptex1 * _Power1),(alptex2 * _Color2 * _Power2),_LerpSt)
+			
 			o.Alpha = c.a;
 		}
 		ENDCG
