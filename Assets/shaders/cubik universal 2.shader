@@ -54,7 +54,7 @@
 				o.Emission = _Color1 * _Power2 * alptex1; // 1 3 5 7 9 квадраты
 			
 			if (scrolledUV1.y > 0.5 && scrolledUV1.y < 0.6) 
-				o.Emission = lerp ((alptex1 * _Color2 * _Power3),(alptex1 * _Color1 * _Power1),_LerpSt1); // внутренние грани
+				o.Emission = lerp ((alptex1 * _Color2 * _Power3),((alptex1) * _Color1 * _Power1),_LerpSt1); // внутренние грани
 			
 			//if (scrolledUV1.x > 0.7) o.Emission = _Color1 * _Power4 * alptex1 
 			if (scrolledUV1.x > 0.7) o.Emission = lerp((alptex1 * _Color2 * _Power3),(alptex1 * _Color1 * _Power4),_LerpSt2); // грнаи внутренних квадратов
