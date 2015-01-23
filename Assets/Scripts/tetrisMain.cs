@@ -152,7 +152,7 @@ public class tetrisMain : MonoBehaviour
 		var t = 0.0f;
 		while (t <= 1.0f) 
 		{
-			t += Time.deltaTime;// * 0.2f;
+			t += Time.deltaTime * 10f;
 			for (var i = 0; i < cubesToMove; i++) 
 				_cubeReferences[i].position = new Vector3 (_cubeReferences[i].position.x, (Mathf.Lerp (_cubePositions[i], _cubePositions[i]-1f, t)), 0);
 		}
