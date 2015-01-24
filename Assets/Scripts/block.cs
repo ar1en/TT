@@ -66,8 +66,9 @@ public class block : MonoBehaviour
 			for (float i = _yPosition + 1; i > _yPosition; i -= Time.deltaTime * _fallSpeed)
 			{
 				transform.position = new Vector3 (transform.position.x, i - _halfSizeFloat, 0);
-				yield return 0;
 				_border.renderer.material.SetFloat("_Coord", i);
+				_border.renderer.material.SetColor("_Color2", color);
+				yield return 0;
 			}
 		}
 	}
