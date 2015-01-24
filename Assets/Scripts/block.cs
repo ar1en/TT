@@ -19,9 +19,11 @@ public class block : MonoBehaviour
 	public float _fallSpeed;
 	private tetrisMain _main;
 	private float _halfSizeFloat;
+	private GameObject _border;
 
 	void Start () 
 	{
+		_border = GameObject.FindGameObjectWithTag("border");
 		_main = GameObject.Find ("main").GetComponent<tetrisMain>();
 		_fallSpeed = _main.fallSpeed;
 		_size = brick.Length;						//число элементов текстового массива
@@ -65,6 +67,7 @@ public class block : MonoBehaviour
 			{
 				transform.position = new Vector3 (transform.position.x, i - _halfSizeFloat, 0);
 				yield return 0;
+				_border.renderer.material.SetFloat("_Coord", i);
 			}
 		}
 	}
