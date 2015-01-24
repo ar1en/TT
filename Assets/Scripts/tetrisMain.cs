@@ -78,7 +78,7 @@ public class tetrisMain : MonoBehaviour
 		functions.printNextBrick (briks [_secondBrick], cube);
 	}
 	
-	public void setBrick(bool[,] brickMatrix, int xPosition, int yPosition, Color color)
+	public void setBrick(bool[,] brickMatrix, int xPosition, int yPosition, Color color, float mainColorCorrection)
 	{
 		int size = brickMatrix.GetLength (0);
 		for (var y = 0; y < size; y++)
@@ -87,6 +87,9 @@ public class tetrisMain : MonoBehaviour
 				{
 					Transform cubeOnField = Instantiate(cube, new Vector3(xPosition + x, yPosition - y, 0), Quaternion.identity) as Transform;
 					cubeOnField.renderer.material.SetColor("_Color1", color);
+					cubeOnField.renderer.material.SetFloat("_Power1", cubeOnField.renderer.material.GetFloat("_Power1") * mainColorCorrection);
+					cubeOnField.renderer.material.SetFloat("_Power2", cubeOnField.renderer.material.GetFloat("_Power2") * mainColorCorrection);
+					cubeOnField.renderer.material.SetFloat("_Power5", cubeOnField.renderer.material.GetFloat("_Power5") + 0.2f);
 					//cubeOnField.renderer.material.mainTexture = texture;
 					_field[(int) xPosition + x, (int) yPosition - y] = true;		
 				}

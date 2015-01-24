@@ -5,6 +5,7 @@ public class block : MonoBehaviour
 {
 	public string[] brick;
 	public Color color;
+	public float mainColorCorrection = 0;
 	//public Texture texture;
 
 	[HideInInspector]
@@ -33,6 +34,8 @@ public class block : MonoBehaviour
 					_brickMatrix[x, y] = true;
 					_brick = Instantiate(_main.cube, new Vector3(x - _halfSizeFloat, (_size - y) + _halfSizeFloat - _size, 0.0f), Quaternion.identity) as Transform;
 					_brick.renderer.material.SetColor("_Color1", color);
+					_brick.renderer.material.SetFloat("_Power1", _brick.renderer.material.GetFloat("_Power1") * mainColorCorrection);
+					_brick.renderer.material.SetFloat("_Power2", _brick.renderer.material.GetFloat("_Power2") * mainColorCorrection);
 					//_brick.renderer.material.mainTexture = texture;
 					_brick.parent = transform;		//делаем созданные кубики дочерними
 					transform.tag = "block";
@@ -52,7 +55,7 @@ public class block : MonoBehaviour
 			_yPosition --;
 			if (functions.checkBrick(_brickMatrix, _xPosition, _yPosition, _main._field))
 			{
-				_main.setBrick(_brickMatrix, _xPosition, _yPosition + 1, color);
+				_main.setBrick(_brickMatrix, _xPosition, _yPosition + 1, color, mainColorCorrection);
 				Destroy(gameObject);
 				if (_main.useGhost)
 					Destroy(GameObject.Find("ghost(Clone)"));
