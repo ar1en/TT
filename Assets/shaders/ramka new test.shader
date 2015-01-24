@@ -37,10 +37,12 @@
 			float4 c = tex2D (_MainTex, fixed2(xcoord,ycoord));
 		
 		if (coordUV.x > 0.5)
-			{
-			if (coordUV)o.Emission = _Color1.rgb * _Power1;
-			}
-		else o.Emission = _Color2.rgb * _Power2;
+		{
+			if (coordUV.y > (0.1 + (_Coord * coefsetki)) && coordUV.y < (0.1 + (_Coord * coefsetki) + coefsetki))
+				o.Emission = _Color2.rgb;
+			else o.Emission = _Color1.rgb;
+		}
+		else o.Emission = _Color3.rgb * _Power2;
 			 o.Alpha = c.a;
 		}
 		ENDCG
