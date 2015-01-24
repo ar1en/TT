@@ -9,8 +9,11 @@
 		_Power3 ("Pw inGrani", Float) = 1
 		_Power4 ("Pw GrKvadr", Float) = 1
 		_Power5 ("Pw All", float) = 1
+		_Power6 ("Pw outsurf", float) = 1
+		_Power7 ("Pw outsurf lerp", float) = 0.5
 		_LerpSt1 ("LerpSt inGrani", Float) = 0.5
 		_LerpSt2 ("LerpSt GrKvadr", Float) = 0.5
+		_LerpSt3 ("LerpSt Outsurf", float) = 0.5
 		_1stTex ("First Tex", 2D) = "white"
 		_2ndTex ("Second Tex", 2D) = "white" {}	
 	}
@@ -25,8 +28,8 @@
 
 		sampler2D _1stTex, _2ndTex;
 		float4 _Color1, _Color2;
-		float _Power1, _Power2, _Power3, _Power4, _Power5,
-			  alptex1, alptex2, _LerpSt1, _LerpSt2;
+		float _Power1, _Power2, _Power3, _Power4, _Power5, _Power6, _Power7,
+			  alptex1, alptex2, _LerpSt1, _LerpSt2, _LerpSt3, _LerpSt31;
 		  
 		struct Input 
 		{
@@ -55,6 +58,8 @@
 			_Power3 *= _Power5;
 			_Power4 *= _Power5;
 			
+			_LerpSt31 = frac(_LerpSt3);
+			
 			if (scrolledUV1.y > 0.45 && scrolledUV1.x < 0.35) 
 				o.Emission = _Color1 * _Power1 * alptex1; //2 4 6 8 квадраты
 			else if (scrolledUV1.y > 0.65 && scrolledUV1.x > 0.3) 
@@ -64,8 +69,10 @@
 				o.Emission = lerp ((alptex1 * _Color2 * _Power3),((alptex1) * _Color1 * _Power1),_LerpSt1); // внутренние грани
 			
 			//if (scrolledUV1.x > 0.7) o.Emission = _Color1 * _Power4 * alptex1 
-			if (scrolledUV1.x > 0.7) o.Emission = lerp((alptex1 * _Color2 * _Power3),(alptex1 * _Color1 * _Power4),_LerpSt2); // грнаи внутренних квадратов
-			else o.Albedo = c.rgb; // внешние грани
+			if (scrolledUV1.x > 0.7) 
+				o.Emission = lerp((alptex1 * _Color2 * _Power3),(alptex1 * _Color1 * _Power4),_LerpSt2); // грнаи внутренних квадратов
+			else if (scrolledUV1.y < 0.45)
+				 o.Emission = lerp((_Color1 * 0.8),(_Color2 * _Power6),_LerpSt31) * _Power7; // внешние грани
 			
 			o.Alpha = c.a;
 		}
