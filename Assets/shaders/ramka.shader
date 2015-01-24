@@ -4,6 +4,8 @@
 	{
 		_Color1 ("Area", Color) = (1,1,1,1)
 		_Color2 ("Diffuse", Color) = (1,1,1,1)
+		_Power1 ("Power", float) = 1
+		_Power2 ("Power2", float) = 1
 		_MainTex ("Base (RGB)", 2D) = "white" {}	
 	}
 	SubShader 
@@ -16,7 +18,7 @@
 
 		sampler2D _MainTex;
 		float4 _Color1, _Color2;
-		float i;
+		float i, _Power1, _Power2;
 		  
 		struct Input 
 		{
@@ -34,11 +36,11 @@
 		
 		if (coordUV.x > 0.6)
 			{
-			o.Emission = c.rgb;
+			o.Emission = _Color1.rgb * _Power1;
 			}
-		else o.Albedo = _Color2.rgb;
+		else o.Emission = _Color2.rgb * _Power2;
 			 o.Alpha = c.a;
-				}
+		}
 		ENDCG
 	} 
 	FallBack "Diffuse"
