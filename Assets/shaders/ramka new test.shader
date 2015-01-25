@@ -26,7 +26,7 @@
 
 		sampler2D _MainTex, _SecTex;
 		float4 _Color1, _Color2, _Color3, _Color4;
-		float coefsetki, alpTex1, alpTex2, _Coord,ti,
+		float coefsetki, alpTex1, alpTex2, _Coord, _Coord2, ti,
 			  _Power1, _Power2, _Power3, _Power4, _LerpStep, _Raznica;
 		  
 		struct Input 
@@ -55,18 +55,25 @@
 			//ycoordSc += 0.5;
 			ycoord += 0.5;
 			//ycoordSc -= (coefsetki * _Coord);
-			ycoord -= (coefsetki * _Coord);
-						
+			_Coord2 += _Coord;
+			
+			ycoord -= (coefsetki * _Coord2);			
+												
 			float4 c = tex2D (_MainTex, fixed2(xcoord,ycoord));
 			float4 d = tex2D (_SecTex, fixed2(xcoord,ycoord));
 			
 			alpTex1 = c.a;
 			alpTex2 = d.a;
 			
-		if (coordUV.x > 0.55 && coordUV.y > 0.05)
+		if (coordUV.x > 0.55 && coordUV.y >= 0.05)
 		{				
-			if (coordUV.y > 0.85)  o.Emission = lerp (_Color2.rgb, _Color4.rgb, 0.5);
-			else o.Emission = _Color2.rgb * 2 * 1/exp(_Power4*alpTex2);
+		//	if (ycoord > 0.85)  o.Emission = lerp ((_Color2.rgb * alpTex2), (_Color4.rgb * alpTex2), 0.5);
+			o.Emission = _Color2.rgb * 2 * 1/exp(_Power4*alpTex2);
+		}
+		
+		if (coordUV.x > 0.55 && coordUV.y <= 0.05)
+		{				
+			o.Emission = _Color2.rgb * 1.5;
 		}
 		else o.Albedo = _Color3.rgb * _Power3;
 			 o.Alpha = c.a;
