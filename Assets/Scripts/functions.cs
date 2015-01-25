@@ -42,10 +42,12 @@ public class functions : MonoBehaviour
 
 	public static void printNextBrick(GameObject brick, Transform cube)
 	{
+		GameObject _border = GameObject.FindGameObjectWithTag("border");
 		tetrisMain _main = GameObject.Find ("main").GetComponent<tetrisMain>();
 		foreach (GameObject _cube in GameObject.FindGameObjectsWithTag("preview")) 
 			Destroy(_cube);
 		block _block = brick.GetComponent<block>();
+		_border.renderer.material.SetColor("_Color4", _block.color);
 		var _size = _block.brick.Length;
 		for (int y = 0; y < _size; y++)
 			for (int x = 0; x < _size; x++)
