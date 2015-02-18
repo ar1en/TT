@@ -24,7 +24,7 @@ public class block : MonoBehaviour
 	void Start () 
 	{
 		_border = GameObject.FindGameObjectWithTag("border");
-		_border.renderer.material.SetColor("_Color2", color);
+		_border.renderer.material.SetColor("_Color1", color);
 		_main = GameObject.Find ("main").GetComponent<tetrisMain>();
 		_fallSpeed = _main.fallSpeed;
 		_size = brick.Length;						//число элементов текстового массива
