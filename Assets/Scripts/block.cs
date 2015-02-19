@@ -14,7 +14,6 @@ public class block : MonoBehaviour
 	private int _xPosition;
 	private int _size; 									//размер матрицы кирпичика
 	private int _count;
-	private float _fallspcount;
 	private Transform _brick;
 	private Transform _ghost;
 	[HideInInspector]
@@ -27,9 +26,7 @@ public class block : MonoBehaviour
 	{
 		_border = GameObject.FindGameObjectWithTag("border");
 		_count = 1;
-		_fallspcount = _fallSpeed;
 		_border.renderer.material.SetFloat ("_Counter", _count);
-		_border.renderer.material.SetFloat ("_fallspcount", _fallspcount);
 		_border.renderer.material.SetColor("_Color1", color);
 		_main = GameObject.Find ("main").GetComponent<tetrisMain>();
 		_fallSpeed = _main.fallSpeed;
@@ -59,7 +56,7 @@ public class block : MonoBehaviour
 
 	void Update ()
 	{
-		if (_count < 60 * _fallSpeed)
+		if (_count < 120)
 		{
 			_count++;
 			_border.renderer.material.SetFloat ("_Counter", _count);
