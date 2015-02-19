@@ -24,9 +24,9 @@ public class tetrisMain : MonoBehaviour
 	public float previewX = 20;
 	public float previewY = 16;
 
-	[HideInInspector]
+	//[HideInInspector]
 	public int blocksPerCount = 1;
-	[HideInInspector]
+	//[HideInInspector]
 	public float fallFramesMean;
 	[HideInInspector]
 	public float score;
@@ -190,7 +190,7 @@ public class tetrisMain : MonoBehaviour
 				Application.LoadLevel(0);
 			}
 		}
-		if (blocksPerCount > 4) 
+		if (blocksPerCount > 3) 
 		{
 			_border.renderer.material.SetFloat ("_Counter", fallFramesMean/3);
 			blocksPerCount = 1;
