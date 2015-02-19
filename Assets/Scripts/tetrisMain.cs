@@ -190,9 +190,10 @@ public class tetrisMain : MonoBehaviour
 				Application.LoadLevel(0);
 			}
 		}
+
 		if (blocksPerCount > 3) 
 		{
-			_border.renderer.material.SetFloat ("_Counter", fallFramesMean/3);
+			//_border.renderer.material.SetFloat ("_Counter", fallFramesMean/3);
 			blocksPerCount = 1;
 			fallFramesMean = 0;
 		}

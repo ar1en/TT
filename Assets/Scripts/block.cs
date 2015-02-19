@@ -13,7 +13,7 @@ public class block : MonoBehaviour
 	private int _yPosition;
 	private int _xPosition;
 	private int _size; 									//размер матрицы кирпичика
-	//private int _count;
+	private int _count;
 	private float _fallFrames;
 	private Transform _brick;
 	private Transform _ghost;
@@ -67,6 +67,11 @@ public class block : MonoBehaviour
 	void Update ()
 	{
 		_main.fallFramesMean++;
+		if (_count < _main.fallFramesMean/3)
+		{
+			_count++;
+			_border.renderer.material.SetFloat ("_Counter", _count);
+		}
 		//_fallFrames++;
 		//_fallTime += Time.deltaTime;
 		//Debug.Log (_fallFrames);
