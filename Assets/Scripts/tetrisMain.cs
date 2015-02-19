@@ -192,7 +192,7 @@ public class tetrisMain : MonoBehaviour
 		}
 		if (blocksPerCount > 4) 
 		{
-			_border.renderer.material.SetFloat ("_Counter", fallFramesMean);
+			_border.renderer.material.SetFloat ("_Counter", fallFramesMean/3);
 			blocksPerCount = 1;
 			fallFramesMean = 0;
 		}
