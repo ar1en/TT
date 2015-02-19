@@ -25,6 +25,10 @@ public class tetrisMain : MonoBehaviour
 	public float previewY = 16;
 
 	[HideInInspector]
+	public int blocksPerCount = 1;
+	[HideInInspector]
+	public float fallFramesMean;
+	[HideInInspector]
 	public float score;
 	[HideInInspector]
 	public bool pause;
@@ -41,6 +45,7 @@ public class tetrisMain : MonoBehaviour
 	private int _firstBrick;
 	private int _secondBrick;
 	private int _scoreLvl;
+	private GameObject _border;
 	
 	void Start () 
 	{
@@ -60,6 +65,8 @@ public class tetrisMain : MonoBehaviour
 		_cubePositions = new int[_fieldWidth * _fieldHeight];
 		spawnBrick (true);
 		_scoreLvl = 0;
+
+		_border = GameObject.FindGameObjectWithTag("border");
 	}
 	
 	void spawnBrick(bool first)
@@ -183,6 +190,13 @@ public class tetrisMain : MonoBehaviour
 				Application.LoadLevel(0);
 			}
 		}
+		if (blocksPerCount > 4) 
+		{
+			_border.renderer.material.SetFloat ("_Counter", fallFramesMean);
+			blocksPerCount = 1;
+			fallFramesMean = 0;
+		}
+
 	}
 	
 	void Awake() 
