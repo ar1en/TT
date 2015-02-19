@@ -14,7 +14,7 @@ public class block : MonoBehaviour
 	private int _xPosition;
 	private int _size; 									//размер матрицы кирпичика
 	private int _count;
-	private float _fallFrames;
+	private float _fallspcount;
 	private Transform _brick;
 	private Transform _ghost;
 	[HideInInspector]
@@ -26,8 +26,10 @@ public class block : MonoBehaviour
 	void Start () 
 	{
 		_border = GameObject.FindGameObjectWithTag("border");
-		//_count = 1;
-		//_border.renderer.material.SetFloat ("_Counter", _count);
+		_count = 1;
+		_fallspcount = _fallSpeed;
+		_border.renderer.material.SetFloat ("_Counter", _count);
+		_border.renderer.material.SetFloat ("_fallspcount", _fallspcount);
 		_border.renderer.material.SetColor("_Color1", color);
 		_main = GameObject.Find ("main").GetComponent<tetrisMain>();
 		_fallSpeed = _main.fallSpeed;
@@ -55,26 +57,13 @@ public class block : MonoBehaviour
 		StartCoroutine (Fall ());
 	}
 
-	/*void Update ()
+	void Update ()
 	{
 		if (_count < 60 * _fallSpeed)
 		{
 			_count++;
 			_border.renderer.material.SetFloat ("_Counter", _count);
 		}
-	}*/
-
-	void Update ()
-	{
-		_main.fallFramesMean++;
-		if (_count < _main.fallFramesMean/3)
-		{
-			_count++;
-			_border.renderer.material.SetFloat ("_Counter", _count);
-		}
-		//_fallFrames++;
-		//_fallTime += Time.deltaTime;
-		//Debug.Log (_fallFrames);
 	}
 
 	IEnumerator  Fall ()
@@ -98,7 +87,6 @@ public class block : MonoBehaviour
 				yield return 0;
 			}
 		}
-		_main.blocksPerCount++;
 	}
 
 	public void horizontalMove (int dir)
