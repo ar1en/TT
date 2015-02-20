@@ -10,6 +10,8 @@ public class block : MonoBehaviour
 
 	[HideInInspector]
 	public bool[,] _brickMatrix;						//матрица для кирпичика
+
+	private bool _flag = true;
 	private int _yPosition;
 	private int _xPosition;
 	private int _size; 									//размер матрицы кирпичика
@@ -56,7 +58,7 @@ public class block : MonoBehaviour
 
 	void Update ()
 	{
-		if (_count < 120)
+		if ((_count < 120) && (_flag))
 		{
 			_count++;
 			_border.renderer.material.SetFloat ("_Counter", _count);
@@ -65,6 +67,7 @@ public class block : MonoBehaviour
 		{
 			_border.renderer.material.SetColor("_Color1", color);
 			_border.renderer.material.SetColor("_Color4", _main.nextBrickColor);
+			_flag = false;
 		}
 	}
 
