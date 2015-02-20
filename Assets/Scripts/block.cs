@@ -83,6 +83,12 @@ public class block : MonoBehaviour
 				Destroy(gameObject);
 				if (_main.useGhost)
 					Destroy(GameObject.Find("ghost(Clone)"));
+				if (_flag)
+				{
+					_border.renderer.material.SetColor("_Color1", color);
+					_border.renderer.material.SetColor("_Color4", _main.nextBrickColor);
+					_border.renderer.material.SetFloat ("_Counter", 0);
+				}
 				break;	
 			}
 			for (float i = _yPosition + 1; i > _yPosition; i -= Time.deltaTime * _fallSpeed)
