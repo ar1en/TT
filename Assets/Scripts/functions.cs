@@ -47,7 +47,8 @@ public class functions : MonoBehaviour
 		foreach (GameObject _cube in GameObject.FindGameObjectsWithTag("preview")) 
 			Destroy(_cube);
 		block _block = brick.GetComponent<block>();
-		_border.renderer.material.SetColor("_Color4", _block.color);
+		//_border.renderer.material.SetColor("_Color4", _block.color);
+		_main.nextBrickColor = _block.color;
 		var _size = _block.brick.Length;
 		for (int y = 0; y < _size; y++)
 			for (int x = 0; x < _size; x++)

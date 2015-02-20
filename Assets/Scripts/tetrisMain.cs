@@ -35,6 +35,9 @@ public class tetrisMain : MonoBehaviour
 	[HideInInspector]
 	public bool[,] _field;
 
+	//public Color currentBrickColor;
+	public Color nextBrickColor;
+
 	private Transform _ghost;
 	private Transform[] _cubeReferences;
 	private int[] _cubePositions;
