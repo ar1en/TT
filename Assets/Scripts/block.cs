@@ -68,6 +68,7 @@ public class block : MonoBehaviour
 			_border.renderer.material.SetColor("_Color1", color);
 			_border.renderer.material.SetColor("_Color4", _main.nextBrickColor);
 			_flag = false;
+			_border.renderer.material.SetFloat ("_Counter", 0);
 		}
 	}
 
