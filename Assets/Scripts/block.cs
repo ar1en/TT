@@ -66,7 +66,7 @@ public class block : MonoBehaviour
 		else 
 		{
 			_border.renderer.material.SetColor("_Color1", color);
-			_border.renderer.material.SetColor("_Color4", _main.nextBrickColor);
+			_border.renderer.material.SetColor("_Color2", _main.nextBrickColor);
 			_flag = false;
 			_border.renderer.material.SetFloat ("_Counter", 0);
 		}
@@ -87,7 +87,7 @@ public class block : MonoBehaviour
 				{
 					_border.renderer.material.SetColor("_Color1", color);
 				//	Debug.Log ("Done1");
-					_border.renderer.material.SetColor("_Color4", _main.nextBrickColor2);
+					_border.renderer.material.SetColor("_Color2", _main.nextBrickColor2);
 				//	Debug.Log ("Done2");
 					_border.renderer.material.SetFloat ("_Counter", 0);	
 				//	Debug.Log ("Done3");

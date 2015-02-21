@@ -42,7 +42,7 @@ public class functions : MonoBehaviour
 
 	public static void printNextBrick(GameObject brick, Transform cube)
 	{
-		GameObject _border = GameObject.FindGameObjectWithTag("border");
+//		GameObject _border = GameObject.FindGameObjectWithTag("border");
 		tetrisMain _main = GameObject.Find ("main").GetComponent<tetrisMain>();
 		foreach (GameObject _cube in GameObject.FindGameObjectsWithTag("preview")) 
 			Destroy(_cube);
