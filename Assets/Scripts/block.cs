@@ -58,12 +58,12 @@ public class block : MonoBehaviour
 
 	void Update ()
 	{
-		if ((_count < 120) && (_flag))
+		if ((_count < _main.colorAnimationChangeSpeed) && (_flag))
 		{
 			_count++;
 			_border.renderer.material.SetFloat ("_Counter", _count);
 		}
-		else
+		else 
 		{
 			_border.renderer.material.SetColor("_Color1", color);
 			_border.renderer.material.SetColor("_Color4", _main.nextBrickColor);
@@ -86,8 +86,11 @@ public class block : MonoBehaviour
 				if (_flag)
 				{
 					_border.renderer.material.SetColor("_Color1", color);
-					_border.renderer.material.SetColor("_Color4", _main.nextBrickColor);
-					_border.renderer.material.SetFloat ("_Counter", 0);
+				//	Debug.Log ("Done1");
+					_border.renderer.material.SetColor("_Color4", _main.nextBrickColor2);
+				//	Debug.Log ("Done2");
+					_border.renderer.material.SetFloat ("_Counter", 0);	
+				//	Debug.Log ("Done3");
 				}
 				break;	
 			}

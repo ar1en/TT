@@ -23,6 +23,7 @@ public class tetrisMain : MonoBehaviour
 
 	public float previewX = 20;
 	public float previewY = 16;
+	public int colorAnimationChangeSpeed = 120;
 
 	[HideInInspector]
 	public float score;
@@ -34,9 +35,10 @@ public class tetrisMain : MonoBehaviour
 	public int _fieldHeight;
 	[HideInInspector]
 	public bool[,] _field;
-
-	//public Color currentBrickColor;
+	[HideInInspector]
 	public Color nextBrickColor;
+	[HideInInspector]
+	public Color nextBrickColor2;
 
 	private Transform _ghost;
 	private Transform[] _cubeReferences;

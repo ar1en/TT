@@ -28,7 +28,7 @@
 
 		sampler2D _MainTex, _SecTex;
 		float4 _Color1, _Color2, _Color3, _Color4;
-		float coefsetki, alpTex1,_Power1, _Power2,a, _Counter, fallspcount;
+		float coefsetki, alpTex1,_Power1, _Power2,a, _Counter, _Coord;
 		  
 		struct Input 
 		{
@@ -40,10 +40,13 @@
 		{
 			float2 coordUV = IN.uv_MainTex;
 			float xcoord = coordUV.x;
-			float ycoord = coordUV.y;			
-												
-			float4 c = tex2D (_MainTex, fixed2(xcoord,ycoord));
+			float ycoord = coordUV.y;
 			
+			coefsetki = 0.05;
+			ycoord -= (coefsetki*_Coord);																		
+																																																									
+			float4 c = tex2D (_MainTex, fixed2(xcoord,ycoord));
+
 			alpTex1 = c.a;
 			
 		if (coordUV.x < 0.6)

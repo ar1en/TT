@@ -48,6 +48,7 @@ public class functions : MonoBehaviour
 			Destroy(_cube);
 		block _block = brick.GetComponent<block>();
 		//_border.renderer.material.SetColor("_Color4", _block.color);
+		_main.nextBrickColor2 = _main.nextBrickColor;
 		_main.nextBrickColor = _block.color;
 		var _size = _block.brick.Length;
 		for (int y = 0; y < _size; y++)
