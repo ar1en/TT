@@ -2,21 +2,16 @@
 	{
 	Properties 
 	{
-		_Color1 ("Area", Color) = (1,1,1,1)
-		_Color2 ("Area 2", Color) = (1,1,1,1)
-		_Color3 ("VneshGrani", Color) = (1,1,1,1)
-		_Color4 ("Sled Cubik", Color) = (1,1,1,1)
+		_Color1 ("FtColor", Color) = (1,1,1,1)
+		_Color2 ("ScColor", Color) = (1,1,1,1)
+		_Color3 ("Zona", Color) = (1,1,1,1)
+		_Color4 ("Diffuse", Color) = (1,1,1,1)
 		_Coord ("Coord", float) = 1
 		_Counter ("_Counter", float) = 1
-		_fallspcount ("_fallspcount", float) = 1
-		_Power1 ("Main", float) = 1
-		_Power2 ("Cube", float) = 1
-	//	_Power3 ("VneshGrani Pw", float) = 1
-	//	_Power4 ("Power4", float) = 1
-	//	_Raznica ("Raznica", float) = 1
-	//	_LerpStep ("LerpStep", float) = 1
+		_Power1 ("FtClPw", float) = 1
+		_Power2 ("ScClPw", float) = 1
 		_MainTex ("Base (RGB)", 2D) = "white" 
-	//	_SecTex ("Base (RGB)", 2D) = "white" {}	
+		_SecTex ("Base (RGB)", 2D) = "white" {}	
 	}
 	SubShader 
 	{
@@ -28,7 +23,7 @@
 
 		sampler2D _MainTex, _SecTex;
 		float4 _Color1, _Color2, _Color3, _Color4;
-		float coefsetki, alpTex1,_Power1, _Power2,a, _Counter, _Coord;
+		float coefsetki, alpTex1,_Power1, _Power2, a, _Counter, _Coord;
 		  
 		struct Input 
 		{
@@ -49,20 +44,20 @@
 
 			alpTex1 = c.a;
 			
-		if (coordUV.x < 0.6)
-		{				
-			o.Albedo = _Color3.rgb;
-		}
-		
-		if (coordUV.x > 0.6 && coordUV.x < 0.7)
-		{				
-			o.Emission = _Color2.rgb * 1.5;
-		}
-		
-		if (coordUV.x > 0.7)
-		{				
-			o.Emission =  lerp((_Color1.rgb * alpTex1 * _Power1), (_Color4.rgb * alpTex1 * _Power1), (_Counter * 0.0083));
-		}
+			if (coordUV.x < 0.6)
+			{				
+				o.Albedo = _Color3.rgb;
+			}
+			
+			if (coordUV.x > 0.6 && coordUV.x < 0.7)
+			{				
+				o.Emission = _Color2.rgb * 1.5;
+			}
+			
+			if (coordUV.x > 0.7)
+			{				
+				o.Emission =  lerp((_Color1.rgb * alpTex1 * _Power1), (_Color2.rgb * alpTex1 * _Power1), (_Counter * 0.0083));
+			}
 
 		}
 		ENDCG
