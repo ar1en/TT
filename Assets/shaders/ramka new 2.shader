@@ -22,12 +22,13 @@
 		
 		CGPROGRAM
 		#pragma surface surf Lambert
+		
 
 		sampler2D _MainTex, _SecTex;
 		float3 _ColorLerp1, _ColorLerp2;
 		float4 _Color1, _Color2, _Color3, _Color4;
 		float coefsetki, alpTex1, alpTex2,_Power1, _Power2, _Power3, 
-			  _Step, _Counter, _Coord;
+			  _Step, _Stepp, _Counter, _Coord;
 		  
 		struct Input 
 		{
@@ -63,7 +64,6 @@
 			{				
 				o.Emission = lerp(_Color1.rgb * _Power3, _Color2.rgb * _Power3, _Counter * 0.0083);
 			}
-			
 			
 			if (coordUV.x > 0.5 && coordUV.x < 0.8)
 			{				
