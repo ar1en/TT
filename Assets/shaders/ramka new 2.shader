@@ -46,7 +46,7 @@
 			float xcoord2 = coordUV2.x;
 			float ycoord2 = coordUV2.y;
 			
-			coefsetki = 0.05;
+			coefsetki = 0.045;
 			ycoord2 -= (coefsetki*_Coord);																		
 																																																									
 			float4 c = tex2D (_MainTex, fixed2(xcoord,ycoord));
@@ -73,7 +73,7 @@
 			
 			if (coordUV.x > 0.8)
 			{				
-				o.Emission =  lerp(_Color1.rgb * alpTex1 * _Power1, _Color2.rgb * alpTex1 * _Power1, _Counter * 0.0083);
+				o.Emission =  lerp(_Color1.rgb * (alpTex1+alpTex2) * _Power1, _Color2.rgb * (alpTex1+alpTex2) * _Power1, _Counter * 0.0083);
 			}
 			
 
