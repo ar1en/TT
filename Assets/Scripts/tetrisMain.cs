@@ -46,9 +46,12 @@ public class tetrisMain : MonoBehaviour
 	private int _firstBrick;
 	private int _secondBrick;
 	private int _scoreLvl;
-	
+	private int _count;
+	private GameObject _border;
+
 	void Start () 
 	{
+		_border = GameObject.FindGameObjectWithTag("border");
 		if (useMobileControl)
 			gameObject.AddComponent<mobileControl>();
 		else
@@ -85,6 +88,8 @@ public class tetrisMain : MonoBehaviour
 	
 	public void setBrick(bool[,] brickMatrix, int xPosition, int yPosition, Color color, float mainColorCorrection)
 	{
+		StartCoroutine (counter (yPosition));
+		//Debug.Log (yPosition);
 		int size = brickMatrix.GetLength (0);
 		for (var y = 0; y < size; y++)
 			for (var x = 0; x < size; x++)
@@ -165,6 +170,17 @@ public class tetrisMain : MonoBehaviour
 				_cubeReferences[i].position = new Vector3 (_cubeReferences[i].position.x, (Mathf.Lerp (_cubePositions[i], _cubePositions[i]-1f, t)), 0);
 		}
 		yield return 0;
+	}
+
+	IEnumerator counter(int _y)
+	{
+		for (int i = _y; i > 0; i--) 
+		{
+			yield return new WaitForSeconds(0.01f);
+			Debug.Log (i);
+			_border.renderer.material.SetFloat ("coordSc", i);
+		}
+		//yield return 0;
 	}
 
 	void addScore(int scoreLvl)
