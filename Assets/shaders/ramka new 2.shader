@@ -25,10 +25,11 @@
 		
 
 		sampler2D _MainTex, _SecTex;
+		int flag;
 		float3 _ColorLerp1, _ColorLerp2;
 		float4 _Color1, _Color2, _Color3;
 		float coefsetki, alpTex1, alpTex2,_Power1, _Power2, _Power3, 
-			  _Step, _Counter, _Coord, _coordSc;
+			  _Step, _Counter, _Coord, _coordSc, _coordTh;
 		  
 		struct Input 
 		{
@@ -47,16 +48,25 @@
 			float ycoord2 = coordUV2.y;
 			
 			coefsetki = 0.045;
-			
-			if ((_coordSc - _Coord) >= 0)
+	
+			if (_coordTh == floor(_Coord)-1)
 			{
-			ycoord2 -= (coefsetki*_Coord);
+				flag = 1;
 			}
 			else 
 			{
-			ycoord2 -= (coefsetki*_coordSc);
-			}																		
-																																																									
+				flag = 0;
+			}
+			
+			if (flag == 0)
+			{
+				ycoord2 -= (coefsetki*_Coord);
+			}
+			else 
+			{
+				ycoord2 -= (coefsetki*_coordSc);
+			}																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																								
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																												
 			float4 c = tex2D (_MainTex, fixed2(xcoord,ycoord));
 			float4 d = tex2D (_SecTex, fixed2(xcoord2,ycoord2));
 			
@@ -84,7 +94,8 @@
 				o.Emission =  lerp(_Color1.rgb * (alpTex1+alpTex2) * _Power1, _Color2.rgb * (alpTex1+alpTex2) * _Power1, _Counter * 0.0083);
 			}
 			
-
+			_coordTh = _Coord;
+			
 		}
 		ENDCG
 	} 
