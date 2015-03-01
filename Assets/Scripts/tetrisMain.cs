@@ -180,6 +180,7 @@ public class tetrisMain : MonoBehaviour
 			Debug.Log (i);
 			_border.renderer.material.SetFloat ("_coordSc", i);
 		}
+		_border.renderer.material.SetFloat ("_coordSc", 23);
 		//yield return 0;
 	}
 
