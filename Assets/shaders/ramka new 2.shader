@@ -4,10 +4,9 @@
 	{
 		_Color1 ("FtColor", Color) = (1,1,1,1)
 		_Color2 ("ScColor", Color) = (1,1,1,1)
-		_Color3 ("Zone", Color) = (1,1,1,1)
-		_Color4 ("Diffuse", Color) = (1,1,1,1)
+		_Color3 ("Diffuse", Color) = (1,1,1,1)
 		_Coord ("Coord", float) = 1
-		_Counter ("_Counter", float) = 1
+		_Counter ("Counter", float) = 1
 		_Power1 ("FtClPw", float) = 1
 		_Power2 ("ScClPw", float) = 1
 		_Power3 ("ZonePW", float) = 1
@@ -26,9 +25,9 @@
 
 		sampler2D _MainTex, _SecTex;
 		float3 _ColorLerp1, _ColorLerp2;
-		float4 _Color1, _Color2, _Color3, _Color4;
+		float4 _Color1, _Color2, _Color3;
 		float coefsetki, alpTex1, alpTex2,_Power1, _Power2, _Power3, 
-			  _Step, _Stepp, _Counter, _Coord;
+			  _Step, _Counter, _Coord, _CoordFt, _CoordSc;
 		  
 		struct Input 
 		{
@@ -46,8 +45,18 @@
 			float xcoord2 = coordUV2.x;
 			float ycoord2 = coordUV2.y;
 			
+		//	_CoordFt = 23;
 			coefsetki = 0.045;
-			ycoord2 -= (coefsetki*_Coord);																		
+			
+			//if ((_CoordFt - _Coord) >= 0)
+			//{
+		//	ycoord2 -= (coefsetki*_Coord);
+			//_CoordFt = floor(_Coord);
+		//	}
+		//	else 
+		//	{
+		//	ycoord2 -= (coefsetki*(_CoordFt-(_Coord/15)*2));
+		//	}																		
 																																																									
 			float4 c = tex2D (_MainTex, fixed2(xcoord,ycoord));
 			float4 d = tex2D (_SecTex, fixed2(xcoord2,ycoord2));
@@ -57,7 +66,7 @@
 			
 			if (coordUV.x < 0.2)
 			{				
-				o.Albedo = _Color4.rgb;
+				o.Albedo = _Color3.rgb;
 			}
 			
 			if (coordUV.x > 0.2 && coordUV.x < 0.5)
@@ -73,7 +82,7 @@
 			
 			if (coordUV.x > 0.8)
 			{				
-				o.Emission =  lerp(_Color1.rgb * (alpTex1) * _Power1, _Color2.rgb * (alpTex1) * _Power1, _Counter * 0.0083);
+				o.Emission =  lerp(_Color1.rgb * (alpTex1+alpTex2) * _Power1, _Color2.rgb * (alpTex1+alpTex2) * _Power1, _Counter * 0.0083);
 			}
 			
 
