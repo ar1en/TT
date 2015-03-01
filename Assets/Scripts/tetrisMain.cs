@@ -178,7 +178,7 @@ public class tetrisMain : MonoBehaviour
 		{
 			yield return new WaitForSeconds(0.01f);
 			Debug.Log (i);
-			_border.renderer.material.SetFloat ("coordSc", i);
+			_border.renderer.material.SetFloat ("_coordSc", i);
 		}
 		//yield return 0;
 	}

@@ -6,6 +6,7 @@
 		_Color2 ("ScColor", Color) = (1,1,1,1)
 		_Color3 ("Diffuse", Color) = (1,1,1,1)
 		_Coord ("Coord", float) = 1
+		_coordSc ("coordSc", float) = 1
 		_Counter ("Counter", float) = 1
 		_Power1 ("FtClPw", float) = 1
 		_Power2 ("ScClPw", float) = 1
@@ -27,7 +28,7 @@
 		float3 _ColorLerp1, _ColorLerp2;
 		float4 _Color1, _Color2, _Color3;
 		float coefsetki, alpTex1, alpTex2,_Power1, _Power2, _Power3, 
-			  _Step, _Counter, _Coord, _CoordFt, _CoordSc;
+			  _Step, _Counter, _Coord, _coordSc;
 		  
 		struct Input 
 		{
@@ -45,18 +46,16 @@
 			float xcoord2 = coordUV2.x;
 			float ycoord2 = coordUV2.y;
 			
-		//	_CoordFt = 23;
 			coefsetki = 0.045;
 			
-			//if ((_CoordFt - _Coord) >= 0)
-			//{
-		//	ycoord2 -= (coefsetki*_Coord);
-			//_CoordFt = floor(_Coord);
-		//	}
-		//	else 
-		//	{
-		//	ycoord2 -= (coefsetki*(_CoordFt-(_Coord/15)*2));
-		//	}																		
+			if ((_coordSc - _Coord) >= 0)
+			{
+			ycoord2 -= (coefsetki*_Coord);
+			}
+			else 
+			{
+			ycoord2 -= (coefsetki*_coordSc);
+			}																		
 																																																									
 			float4 c = tex2D (_MainTex, fixed2(xcoord,ycoord));
 			float4 d = tex2D (_SecTex, fixed2(xcoord2,ycoord2));
