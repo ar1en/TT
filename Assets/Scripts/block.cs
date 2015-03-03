@@ -23,14 +23,21 @@ public class block : MonoBehaviour
 	private tetrisMain _main;
 	private float _halfSizeFloat;
 	private GameObject _border;
+	private borderShaderManager _shaderManager;
 
 	void Start () 
 	{
+		_shaderManager = GameObject.FindGameObjectWithTag("border").GetComponent<borderShaderManager>();
+		_shaderManager.newBlock = true;
+
 		_border = GameObject.FindGameObjectWithTag("border");
 		_count = 1;
 		_border.renderer.material.SetFloat ("_Counter", _count);
 		//_border.renderer.material.SetColor("_Color1", color);
 		_main = GameObject.Find ("main").GetComponent<tetrisMain>();
+		_main.currentBrickColor = color;
+		//_main.blockDown = false;
+
 		_fallSpeed = _main.fallSpeed;
 		_size = brick.Length;						//число элементов текстового массива
 		_halfSizeFloat = _size * 0.5f;
@@ -67,8 +74,8 @@ public class block : MonoBehaviour
 		{
 			_border.renderer.material.SetColor("_Color1", color);
 			_border.renderer.material.SetColor("_Color2", _main.nextBrickColor);
-			_flag = false;
 			_border.renderer.material.SetFloat ("_Counter", 0);
+
 		}
 	}
 
@@ -83,14 +90,19 @@ public class block : MonoBehaviour
 				Destroy(gameObject);
 				if (_main.useGhost)
 					Destroy(GameObject.Find("ghost(Clone)"));
+				//_main.blockDown = true;
+				//Debug.Log("Done 1");
 				if (_flag)
 				{
-					_border.renderer.material.SetColor("_Color1", color);
+				//	_border.renderer.material.SetColor("_Color1", color);
 				//	Debug.Log ("Done1");
-					_border.renderer.material.SetColor("_Color2", _main.nextBrickColor2);
+				//	_border.renderer.material.SetColor("_Color2", _main.nextBrickColor2);
 				//	Debug.Log ("Done2");
-					_border.renderer.material.SetFloat ("_Counter", 0);	
-				//	Debug.Log ("Done3");
+				//	_border.renderer.material.SetFloat ("_Counter", 0);	
+					_border.renderer.material.SetColor("_CurrentColor", _main.currentBrickColor);
+					_border.renderer.material.SetColor("_NextColor", _main.nextBrickColor);
+					_border.renderer.material.SetInt("_ColorChangeCounter", 0);
+					Debug.Log ("Done3");
 				}
 				break;	
 			}

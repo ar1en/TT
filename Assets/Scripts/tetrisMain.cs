@@ -24,7 +24,7 @@ public class tetrisMain : MonoBehaviour
 	public float previewX = 20;
 	public float previewY = 16;
 	public int colorAnimationChangeSpeed = 120;
-
+	public bool blockDown = false;
 	[HideInInspector]
 	public float score;
 	[HideInInspector]
@@ -39,6 +39,10 @@ public class tetrisMain : MonoBehaviour
 	public Color nextBrickColor;
 	[HideInInspector]
 	public Color nextBrickColor2;
+	[HideInInspector]
+	public Color currentBrickColor;
+	//[HideInInspector]
+
 
 	private Transform _ghost;
 	private Transform[] _cubeReferences;
@@ -177,7 +181,7 @@ public class tetrisMain : MonoBehaviour
 		for (int i = _y; i > 0; i--) 
 		{
 			yield return new WaitForSeconds(0.02f);
-			Debug.Log (i);
+			//Debug.Log (i);
 			_border.renderer.material.SetFloat ("_coordSc", i);
 		}
 		_border.renderer.material.SetFloat ("_coordSc", 24);

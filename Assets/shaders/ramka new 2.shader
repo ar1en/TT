@@ -2,12 +2,12 @@
 	{
 	Properties 
 	{
-		_Color1 ("FtColor", Color) = (1,1,1,1)
-		_Color2 ("ScColor", Color) = (1,1,1,1)
+		_CurrentColor ("CurrentColor", Color) = (1,1,1,1)
+		_NextColor ("NextColor", Color) = (1,1,1,1)
 		_Color3 ("Diffuse", Color) = (1,1,1,1)
 		_Coord ("Coord", float) = 1
 		_coordSc ("coordSc", float) = 1
-		_Counter ("Counter", float) = 1
+		_ColorChangeCounter ("Counter", int) = 1
 		_Power1 ("FtClPw", float) = 1
 		_Power2 ("ScClPw", float) = 1
 		_Power3 ("ZonePW", float) = 1
@@ -27,9 +27,9 @@
 		sampler2D _MainTex, _SecTex;
 		int flag;
 		float3 _ColorLerp1, _ColorLerp2;
-		float4 _Color1, _Color2, _Color3;
-		float coefsetki, alpTex1, alpTex2,_Power1, _Power2, _Power3, 
-			  _Step, _Counter, _Coord, _coordSc, _coordTh;
+		float4 _CurrentColor, _NextColor, _Color3;
+		float coefsetki, alpTex1, alpTex2,_Power1, _Power2, _Power3, _Step, _Coord, _coordSc, _coordTh;
+		int _ColorChangeCounter;
 		  
 		struct Input 
 		{
@@ -80,18 +80,18 @@
 			
 			if (coordUV.x > 0.2 && coordUV.x < 0.5)
 			{				
-				o.Emission = lerp(_Color1.rgb * _Power3, _Color2.rgb * _Power3, _Counter * 0.0083);
+				o.Emission = lerp(_CurrentColor.rgb * _Power3, _NextColor.rgb * _Power3, _ColorChangeCounter * 0.0083);
 			}
 			
 			if (coordUV.x > 0.5 && coordUV.x < 0.8)
 			{				
-				o.Emission = lerp(_Color1.rgb * pow(alpTex1, _Step) * _Power3, 
-				_Color2.rgb * pow(alpTex1, _Step) * _Power3, _Counter * 0.0083);
+				o.Emission = lerp(_CurrentColor.rgb * pow(alpTex1, _Step) * _Power3, 
+				_NextColor.rgb * pow(alpTex1, _Step) * _Power3, _ColorChangeCounter * 0.0083);
 			}
 			
 			if (coordUV.x > 0.8)
 			{				
-				o.Emission =  lerp(_Color1.rgb * (alpTex1+alpTex2) * _Power1, _Color2.rgb * (alpTex1+alpTex2) * _Power1, _Counter * 0.0083);
+				o.Emission =  lerp(_CurrentColor.rgb * (alpTex1+alpTex2) * _Power1, _NextColor.rgb * (alpTex1+alpTex2) * _Power1, _ColorChangeCounter * 0.0083);
 			}
 			
 			_coordTh = _Coord;
