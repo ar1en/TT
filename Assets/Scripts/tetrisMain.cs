@@ -41,6 +41,7 @@ public class tetrisMain : MonoBehaviour
 	public Color nextBrickColor2;
 	[HideInInspector]
 	public Color currentBrickColor;
+	public Color currentBrickColor2;
 	//[HideInInspector]
 
 

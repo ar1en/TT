@@ -3,11 +3,10 @@ using System.Collections;
 
 public class borderShaderManager : MonoBehaviour 
 {
-	public bool newBlock = true;
 
-	//private bool _colorIsSend = true;
+	public bool colorIsSend = true;
 	private tetrisMain _main;
-	public int _colorChangeCounter;
+	public int colorChangeCounter;
 
 	void Start () 
 	{
@@ -16,45 +15,31 @@ public class borderShaderManager : MonoBehaviour
 
 	void Update () 
 	{
-		if (newBlock)													//если появляется новый блок сбрасываем счетчик
+		if ((colorChangeCounter < _main.colorAnimationChangeSpeed) && !_main.blockDown)
 		{
-			_colorChangeCounter = 0;
-			newBlock = false;
-			//_colorIsSend = false;
+			colorChangeCounter++;
+			gameObject.renderer.material.SetInt ("_ColorChangeCounter", colorChangeCounter);
 		}
-
-		if (_colorChangeCounter < _main.colorAnimationChangeSpeed) 
+		else if ((colorChangeCounter >= _main.colorAnimationChangeSpeed) && !_main.blockDown)
 		{
-			_colorChangeCounter++;
-			gameObject.renderer.material.SetInt ("_ColorChangeCounter", _colorChangeCounter);
-			//Debug.Log(_colorChangeCounter);
-		}
-		else
-		{
-			//if (!_colorIsSend)
-			//{
+			if (!colorIsSend)
+			{
+				Debug.Log ("done3");
 				gameObject.renderer.material.SetColor("_CurrentColor", _main.currentBrickColor);
 				gameObject.renderer.material.SetColor("_NextColor", _main.nextBrickColor);
 				gameObject.renderer.material.SetInt("_ColorChangeCounter", 0);
-				//_colorChangeCounter = 0;
-				//_colorIsSend = true;
-			//}
+				
+				colorIsSend = true;
+			}
 		}
-
-		if ((_main.blockDown) && (_colorChangeCounter < _main.colorAnimationChangeSpeed)&& (_colorChangeCounter > 3))
-		//if ((_colorChangeCounter < _main.colorAnimationChangeSpeed)&&(_main.blockDown))	
+		else if (_main.blockDown && (colorChangeCounter < _main.colorAnimationChangeSpeed))
 		{
-			Debug.Log("Done_if");
+			Debug.Log("Done2");
+			gameObject.renderer.material.SetColor("_CurrentColor", _main.currentBrickColor2);
+			gameObject.renderer.material.SetColor("_NextColor", _main.nextBrickColor2);
+			gameObject.renderer.material.SetInt("_ColorChangeCounter", 0);
 			_main.blockDown = false;
-			//_colorChangeCounter++;
-			//gameObject.renderer.material.SetInt("_ColorChangeCounter", _colorChangeCounter);
-			//Debug.Log(_colorChangeCounter);
 		}
 
-		/*if ((_main.blockDown) && (_colorChangeCounter < _main.colorAnimationChangeSpeed))
-		{
-			gameObject.renderer.material.SetColor("_CurrentColor", _main.currentBrickColor);
-			gameObject.renderer.material.SetColor("_NextColor", _main.nextBrickColor);
-		}*/
 	}
 }

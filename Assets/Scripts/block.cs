@@ -30,13 +30,14 @@ public class block : MonoBehaviour
 	void Start () 
 	{
 		_shaderManager = GameObject.FindGameObjectWithTag("border").GetComponent<borderShaderManager>();
-		_shaderManager.newBlock = true;
+		//_shaderManager.newBlock = true;
+
 
 		_border = GameObject.FindGameObjectWithTag("border");
 		_count = 1;
 		_border.renderer.material.SetFloat ("_Counter", _count);
-		//_border.renderer.material.SetColor("_Color1", color);
 		_main = GameObject.Find ("main").GetComponent<tetrisMain>();
+		_main.currentBrickColor2 = _main.currentBrickColor;
 		_main.currentBrickColor = color;
 
 
@@ -68,29 +69,14 @@ public class block : MonoBehaviour
 
 	void Update ()
 	{
-		if (firstFrame == 0)					//задержка в 1 кадр для  смены цвета
-		{
+		if (firstFrame == 0)								//задержка в 1 кадр для  смены цвета
 			firstFrame++;
-		}
-		else if(firstFrame == 1)
+		if(firstFrame == 1)
 		{
-			Debug.Log ("false");
+			_shaderManager.colorChangeCounter = 0;
+			_shaderManager.colorIsSend = false;
 			_main.blockDown = false;
 			firstFrame++;
-		}
-
-
-		if ((_count < _main.colorAnimationChangeSpeed) && (_flag))
-		{
-			_count++;
-			_border.renderer.material.SetFloat ("_Counter", _count);
-		}
-		else 
-		{
-			_border.renderer.material.SetColor("_Color1", color);
-			_border.renderer.material.SetColor("_Color2", _main.nextBrickColor);
-			_border.renderer.material.SetFloat ("_Counter", 0);
-
 		}
 	}
 
@@ -101,29 +87,16 @@ public class block : MonoBehaviour
 			_yPosition --;
 			if (functions.checkBrick(_brickMatrix, _xPosition, _yPosition, _main._field))
 			{
-				Debug.Log ("true");
 				_main.blockDown = true;
 				_main.setBrick(_brickMatrix, _xPosition, _yPosition + 1, color, mainColorCorrection);
 				Destroy(gameObject);
 				if (_main.useGhost)
 					Destroy(GameObject.Find("ghost(Clone)"));
-				if (_flag)
-				{
-				//	_border.renderer.material.SetColor("_Color1", color);
-				//	_border.renderer.material.SetColor("_Color2", _main.nextBrickColor2);
-				//	_border.renderer.material.SetFloat ("_Counter", 0);	
-					//_border.renderer.material.SetColor("_CurrentColor", _main.currentBrickColor);
-					//_border.renderer.material.SetColor("_NextColor", _main.nextBrickColor);
-					_border.renderer.material.SetInt("_ColorChangeCounter", 0);
-					//Debug.Log ("Done3");
-				}
 				break;	
 			}
 			for (float i = _yPosition + 1; i > _yPosition; i -= Time.deltaTime * _fallSpeed)
 			{
 				transform.position = new Vector3 (transform.position.x, i - _halfSizeFloat, 0);
-				_border.renderer.material.SetFloat("_Coord", i);
-				//_border.renderer.material.SetColor("_Color2", color);
 				yield return 0;
 			}
 		}
