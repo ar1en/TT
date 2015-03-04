@@ -88,10 +88,12 @@ public class tetrisMain : MonoBehaviour
 		}
 		Instantiate (briks [_firstBrick]);
 		functions.printNextBrick (briks [_secondBrick], cube);
+		//blockDown = false;
 	}
 	
 	public void setBrick(bool[,] brickMatrix, int xPosition, int yPosition, Color color, float mainColorCorrection)
 	{
+		blockDown = true;
 		StartCoroutine (counter (yPosition));
 		//Debug.Log (yPosition);
 		int size = brickMatrix.GetLength (0);

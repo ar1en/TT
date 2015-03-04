@@ -24,6 +24,8 @@ public class block : MonoBehaviour
 	private float _halfSizeFloat;
 	private GameObject _border;
 	private borderShaderManager _shaderManager;
+	private int firstFrame = 0;
+	//private int firstFrameCounter;
 
 	void Start () 
 	{
@@ -36,7 +38,8 @@ public class block : MonoBehaviour
 		//_border.renderer.material.SetColor("_Color1", color);
 		_main = GameObject.Find ("main").GetComponent<tetrisMain>();
 		_main.currentBrickColor = color;
-		//_main.blockDown = false;
+
+
 
 		_fallSpeed = _main.fallSpeed;
 		_size = brick.Length;						//число элементов текстового массива
@@ -65,6 +68,18 @@ public class block : MonoBehaviour
 
 	void Update ()
 	{
+		if (firstFrame == 0)					//задержка в 1 кадр для  смены цвета
+		{
+			firstFrame++;
+		}
+		else if(firstFrame == 1)
+		{
+			Debug.Log ("false");
+			_main.blockDown = false;
+			firstFrame++;
+		}
+
+
 		if ((_count < _main.colorAnimationChangeSpeed) && (_flag))
 		{
 			_count++;
@@ -86,23 +101,21 @@ public class block : MonoBehaviour
 			_yPosition --;
 			if (functions.checkBrick(_brickMatrix, _xPosition, _yPosition, _main._field))
 			{
+				Debug.Log ("true");
+				_main.blockDown = true;
 				_main.setBrick(_brickMatrix, _xPosition, _yPosition + 1, color, mainColorCorrection);
 				Destroy(gameObject);
 				if (_main.useGhost)
 					Destroy(GameObject.Find("ghost(Clone)"));
-				//_main.blockDown = true;
-				//Debug.Log("Done 1");
 				if (_flag)
 				{
 				//	_border.renderer.material.SetColor("_Color1", color);
-				//	Debug.Log ("Done1");
 				//	_border.renderer.material.SetColor("_Color2", _main.nextBrickColor2);
-				//	Debug.Log ("Done2");
 				//	_border.renderer.material.SetFloat ("_Counter", 0);	
-					_border.renderer.material.SetColor("_CurrentColor", _main.currentBrickColor);
-					_border.renderer.material.SetColor("_NextColor", _main.nextBrickColor);
+					//_border.renderer.material.SetColor("_CurrentColor", _main.currentBrickColor);
+					//_border.renderer.material.SetColor("_NextColor", _main.nextBrickColor);
 					_border.renderer.material.SetInt("_ColorChangeCounter", 0);
-					Debug.Log ("Done3");
+					//Debug.Log ("Done3");
 				}
 				break;	
 			}
