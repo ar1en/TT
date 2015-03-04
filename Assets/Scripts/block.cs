@@ -6,12 +6,9 @@ public class block : MonoBehaviour
 	public string[] brick;
 	public Color color;
 	public float mainColorCorrection = 0;
-	//public Texture texture;
 
 	[HideInInspector]
 	public bool[,] _brickMatrix;						//матрица для кирпичика
-
-	private bool _flag = true;
 	private int _yPosition;
 	private int _xPosition;
 	private int _size; 									//размер матрицы кирпичика
@@ -97,6 +94,7 @@ public class block : MonoBehaviour
 			for (float i = _yPosition + 1; i > _yPosition; i -= Time.deltaTime * _fallSpeed)
 			{
 				transform.position = new Vector3 (transform.position.x, i - _halfSizeFloat, 0);
+				_border.renderer.material.SetFloat("_Coord", i);
 				yield return 0;
 			}
 		}
