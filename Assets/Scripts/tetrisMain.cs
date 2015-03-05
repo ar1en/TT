@@ -42,7 +42,6 @@ public class tetrisMain : MonoBehaviour
 	[HideInInspector]
 	public Color currentBrickColor;
 	public Color currentBrickColor2;
-	//[HideInInspector]
 
 
 	private Transform _ghost;

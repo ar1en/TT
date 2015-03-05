@@ -12,27 +12,21 @@ public class block : MonoBehaviour
 	private int _yPosition;
 	private int _xPosition;
 	private int _size; 									//размер матрицы кирпичика
-	private int _count;
 	private Transform _brick;
 	private Transform _ghost;
 	[HideInInspector]
 	public float _fallSpeed;
 	private tetrisMain _main;
 	private float _halfSizeFloat;
-	private GameObject _border;
+	//private GameObject _border;
 	private borderShaderManager _shaderManager;
-	private int firstFrame = 0;
+	private byte firstFrame = 0;
 	//private int firstFrameCounter;
 
 	void Start () 
 	{
 		_shaderManager = GameObject.FindGameObjectWithTag("border").GetComponent<borderShaderManager>();
-		//_shaderManager.newBlock = true;
-
-
-		_border = GameObject.FindGameObjectWithTag("border");
-		_count = 1;
-		_border.renderer.material.SetFloat ("_Counter", _count);
+		//_border = GameObject.FindGameObjectWithTag("border");
 		_main = GameObject.Find ("main").GetComponent<tetrisMain>();
 		_main.currentBrickColor2 = _main.currentBrickColor;
 		_main.currentBrickColor = color;
@@ -94,7 +88,8 @@ public class block : MonoBehaviour
 			for (float i = _yPosition + 1; i > _yPosition; i -= Time.deltaTime * _fallSpeed)
 			{
 				transform.position = new Vector3 (transform.position.x, i - _halfSizeFloat, 0);
-				_border.renderer.material.SetFloat("_Coord", i);
+				_shaderManager.coord = i;
+				//_border.renderer.material.SetFloat("_Coord", i);
 				yield return 0;
 			}
 		}
