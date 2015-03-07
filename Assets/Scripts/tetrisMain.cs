@@ -96,6 +96,10 @@ public class tetrisMain : MonoBehaviour
 	
 	public void setBrick(bool[,] brickMatrix, int xPosition, int yPosition, Color color, float mainColorCorrection)
 	{
+		if (currentFallSpeed > 30)
+			colorAnimationChangeSpeed = 30;
+		else
+			colorAnimationChangeSpeed = 120;
 		blockDown = true;
 		StartCoroutine (counter (yPosition));
 		//Debug.Log (yPosition);
@@ -206,7 +210,8 @@ public class tetrisMain : MonoBehaviour
 		else
 			Time.timeScale = 1;
 
-		colorAnimationChangeSpeed = 151 - 4 * currentFallSpeed;
+		//colorAnimationChangeSpeed = 151 - 4 * currentFallSpeed;
+
 		Debug.Log (currentFallSpeed);
 
 		for (int i= _fieldWidth/maxBlockSize + 1; i<_fieldWidth/maxBlockSize + fieldWidth + 1; i++)
