@@ -79,18 +79,18 @@
 			
 			if (coordUV.x > 0.2 && coordUV.x < 0.5)
 			{				
-				o.Emission = lerp(_CurrentColor.rgb * _Power3, _NextColor.rgb * _Power3, _ColorChangeCounter * 0.0083);
+				o.Emission = lerp(_CurrentColor.rgb * _Power3, _NextColor.rgb * _Power3, _ColorChangeCounter);
 			}
 			
 			if (coordUV.x > 0.5 && coordUV.x < 0.8)
 			{				
 				o.Emission = lerp(_CurrentColor.rgb * pow(alpTex1, _Step) * _Power3, 
-				_NextColor.rgb * pow(alpTex1, _Step) * _Power3, _ColorChangeCounter * 0.0083);
+				_NextColor.rgb * pow(alpTex1, _Step) * _Power3, _ColorChangeCounter);
 			}
 			
 			if (coordUV.x > 0.8)
 			{				
-				o.Emission =  lerp(_CurrentColor.rgb * (alpTex1+alpTex2) * _Power1, _NextColor.rgb * (alpTex1+alpTex2) * _Power1, _ColorChangeCounter * 0.0083);
+				o.Emission =  lerp(_CurrentColor.rgb * (alpTex1+alpTex2) * _Power1, _NextColor.rgb * (alpTex1+alpTex2) * _Power1, _ColorChangeCounter);
 			}
 			
 			_coordTh = _Coord;
