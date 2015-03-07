@@ -19,20 +19,16 @@ public class borderShaderManager : MonoBehaviour
 	void Update () 
 	{
 		//изменение координаты
-		Debug.Log ("__COORD___" + coord);
 		if (_main.blockDown)
 		{
-			Debug.Log ("DOWN");
 			_downCounter = coord;
 		}
 
 		if (_downCounter > 0) 
 		{
-			Debug.Log ("downcounterstart");
-			//Debug.Log (_downCounter);
 			_downCounter--;
 		}
-		else
+		//else
 			//Debug.Log ("Log");
 
 		gameObject.renderer.material.SetFloat ("_Coord", coord);

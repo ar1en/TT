@@ -21,6 +21,7 @@ public class block : MonoBehaviour
 	//private GameObject _border;
 	private borderShaderManager _shaderManager;
 	private byte firstFrame = 0;
+	
 	//private int firstFrameCounter;
 
 	void Start () 
@@ -30,7 +31,6 @@ public class block : MonoBehaviour
 		_main = GameObject.Find ("main").GetComponent<tetrisMain>();
 		_main.currentBrickColor2 = _main.currentBrickColor;
 		_main.currentBrickColor = color;
-
 
 
 		_fallSpeed = _main.fallSpeed;
@@ -60,6 +60,8 @@ public class block : MonoBehaviour
 
 	void Update ()
 	{
+		_main.currentFallSpeed = _fallSpeed;
+
 		if (firstFrame == 0)								//задержка в 1 кадр для  смены цвета
 			firstFrame++;
 		if(firstFrame == 1)

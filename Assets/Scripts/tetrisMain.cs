@@ -44,6 +44,8 @@ public class tetrisMain : MonoBehaviour
 	[HideInInspector]
 	public Color currentBrickColor2;
 
+	public float currentFallSpeed;
+
 
 	private Transform _ghost;
 	private Transform[] _cubeReferences;
@@ -204,7 +206,8 @@ public class tetrisMain : MonoBehaviour
 		else
 			Time.timeScale = 1;
 
-		colorAnimationChangeSpeed = 151 - 4 * fallSpeed;
+		colorAnimationChangeSpeed = 151 - 4 * currentFallSpeed;
+		Debug.Log (currentFallSpeed);
 
 		for (int i= _fieldWidth/maxBlockSize + 1; i<_fieldWidth/maxBlockSize + fieldWidth + 1; i++)
 		{
