@@ -7,7 +7,7 @@
 		_Color3 ("Diffuse", Color) = (1,1,1,1)
 		_Coord ("Coord", float) = 1
 		_coordSc ("coordSc", float) = 1
-		_ColorChangeCounter ("Counter", int) = 1
+		_ColorChangeCounter ("Counter", float) = 1
 		_Power1 ("FtClPw", float) = 1
 		_Power2 ("ScClPw", float) = 1
 		_Power3 ("ZonePW", float) = 1
@@ -28,8 +28,7 @@
 		int flag;
 		float3 _ColorLerp1, _ColorLerp2;
 		float4 _CurrentColor, _NextColor, _Color3;
-		float coefsetki, alpTex1, alpTex2,_Power1, _Power2, _Power3, _Step, _Coord, _coordSc, _coordTh;
-		int _ColorChangeCounter;
+		float coefsetki, alpTex1, alpTex2,_Power1, _Power2, _Power3, _Step, _Coord, _coordSc, _coordTh, _ColorChangeCounter;
 		  
 		struct Input 
 		{

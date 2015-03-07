@@ -23,7 +23,7 @@ public class tetrisMain : MonoBehaviour
 
 	public float previewX = 20;
 	public float previewY = 16;
-	public int colorAnimationChangeSpeed = 120;
+	public float colorAnimationChangeSpeed = 120;
 	public bool blockDown = false;
 	[HideInInspector]
 	public float score;
@@ -204,7 +204,7 @@ public class tetrisMain : MonoBehaviour
 		else
 			Time.timeScale = 1;
 
-		colorAnimationChangeSpeed = Mathf.RoundToInt(121 - 4 * fallSpeed);
+		colorAnimationChangeSpeed = 121 - 4 * fallSpeed;
 
 		for (int i= _fieldWidth/maxBlockSize + 1; i<_fieldWidth/maxBlockSize + fieldWidth + 1; i++)
 		{

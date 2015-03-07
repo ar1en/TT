@@ -6,7 +6,7 @@ public class borderShaderManager : MonoBehaviour
 
 	public bool colorIsSend = true;
 	public float coord = 0;
-	public int colorChangeCounter;
+	public float colorChangeCounter;
 
 	private float _downCounter;
 	private tetrisMain _main;
@@ -41,7 +41,7 @@ public class borderShaderManager : MonoBehaviour
 		if ((colorChangeCounter < _main.colorAnimationChangeSpeed) && !_main.blockDown)
 		{
 			colorChangeCounter++;
-			gameObject.renderer.material.SetInt ("_ColorChangeCounter", colorChangeCounter * (1/_main.colorAnimationChangeSpeed));
+			gameObject.renderer.material.SetFloat ("_ColorChangeCounter", colorChangeCounter * (1/_main.colorAnimationChangeSpeed));
 		}
 		else if ((colorChangeCounter >= _main.colorAnimationChangeSpeed) && !_main.blockDown)
 		{
