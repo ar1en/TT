@@ -11,7 +11,6 @@
 		_Power1 ("FtClPw", float) = 1
 		_Power2 ("ScClPw", float) = 1
 		_Power3 ("ZonePW", float) = 1
-		_Step ("Step", float) = 1
 		_MainTex ("Base (RGB)", 2D) = "white" 
 		_SecTex ("Base (RGB)", 2D) = "white" {}	
 	}
@@ -25,7 +24,6 @@
 		
 
 		sampler2D _MainTex, _SecTex;
-		int flag;
 		float3 _ColorLerp1, _ColorLerp2;
 		float4 _CurrentColor, _NextColor, _Color3;
 		float coefsetki, alpTex1, alpTex2,_Power1, _Power2, _Power3, _Step, _Coord, _coordSc, _coordTh, _ColorChangeCounter;
@@ -45,27 +43,7 @@
 			float2 coordUV2 = IN.uv_SecTex;
 			float xcoord2 = coordUV2.x;
 			float ycoord2 = coordUV2.y;
-			
-			coefsetki = 0.045;
-	
-			if (_coordTh == floor(_Coord)-1)
-			{
-				flag = 1;
-			}
-			else 
-			{
-				flag = 0;
-			}
-			
-			if (flag == 0)
-			{
-				ycoord2 -= (coefsetki*_Coord);
-			}
-			else 
-			{
-				ycoord2 -= (coefsetki*_coordSc);
-			}																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																								
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																												
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																									
 			float4 c = tex2D (_MainTex, fixed2(xcoord,ycoord));
 			float4 d = tex2D (_SecTex, fixed2(xcoord2,ycoord2));
 			
@@ -90,10 +68,8 @@
 			
 			if (coordUV.x > 0.8)
 			{				
-				o.Emission =  lerp(_CurrentColor.rgb * (alpTex1+alpTex2) * _Power1, _NextColor.rgb * (alpTex1+alpTex2) * _Power1, _ColorChangeCounter);
+				o.Emission =  lerp(_CurrentColor.rgb * alpTex1 * _Power1, _NextColor.rgb * alpTex1 * _Power1, _ColorChangeCounter);
 			}
-			
-			_coordTh = _Coord;
 			
 		}
 		ENDCG
