@@ -41,6 +41,7 @@ public class tetrisMain : MonoBehaviour
 	public Color nextBrickColor2;
 	[HideInInspector]
 	public Color currentBrickColor;
+	[HideInInspector]
 	public Color currentBrickColor2;
 
 
@@ -202,6 +203,8 @@ public class tetrisMain : MonoBehaviour
 			Time.timeScale = 0;
 		else
 			Time.timeScale = 1;
+
+		colorAnimationChangeSpeed = Mathf.RoundToInt(121 - 4 * fallSpeed);
 
 		for (int i= _fieldWidth/maxBlockSize + 1; i<_fieldWidth/maxBlockSize + fieldWidth + 1; i++)
 		{

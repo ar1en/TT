@@ -41,7 +41,7 @@ public class borderShaderManager : MonoBehaviour
 		if ((colorChangeCounter < _main.colorAnimationChangeSpeed) && !_main.blockDown)
 		{
 			colorChangeCounter++;
-			gameObject.renderer.material.SetInt ("_ColorChangeCounter", colorChangeCounter);
+			gameObject.renderer.material.SetInt ("_ColorChangeCounter", colorChangeCounter * (1/_main.colorAnimationChangeSpeed));
 		}
 		else if ((colorChangeCounter >= _main.colorAnimationChangeSpeed) && !_main.blockDown)
 		{
