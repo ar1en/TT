@@ -97,7 +97,7 @@ public class tetrisMain : MonoBehaviour
 		else
 			colorAnimationChangeSpeed = 120;
 		blockDown = true;
-		StartCoroutine (counter (yPosition));
+		//StartCoroutine (counter (yPosition));
 		int size = brickMatrix.GetLength (0);
 		for (var y = 0; y < size; y++)
 			for (var x = 0; x < size; x++)
@@ -179,15 +179,15 @@ public class tetrisMain : MonoBehaviour
 		yield return 0;
 	}
 
-	IEnumerator counter(int _y)
+	/*IEnumerator counter(int _y)
 	{
 		for (int i = _y; i > 0; i--) 
 		{
 			yield return new WaitForSeconds(0.02f);
-			_border.renderer.material.SetFloat ("_coordSc", i);
+			//_border.renderer.material.SetFloat ("_coordSc", i);
 		}
-		_border.renderer.material.SetFloat ("_coordSc", 24);
-	}
+		//_border.renderer.material.SetFloat ("_coordSc", 24);
+	}*/
 
 	void addScore(int scoreLvl)
 	{

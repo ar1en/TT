@@ -77,6 +77,7 @@ public class block : MonoBehaviour
 			if (functions.checkBrick(_brickMatrix, _xPosition, _yPosition, _main._field))
 			{
 				_main.blockDown = true;
+				_shaderManager.coord2 = _yPosition;
 				_main.setBrick(_brickMatrix, _xPosition, _yPosition + 1, color, mainColorCorrection);
 				Destroy(gameObject);
 				if (_main.useGhost)
