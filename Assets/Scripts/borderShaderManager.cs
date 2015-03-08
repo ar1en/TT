@@ -23,8 +23,8 @@ public class borderShaderManager : MonoBehaviour
 		if (_main.blockDown)
 		{
 			_downCounter = coord2;
-			Debug.Log (_downCounter);
 		}
+
 		if (_downCounter > 0)
 		{
 			_downCounter -= 0.25f;
