@@ -212,7 +212,7 @@ public class tetrisMain : MonoBehaviour
 
 		//colorAnimationChangeSpeed = 151 - 4 * currentFallSpeed;
 
-		Debug.Log (currentFallSpeed);
+		//Debug.Log (currentFallSpeed);
 
 		for (int i= _fieldWidth/maxBlockSize + 1; i<_fieldWidth/maxBlockSize + fieldWidth + 1; i++)
 		{

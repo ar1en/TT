@@ -3,7 +3,6 @@ using System.Collections;
 
 public class borderShaderManager : MonoBehaviour 
 {
-
 	public bool colorIsSend = true;
 	public float coord = 0;
 	public float colorChangeCounter;
@@ -57,6 +56,5 @@ public class borderShaderManager : MonoBehaviour
 			gameObject.renderer.material.SetInt("_ColorChangeCounter", 0);
 			_main.blockDown = false;
 		}
-
 	}
 }

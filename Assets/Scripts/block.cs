@@ -6,7 +6,6 @@ public class block : MonoBehaviour
 	public string[] brick;
 	public Color color;
 	public float mainColorCorrection = 0;
-
 	[HideInInspector]
 	public bool[,] _brickMatrix;						//матрица для кирпичика
 	private int _yPosition;
@@ -27,11 +26,10 @@ public class block : MonoBehaviour
 	void Start () 
 	{
 		_shaderManager = GameObject.FindGameObjectWithTag("border").GetComponent<borderShaderManager>();
-		//_border = GameObject.FindGameObjectWithTag("border");
 		_main = GameObject.Find ("main").GetComponent<tetrisMain>();
+
 		_main.currentBrickColor2 = _main.currentBrickColor;
 		_main.currentBrickColor = color;
-
 
 		_fallSpeed = _main.fallSpeed;
 		_size = brick.Length;						//число элементов текстового массива
@@ -46,7 +44,7 @@ public class block : MonoBehaviour
 					_brick.renderer.material.SetColor("_Color1", color);
 					_brick.renderer.material.SetFloat("_Power1", _brick.renderer.material.GetFloat("_Power1") * mainColorCorrection);
 					_brick.renderer.material.SetFloat("_Power2", _brick.renderer.material.GetFloat("_Power2") * mainColorCorrection);
-					//_brick.renderer.material.mainTexture = texture;
+
 					_brick.parent = transform;		//делаем созданные кубики дочерними
 					transform.tag = "block";
 				}
@@ -61,7 +59,6 @@ public class block : MonoBehaviour
 	void Update ()
 	{
 		_main.currentFallSpeed = _fallSpeed;
-
 		if (firstFrame == 0)								//задержка в 1 кадр для  смены цвета
 			firstFrame++;
 		if(firstFrame == 1)
