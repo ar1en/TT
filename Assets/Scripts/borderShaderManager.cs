@@ -8,6 +8,12 @@ public class borderShaderManager : MonoBehaviour
 	
 	public float coord = 0;
 	public float coord2 = 0;
+	
+	public float brightnessCentral;
+	public float brightnessLampInside;
+	public float brightnessLampOutside;
+	public float brightnessLampGradient;
+	public float brightnessReflectorGradient;
 
 	private float _downCounter;
 	private tetrisMain _main;
@@ -15,6 +21,12 @@ public class borderShaderManager : MonoBehaviour
 	void Start () 
 	{
 		_main = GameObject.Find ("main").GetComponent<tetrisMain>();
+		
+		gameObject.renderer.material.SetFloat ("_Power1", brightnessCentral);
+		gameObject.renderer.material.SetFloat ("_Power2", brightnessLampInside);
+		gameObject.renderer.material.SetFloat ("_Power3", brightnessLampOutside);
+		gameObject.renderer.material.SetFloat ("_Step", brightnessLampGradient);
+		gameObject.renderer.material.SetFloat ("_Step2", brightnessReflectorGradient);
 	}
 
 	void Update () 

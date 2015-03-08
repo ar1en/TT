@@ -6,6 +6,12 @@ public class block : MonoBehaviour
 	public string[] brick;
 	public Color color;
 	public float mainColorCorrection = 0;
+	
+	public float brightnessCentral = 1;
+	public float brightnessLampInside = 1;
+	public float brightnessLampOutside = 1;
+	public float brightnessLampGradient = 1;
+	public float brightnessReflectorGradient = 1;
 
 	[HideInInspector]
 	public bool[,] _brickMatrix;							//матрица для кирпичика
@@ -26,7 +32,13 @@ public class block : MonoBehaviour
 	{
 		_shaderManager = GameObject.FindGameObjectWithTag("border").GetComponent<borderShaderManager>();
 		_main = GameObject.Find ("main").GetComponent<tetrisMain>();
-
+		
+		_shaderManager.brightnessCentral = brightnessCentral;
+		_shaderManager.brightnessLampGradient = brightnessLampGradient;
+		_shaderManager.brightnessLampInside = brightnessLampInside;
+		_shaderManager.brightnessLampOutside = brightnessLampOutside;
+		_shaderManager.brightnessReflectorGradient = brightnessReflectorGradient;
+		
 		_main.currentBrickColor2 = _main.currentBrickColor;
 		_main.currentBrickColor = color;
 
