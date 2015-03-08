@@ -20,11 +20,11 @@ public class tetrisMain : MonoBehaviour
 	public int sensivity = 70;								//
 	public float fallingCubeLight = 0.56f;					//
 	public float cubeLight = 1.0f;							//
-
 	public float previewX = 20;
 	public float previewY = 16;
 	public float colorAnimationChangeSpeed = 120;
 	public bool blockDown = false;
+	
 	[HideInInspector]
 	public float score;
 	[HideInInspector]
@@ -43,18 +43,15 @@ public class tetrisMain : MonoBehaviour
 	public Color currentBrickColor;
 	[HideInInspector]
 	public Color currentBrickColor2;
-
+	[HideInInspector]
 	public float currentFallSpeed;
-
-
-	//private Transform _ghost;
-	private Transform[] _cubeReferences;
+	
 	private int[] _cubePositions;
 	private int _firstBrick;
 	private int _secondBrick;
 	private int _scoreLvl;
-	//private int _count;
 	private GameObject _border;
+	private Transform[] _cubeReferences;
 
 	void Start () 
 	{
@@ -91,7 +88,6 @@ public class tetrisMain : MonoBehaviour
 		}
 		Instantiate (briks [_firstBrick]);
 		functions.printNextBrick (briks [_secondBrick], cube);
-		//blockDown = false;
 	}
 	
 	public void setBrick(bool[,] brickMatrix, int xPosition, int yPosition, Color color, float mainColorCorrection)

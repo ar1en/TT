@@ -6,18 +6,21 @@ public class block : MonoBehaviour
 	public string[] brick;
 	public Color color;
 	public float mainColorCorrection = 0;
+
 	[HideInInspector]
-	public bool[,] _brickMatrix;						//матрица для кирпичика
+	public bool[,] _brickMatrix;							//матрица для кирпичика
+	[HideInInspector]
+	public float _fallSpeed;
+
 	private int _yPosition;
 	private int _xPosition;
 	private int _size; 									//размер матрицы кирпичика
-	private Transform _brick;
-	[HideInInspector]
-	public float _fallSpeed;
-	private tetrisMain _main;
 	private float _halfSizeFloat;
-	private borderShaderManager _shaderManager;
 	private byte firstFrame = 0;
+	private Transform _brick;
+	private tetrisMain _main;
+	private borderShaderManager _shaderManager;
+
 
 	void Start () 
 	{
@@ -40,7 +43,6 @@ public class block : MonoBehaviour
 					_brick.renderer.material.SetColor("_Color1", color);
 					_brick.renderer.material.SetFloat("_Power1", _brick.renderer.material.GetFloat("_Power1") * mainColorCorrection);
 					_brick.renderer.material.SetFloat("_Power2", _brick.renderer.material.GetFloat("_Power2") * mainColorCorrection);
-
 					_brick.parent = transform;		//делаем созданные кубики дочерними
 					transform.tag = "block";
 				}
@@ -55,6 +57,7 @@ public class block : MonoBehaviour
 	void Update ()
 	{
 		_main.currentFallSpeed = _fallSpeed;
+		
 		if (firstFrame == 0)								//задержка в 1 кадр для  смены цвета
 			firstFrame++;
 		if(firstFrame == 1)
@@ -84,7 +87,6 @@ public class block : MonoBehaviour
 			{
 				transform.position = new Vector3 (transform.position.x, i - _halfSizeFloat, 0);
 				_shaderManager.coord = i;
-				//_border.renderer.material.SetFloat("_Coord", i);
 				yield return 0;
 			}
 		}
