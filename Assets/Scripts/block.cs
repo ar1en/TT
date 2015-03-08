@@ -12,16 +12,12 @@ public class block : MonoBehaviour
 	private int _xPosition;
 	private int _size; 									//размер матрицы кирпичика
 	private Transform _brick;
-	private Transform _ghost;
 	[HideInInspector]
 	public float _fallSpeed;
 	private tetrisMain _main;
 	private float _halfSizeFloat;
-	//private GameObject _border;
 	private borderShaderManager _shaderManager;
 	private byte firstFrame = 0;
-	
-	//private int firstFrameCounter;
 
 	void Start () 
 	{

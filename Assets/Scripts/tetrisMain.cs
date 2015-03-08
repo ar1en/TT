@@ -47,13 +47,13 @@ public class tetrisMain : MonoBehaviour
 	public float currentFallSpeed;
 
 
-	private Transform _ghost;
+	//private Transform _ghost;
 	private Transform[] _cubeReferences;
 	private int[] _cubePositions;
 	private int _firstBrick;
 	private int _secondBrick;
 	private int _scoreLvl;
-	private int _count;
+	//private int _count;
 	private GameObject _border;
 
 	void Start () 
@@ -102,18 +102,16 @@ public class tetrisMain : MonoBehaviour
 			colorAnimationChangeSpeed = 120;
 		blockDown = true;
 		StartCoroutine (counter (yPosition));
-		//Debug.Log (yPosition);
 		int size = brickMatrix.GetLength (0);
 		for (var y = 0; y < size; y++)
 			for (var x = 0; x < size; x++)
 				if (brickMatrix[x, y])
 				{
-					Transform cubeOnField = Instantiate(cube, new Vector3(xPosition + x, yPosition - y, 0), Quaternion.identity) as Transform;
+					var cubeOnField = Instantiate(cube, new Vector3(xPosition + x, yPosition - y, 0), Quaternion.identity) as Transform;
 					cubeOnField.renderer.material.SetColor("_Color1", color);
 					cubeOnField.renderer.material.SetFloat("_Power1", cubeOnField.renderer.material.GetFloat("_Power1") * mainColorCorrection);
 					cubeOnField.renderer.material.SetFloat("_Power2", cubeOnField.renderer.material.GetFloat("_Power2") * mainColorCorrection);
 					cubeOnField.renderer.material.SetFloat("_Power5", cubeOnField.renderer.material.GetFloat("_Power5") + 0.2f);
-					//cubeOnField.renderer.material.mainTexture = texture;
 					_field[(int) xPosition + x, (int) yPosition - y] = true;		
 				}
 		checkRows (yPosition - size, size);
@@ -190,11 +188,9 @@ public class tetrisMain : MonoBehaviour
 		for (int i = _y; i > 0; i--) 
 		{
 			yield return new WaitForSeconds(0.02f);
-			//Debug.Log (i);
 			_border.renderer.material.SetFloat ("_coordSc", i);
 		}
 		_border.renderer.material.SetFloat ("_coordSc", 24);
-		//yield return 0;
 	}
 
 	void addScore(int scoreLvl)
@@ -209,10 +205,6 @@ public class tetrisMain : MonoBehaviour
 			Time.timeScale = 0;
 		else
 			Time.timeScale = 1;
-
-		//colorAnimationChangeSpeed = 151 - 4 * currentFallSpeed;
-
-		//Debug.Log (currentFallSpeed);
 
 		for (int i= _fieldWidth/maxBlockSize + 1; i<_fieldWidth/maxBlockSize + fieldWidth + 1; i++)
 		{

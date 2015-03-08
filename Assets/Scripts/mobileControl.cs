@@ -3,7 +3,6 @@ using System.Collections;
 
 public class mobileControl : MonoBehaviour 
 {
-
 	private block _block;
 	private tetrisMain _main;
 	private Vector2 startPos;

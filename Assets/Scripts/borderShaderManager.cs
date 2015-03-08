@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+//using System.Collections;
 
 public class borderShaderManager : MonoBehaviour 
 {
@@ -45,7 +45,6 @@ public class borderShaderManager : MonoBehaviour
 				gameObject.renderer.material.SetColor("_CurrentColor", _main.currentBrickColor);
 				gameObject.renderer.material.SetColor("_NextColor", _main.nextBrickColor);
 				gameObject.renderer.material.SetInt("_ColorChangeCounter", 0);
-				
 				colorIsSend = true;
 			}
 		}
