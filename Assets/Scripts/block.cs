@@ -7,11 +7,11 @@ public class block : MonoBehaviour
 	public Color color;
 	public float mainColorCorrection = 0;
 	
-	public float brightnessCentral = 1;
-	public float brightnessLampInside = 1;
-	public float brightnessLampOutside = 1;
-	public float brightnessLampGradient = 1;
-	public float brightnessReflectorGradient = 1;
+	public float brightnessCentral = 0;					//1
+	public float brightnessLampInside = 0;				//2
+	public float brightnessLampOutside = 0;			//3
+	public float brightnessLampGradient = 0;			//4
+	public float brightnessReflectorGradient = 0;		//5
 
 	[HideInInspector]
 	public bool[,] _brickMatrix;							//матрица для кирпичика
@@ -32,12 +32,17 @@ public class block : MonoBehaviour
 	{
 		_shaderManager = GameObject.FindGameObjectWithTag("border").GetComponent<borderShaderManager>();
 		_main = GameObject.Find ("main").GetComponent<tetrisMain>();
-		
-		_shaderManager.brightnessCentral = brightnessCentral;
-		_shaderManager.brightnessLampGradient = brightnessLampGradient;
-		_shaderManager.brightnessLampInside = brightnessLampInside;
-		_shaderManager.brightnessLampOutside = brightnessLampOutside;
-		_shaderManager.brightnessReflectorGradient = brightnessReflectorGradient;
+
+		if (brightnessCentral != 0)
+			_shaderManager.setCustomBrightness("1", brightnessCentral);
+		if (brightnessLampInside != 0)
+			_shaderManager.setCustomBrightness("2", brightnessLampInside);
+		if (brightnessLampOutside != 0)
+			_shaderManager.setCustomBrightness("3", brightnessLampOutside);
+		if (brightnessLampGradient != 0)
+			_shaderManager.setCustomBrightness("4", brightnessLampGradient);
+		if (brightnessReflectorGradient != 0)
+			_shaderManager.setCustomBrightness("5",brightnessReflectorGradient);
 		
 		_main.currentBrickColor2 = _main.currentBrickColor;
 		_main.currentBrickColor = color;

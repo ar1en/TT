@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-//using System.Collections;
 
 public class borderShaderManager : MonoBehaviour 
 {
@@ -8,35 +7,43 @@ public class borderShaderManager : MonoBehaviour
 	
 	public float coord = 0;
 	public float coord2 = 0;
-	
-	public float brightnessCentral;
-	public float brightnessLampInside;
-	public float brightnessLampOutside;
-	public float brightnessLampGradient;
-	public float brightnessReflectorGradient;
 
 	private float _downCounter;
 	private tetrisMain _main;
+
+	public void setCustomBrightness (string parametr, float value)
+	{
+		switch (parametr)
+		{
+			case "1":
+				gameObject.renderer.material.SetFloat ("_Power1", value);
+				break;
+			case "2":
+				gameObject.renderer.material.SetFloat ("_Power2", value);
+				break;
+			case "3":
+				gameObject.renderer.material.SetFloat ("_Power3", value);
+				break;
+			case "4":
+				gameObject.renderer.material.SetFloat ("_Step", value);
+				break;
+			case "5":
+				gameObject.renderer.material.SetFloat ("_Step2", value);
+				break;
+		}
+	}
 
 	void Start () 
 	{
 		_main = GameObject.Find ("main").GetComponent<tetrisMain>();
 	}
-
+	
 	void Update () 
 	{
 		//изменение координаты
 		if (_main.blockDown)
 		{
 			_downCounter = coord2;
-			//передача в шейдер рамки значений из префаба блока
-			gameObject.renderer.material.SetFloat ("_Power1", brightnessCentral);
-			gameObject.renderer.material.SetFloat ("_Power2", brightnessLampInside);
-			gameObject.renderer.material.SetFloat ("_Power3", brightnessLampOutside);
-			gameObject.renderer.material.SetFloat ("_Step", brightnessLampGradient);
-			gameObject.renderer.material.SetFloat ("_Step2", brightnessReflectorGradient);
-			//\передача в шейдер рамки значений из префаба блока
-						Debug.Log (1);
 		}
 
 		if (_downCounter > 0)

@@ -3,27 +3,44 @@ using System.Collections;
 
 public class tetrisMain : MonoBehaviour
 {
+	[Header("Основной куб")]
 	public Transform cube;
 	public Transform areaCube;
+	[Header("Настройки призрака")]
+	public bool useGhost = true;
 	public Transform ghostCube;
 	public bool useArea = true;
+	[Header("Настройки скорости игры")]
 	public float fallSpeed = 2.0f;							//скорость падения кирпичика
 	public float fallSpeedUltra = 50.0f;						//скорость во время ускорения при падении
 	public int maxBlockSize = 5;
 	public GameObject[] briks;
 	public GameObject ghost;
-	public bool useGhost = true;
+
 	public int fieldWidth = 10;
 	public int fieldHeight = 20;
+
+
+	[Header("Ограничитель FPS")]
+	[Tooltip("Только для ios, для остального выставить 0")]
+	public int frameRate = 60;								
+	
+	[Header("Настройки управления")]
 	public bool useMobileControl = false;
-	public int frameRate = 60;								//FPS
-	public int sensivity = 70;								//
-	public float fallingCubeLight = 0.56f;					//
-	public float cubeLight = 1.0f;							//
+	public int sensivity = 70;
+	public float fallingCubeLight = 0.56f;					
+	public float cubeLight = 1.0f;						
 	public float previewX = 20;
 	public float previewY = 16;
+
+	
+	[Header("Настройки шейдера рамки")]
+	public float brightnessCentral;
+	public float brightnessLampInside;
+	public float brightnessLampOutside;
+	public float brightnessLampGradient;
+	public float brightnessReflectorGradient;
 	public float colorAnimationChangeSpeed = 120;
-	public bool blockDown = false;
 	
 	[HideInInspector]
 	public float score;
@@ -45,7 +62,9 @@ public class tetrisMain : MonoBehaviour
 	public Color currentBrickColor2;
 	[HideInInspector]
 	public float currentFallSpeed;
-	
+	[HideInInspector]
+	public bool blockDown = false;
+
 	private int[] _cubePositions;
 	private int _firstBrick;
 	private int _secondBrick;
@@ -55,7 +74,14 @@ public class tetrisMain : MonoBehaviour
 
 	void Start () 
 	{
+		
 		_border = GameObject.FindGameObjectWithTag("border");
+		_border.renderer.material.SetFloat ("_Power1", brightnessCentral);
+		_border.renderer.material.SetFloat ("_Power2", brightnessLampInside);
+		_border.renderer.material.SetFloat ("_Power3", brightnessLampOutside);
+		_border.renderer.material.SetFloat ("_Step", brightnessLampGradient);
+		_border.renderer.material.SetFloat ("_Step2", brightnessReflectorGradient);
+
 		if (useMobileControl)
 			gameObject.AddComponent<mobileControl>();
 		else
