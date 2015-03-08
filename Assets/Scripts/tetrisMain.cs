@@ -3,36 +3,35 @@ using System.Collections;
 
 public class tetrisMain : MonoBehaviour
 {
-	[Header("Основной куб")]
+	[Header("Настройки Блоков")]
 	public Transform cube;
-	public Transform areaCube;
-	[Header("Настройки призрака")]
-	public bool useGhost = true;
-	public Transform ghostCube;
-	public bool useArea = true;
-	[Header("Настройки скорости игры")]
-	public float fallSpeed = 2.0f;							//скорость падения кирпичика
-	public float fallSpeedUltra = 50.0f;						//скорость во время ускорения при падении
 	public int maxBlockSize = 5;
 	public GameObject[] briks;
-	public GameObject ghost;
 
+	[Header("Настройки размеров поля")]
 	public int fieldWidth = 10;
 	public int fieldHeight = 20;
 
-
-	[Header("Ограничитель FPS")]
-	[Tooltip("Только для ios, для остального выставить 0")]
-	public int frameRate = 60;								
+	[Header("Настройки призрака")]
+	public bool useGhost = true;
+	public Transform ghostCube;
+	public GameObject ghost;
+	
+	[Header("Настройки скорости игры")]
+	public float fallSpeed = 2.0f;							//скорость падения кирпичика
+	public float fallSpeedUltra = 50.0f;						//скорость во время ускорения при падении
 	
 	[Header("Настройки управления")]
 	public bool useMobileControl = false;
 	public int sensivity = 70;
+
+	[Header("Настройки шейдера куба")]
 	public float fallingCubeLight = 0.56f;					
-	public float cubeLight = 1.0f;						
+	public float cubeLight = 1.0f;
+
+	[Header("Расположение превью")]						
 	public float previewX = 20;
 	public float previewY = 16;
-
 	
 	[Header("Настройки шейдера рамки")]
 	public float brightnessCentral;
@@ -41,7 +40,15 @@ public class tetrisMain : MonoBehaviour
 	public float brightnessLampGradient;
 	public float brightnessReflectorGradient;
 	public float colorAnimationChangeSpeed = 120;
-	
+
+	[Header("Ограничитель FPS")]
+	[Tooltip("Только для ios, для остального выставить 0")]
+	public int frameRate = 60;		
+
+	[Header("Тестовая рамка из кубиков")]
+	public bool useArea = true;
+	public Transform areaCube;	
+
 	[HideInInspector]
 	public float score;
 	[HideInInspector]
