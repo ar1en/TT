@@ -21,12 +21,6 @@ public class borderShaderManager : MonoBehaviour
 	void Start () 
 	{
 		_main = GameObject.Find ("main").GetComponent<tetrisMain>();
-		
-		gameObject.renderer.material.SetFloat ("_Power1", brightnessCentral);
-		gameObject.renderer.material.SetFloat ("_Power2", brightnessLampInside);
-		gameObject.renderer.material.SetFloat ("_Power3", brightnessLampOutside);
-		gameObject.renderer.material.SetFloat ("_Step", brightnessLampGradient);
-		gameObject.renderer.material.SetFloat ("_Step2", brightnessReflectorGradient);
 	}
 
 	void Update () 
@@ -35,6 +29,14 @@ public class borderShaderManager : MonoBehaviour
 		if (_main.blockDown)
 		{
 			_downCounter = coord2;
+			//передача в шейдер рамки значений из префаба блока
+			gameObject.renderer.material.SetFloat ("_Power1", brightnessCentral);
+			gameObject.renderer.material.SetFloat ("_Power2", brightnessLampInside);
+			gameObject.renderer.material.SetFloat ("_Power3", brightnessLampOutside);
+			gameObject.renderer.material.SetFloat ("_Step", brightnessLampGradient);
+			gameObject.renderer.material.SetFloat ("_Step2", brightnessReflectorGradient);
+			//\передача в шейдер рамки значений из префаба блока
+						Debug.Log (1);
 		}
 
 		if (_downCounter > 0)
