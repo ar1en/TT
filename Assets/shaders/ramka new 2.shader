@@ -70,7 +70,7 @@
 			
 			if (coordUV.x > 0.8)
 			{				
-				o.Emission =  lerp(_CurrentColor.rgb * (alpTex1+alpTex2) * _Power1, _NextColor.rgb * (alpTex1+alpTex2) * _Power1, _ColorChangeCounter);
+				o.Emission =  lerp(_CurrentColor.rgb * pow(alpTex1+alpTex2,2) * _Power1, _NextColor.rgb * pow(alpTex1+alpTex2,2) * _Power1, _ColorChangeCounter);
 			}
 			
 		}
