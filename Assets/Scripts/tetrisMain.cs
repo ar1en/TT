@@ -73,6 +73,7 @@ public class tetrisMain : MonoBehaviour
 	public bool blockDown = false;
 
 	private int[] _cubePositions;
+	private int[] _rowsForDeleting;
 	private int _firstBrick;
 	private int _secondBrick;
 	private int _scoreLvl;
@@ -130,7 +131,6 @@ public class tetrisMain : MonoBehaviour
 		else
 			colorAnimationChangeSpeed = 120;
 		blockDown = true;
-		//StartCoroutine (counter (yPosition));
 		int size = brickMatrix.GetLength (0);
 		for (var y = 0; y < size; y++)
 			for (var x = 0; x < size; x++)
@@ -141,13 +141,14 @@ public class tetrisMain : MonoBehaviour
 					cubeOnField.renderer.material.SetFloat("_Power1", cubeOnField.renderer.material.GetFloat("_Power1") * mainColorCorrection);
 					cubeOnField.renderer.material.SetFloat("_Power2", cubeOnField.renderer.material.GetFloat("_Power2") * mainColorCorrection);
 					cubeOnField.renderer.material.SetFloat("_Power5", cubeOnField.renderer.material.GetFloat("_Power5") + 0.2f);
+					cubeOnField.tag = "Cube";
 					_field[(int) xPosition + x, (int) yPosition - y] = true;		
 				}
-		checkRows (yPosition - size, size);
+		StartCoroutine (checkRows (yPosition - size, size));
 		spawnBrick (false);
 	}
-	
-	void checkRows(int yStart, int size)
+
+	IEnumerator checkRows(int yStart, int size)
 	{
 		if (yStart < 1)
 			yStart = 1;																	//исключам пол
@@ -159,7 +160,8 @@ public class tetrisMain : MonoBehaviour
 					cubesInRow++;
 			if (cubesInRow == fieldWidth)
 			{
-				deleteRows(y);
+				deleteRow(y);
+				yield return new WaitForSeconds(0.13f);
 				y--;
 				_scoreLvl++;
 			}
@@ -167,7 +169,7 @@ public class tetrisMain : MonoBehaviour
 		addScore (_scoreLvl);
 	}
 
-	void deleteRows(int yStart)
+	void deleteRow(int yStart)
 	{
 		//Сдвиг массива на 1 строчку вниз
 		for (int y = yStart; y < _fieldHeight -1 ; y++) 
@@ -198,29 +200,33 @@ public class tetrisMain : MonoBehaviour
 		}
 		StartCoroutine(fallEnd(_cubeReferences, _cubePositions, cubesToMove));
 	}
-
-	//метод оставлен только для возможной доработки анимации падения кубов после удаления строки, при ненадобности засунуть в deleteRows
-	IEnumerator fallEnd(Transform[] _cubeReferences, int[] _cubePositions, int cubesToMove)
+	
+	IEnumerator fallEnd(Transform[] cubeReferences, int[] cubePositions, int cubesToMove)
 	{
 		var t = 0.0f;
 		while (t <= 1.0f) 
 		{
-			t += Time.deltaTime * 10f;
+			t += Time.deltaTime * 8f;
 			for (var i = 0; i < cubesToMove; i++) 
-				_cubeReferences[i].position = new Vector3 (_cubeReferences[i].position.x, (Mathf.Lerp (_cubePositions[i], _cubePositions[i]-1f, t)), 0);
+				cubeReferences[i].position = new Vector3 (cubeReferences[i].position.x, (Mathf.Lerp (cubePositions[i], cubePositions[i]-1f, t)), 0);
+			yield return new WaitForSeconds(0.0001f);
 		}
+		/*for (var t = 0.5f; t <= 1.0f; t += Time.deltaTime)
+		{
+			//yield return new WaitForSeconds(0.005f);
+			//Debug.Log (cubesToMove);
+			//yield return new WaitForSeconds(0.01f);
+			for (var i = 0; i < cubesToMove; i++) 
+			{
+				//Debug.Log (cubeRF[i].position.y);
+				cubeReferences[i].position = new Vector3 (cubeReferences[i].position.x, (Mathf.Lerp (cubePositions[i], cubePositions[i] - 1f, t)), 0);
+				//cubeReferences[i].position = new Vector3 (cubeReferences[i].position.x, cubePositions[i] - t, 0);
+				//Debug.Log(cubePositions[i]);
+			}
+		}*/
+		//Debug.Log (t);
 		yield return 0;
 	}
-
-	/*IEnumerator counter(int _y)
-	{
-		for (int i = _y; i > 0; i--) 
-		{
-			yield return new WaitForSeconds(0.02f);
-			//_border.renderer.material.SetFloat ("_coordSc", i);
-		}
-		//_border.renderer.material.SetFloat ("_coordSc", 24);
-	}*/
 
 	void addScore(int scoreLvl)
 	{
