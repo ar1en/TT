@@ -4,7 +4,7 @@
 	{
 		_CurrentColor ("CurrentColor", Color) = (1,1,1,1)
 		_NextColor ("NextColor", Color) = (1,1,1,1)
-		_Color3 ("Diffuse", Color) = (1,1,1,1)
+		_DiffColor ("Diffuse", Color) = (1,1,1,1)
 		_Coord ("Coord", float) = 1
 		_ColorChangeCounter ("Counter", float) = 1
 		_Power1 ("FtClPw", float) = 1
@@ -26,9 +26,9 @@
 
 		sampler2D _MainTex, _SecTex;
 		float3 _ColorLerp1, _ColorLerp2;
-		float4 _CurrentColor, _NextColor, _Color3;
-		float coefsetki, alpTex1, alpTex2,_Power1, _Power2, _Power3, 
-			  _Step, _Step2, _Coord, _ColorChangeCounter;
+		float4 _CurrColor, _CurrentColor, _NxColor, _NextColor, _DiffColor;
+		float coefsetki, alpTex1, alpTex2, _Power1, _Power2, _Power3,
+		_Step, _Step2, _Coord, _ColorChangeCounter;
 		  
 		struct Input 
 		{
@@ -54,9 +54,21 @@
 			alpTex1 = c.a;
 			alpTex2 = d.a;
 			
+			if (alpTex2 < 0.1)
+			{
+			_CurrColor = _CurrentColor;
+			_NxColor = _NextColor;
+			}
+			else 
+			{
+			_CurrColor = lerp(_CurrentColor, (0.9,0.9,0.9,1), pow(alpTex2, 2));
+			_NxColor = lerp(_NextColor, (0.9,0.9,0.9,1), pow(alpTex2, 2));
+			}
+			
+			
 			if (coordUV.x < 0.2)
 			{				
-				o.Albedo = _Color3.rgb;
+				o.Albedo = _DiffColor.rgb;
 			}
 			
 			if (coordUV.x > 0.2 && coordUV.x < 0.5)
@@ -66,14 +78,14 @@
 			
 			if (coordUV.x > 0.5 && coordUV.x < 0.8)
 			{				
-				o.Emission = lerp(_CurrentColor.rgb * pow(alpTex1+alpTex2, _Step) * _Power1, 
-				_NextColor.rgb * pow(alpTex1+alpTex2,_Step) * _Power1, _ColorChangeCounter);
+				o.Emission = lerp(_CurrColor.rgb * pow(alpTex1+alpTex2,_Step) * _Power1, 
+				_NxColor.rgb * pow(alpTex1+alpTex2,_Step) * _Power1, _ColorChangeCounter);
 			}
 			
 			if (coordUV.x > 0.8)
 			{				
-				o.Emission =  lerp(_CurrentColor.rgb * pow(alpTex1+alpTex2,_Step2) * _Power2, 
-				_NextColor.rgb * pow(alpTex1+alpTex2,_Step2) * _Power2, _ColorChangeCounter);
+				o.Emission =  lerp(_CurrColor.rgb * pow(alpTex1+alpTex2,_Step2) * _Power2, 
+				_NxColor.rgb * pow(alpTex1+alpTex2,_Step2) * _Power2, _ColorChangeCounter);
 			}
 			
 		}
