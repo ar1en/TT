@@ -84,11 +84,11 @@ public class tetrisMain : MonoBehaviour
 	{
 		
 		_border = GameObject.FindGameObjectWithTag("border");
-		_border.renderer.material.SetFloat ("_Power1", brightnessCentral);
-		_border.renderer.material.SetFloat ("_Power2", brightnessLampInside);
-		_border.renderer.material.SetFloat ("_Power3", brightnessLampOutside);
-		_border.renderer.material.SetFloat ("_Step", brightnessLampGradient);
-		_border.renderer.material.SetFloat ("_Step2", brightnessReflectorGradient);
+		_border.GetComponent<Renderer>().material.SetFloat ("_Power1", brightnessCentral);
+		_border.GetComponent<Renderer>().material.SetFloat ("_Power2", brightnessLampInside);
+		_border.GetComponent<Renderer>().material.SetFloat ("_Power3", brightnessLampOutside);
+		_border.GetComponent<Renderer>().material.SetFloat ("_Step", brightnessLampGradient);
+		_border.GetComponent<Renderer>().material.SetFloat ("_Step2", brightnessReflectorGradient);
 
 		if (useMobileControl)
 			gameObject.AddComponent<mobileControl>();
@@ -137,10 +137,10 @@ public class tetrisMain : MonoBehaviour
 				if (brickMatrix[x, y])
 				{
 					var cubeOnField = Instantiate(cube, new Vector3(xPosition + x, yPosition - y, 0), Quaternion.identity) as Transform;
-					cubeOnField.renderer.material.SetColor("_Color1", color);
-					cubeOnField.renderer.material.SetFloat("_Power1", cubeOnField.renderer.material.GetFloat("_Power1") * mainColorCorrection);
-					cubeOnField.renderer.material.SetFloat("_Power2", cubeOnField.renderer.material.GetFloat("_Power2") * mainColorCorrection);
-					cubeOnField.renderer.material.SetFloat("_Power5", cubeOnField.renderer.material.GetFloat("_Power5") + 0.2f);
+					cubeOnField.GetComponent<Renderer>().material.SetColor("_Color1", color);
+					cubeOnField.GetComponent<Renderer>().material.SetFloat("_Power1", cubeOnField.GetComponent<Renderer>().material.GetFloat("_Power1") * mainColorCorrection);
+					cubeOnField.GetComponent<Renderer>().material.SetFloat("_Power2", cubeOnField.GetComponent<Renderer>().material.GetFloat("_Power2") * mainColorCorrection);
+					cubeOnField.GetComponent<Renderer>().material.SetFloat("_Power5", cubeOnField.GetComponent<Renderer>().material.GetFloat("_Power5") + 0.2f);
 					cubeOnField.tag = "Cube";
 					_field[(int) xPosition + x, (int) yPosition - y] = true;		
 				}
@@ -190,11 +190,11 @@ public class tetrisMain : MonoBehaviour
 			}
 			else if (cube.transform.position.y == yStart) 
 			{
-				if (!cube.rigidbody)
-					cube.AddComponent("Rigidbody");
-				cube.collider.enabled = true;
-				cube.rigidbody.velocity = new Vector3(Random.Range(-15, 15), Random.Range(-10, 10), Random.Range(-3, -10));
-				cube.rigidbody.MoveRotation(new Quaternion(Random.Range(-10, 10), Random.Range(-10, 10), Random.Range(-10, 10), Random.Range(-10, 10)));
+				if (!cube.GetComponent<Rigidbody>())
+					cube.AddComponent<Rigidbody>();
+				cube.GetComponent<Collider>().enabled = true;
+				cube.GetComponent<Rigidbody>().velocity = new Vector3(Random.Range(-15, 15), Random.Range(-10, 10), Random.Range(-3, -10));
+				cube.GetComponent<Rigidbody>().MoveRotation(new Quaternion(Random.Range(-10, 10), Random.Range(-10, 10), Random.Range(-10, 10), Random.Range(-10, 10)));
 				Destroy(cube, 4f);
 			}
 		}

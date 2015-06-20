@@ -16,19 +16,19 @@ public class borderShaderManager : MonoBehaviour
 		switch (parametr)
 		{
 			case "1":
-				gameObject.renderer.material.SetFloat ("_Power1", value);
+				gameObject.GetComponent<Renderer>().material.SetFloat ("_Power1", value);
 				break;
 			case "2":
-				gameObject.renderer.material.SetFloat ("_Power2", value);
+				gameObject.GetComponent<Renderer>().material.SetFloat ("_Power2", value);
 				break;
 			case "3":
-				gameObject.renderer.material.SetFloat ("_Power3", value);
+				gameObject.GetComponent<Renderer>().material.SetFloat ("_Power3", value);
 				break;
 			case "4":
-				gameObject.renderer.material.SetFloat ("_Step", value);
+				gameObject.GetComponent<Renderer>().material.SetFloat ("_Step", value);
 				break;
 			case "5":
-				gameObject.renderer.material.SetFloat ("_Step2", value);
+				gameObject.GetComponent<Renderer>().material.SetFloat ("_Step2", value);
 				break;
 		}
 	}
@@ -49,32 +49,32 @@ public class borderShaderManager : MonoBehaviour
 		if (_downCounter > 0)
 		{
 			_downCounter -= 0.25f;
-			gameObject.renderer.material.SetFloat ("_Coord", _downCounter);
+			gameObject.GetComponent<Renderer>().material.SetFloat ("_Coord", _downCounter);
 		}
 		else
-			gameObject.renderer.material.SetFloat ("_Coord", coord);
+			gameObject.GetComponent<Renderer>().material.SetFloat ("_Coord", coord);
 		//\изменение координаты
 
 		if ((colorChangeCounter < _main.colorAnimationChangeSpeed) && !_main.blockDown)
 		{
 			colorChangeCounter++;
-			gameObject.renderer.material.SetFloat ("_ColorChangeCounter", colorChangeCounter * (1/_main.colorAnimationChangeSpeed));
+			gameObject.GetComponent<Renderer>().material.SetFloat ("_ColorChangeCounter", colorChangeCounter * (1/_main.colorAnimationChangeSpeed));
 		}
 		else if ((colorChangeCounter >= _main.colorAnimationChangeSpeed) && !_main.blockDown)
 		{
 			if (!colorIsSend)
 			{
-				gameObject.renderer.material.SetColor("_CurrentColor", _main.currentBrickColor);
-				gameObject.renderer.material.SetColor("_NextColor", _main.nextBrickColor);
-				gameObject.renderer.material.SetInt("_ColorChangeCounter", 0);
+				gameObject.GetComponent<Renderer>().material.SetColor("_CurrentColor", _main.currentBrickColor);
+				gameObject.GetComponent<Renderer>().material.SetColor("_NextColor", _main.nextBrickColor);
+				gameObject.GetComponent<Renderer>().material.SetInt("_ColorChangeCounter", 0);
 				colorIsSend = true;
 			}
 		}
 		else if (_main.blockDown && (colorChangeCounter < _main.colorAnimationChangeSpeed))
 		{
-			gameObject.renderer.material.SetColor("_CurrentColor", _main.currentBrickColor2);
-			gameObject.renderer.material.SetColor("_NextColor", _main.nextBrickColor2);
-			gameObject.renderer.material.SetInt("_ColorChangeCounter", 0);
+			gameObject.GetComponent<Renderer>().material.SetColor("_CurrentColor", _main.currentBrickColor2);
+			gameObject.GetComponent<Renderer>().material.SetColor("_NextColor", _main.nextBrickColor2);
+			gameObject.GetComponent<Renderer>().material.SetInt("_ColorChangeCounter", 0);
 			_main.blockDown = false;
 		}
 	}

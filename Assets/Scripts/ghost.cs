@@ -21,7 +21,7 @@ public class ghost : MonoBehaviour
 					//_ghost.renderer.material.color =_block.color;
 					//_ghost.renderer.material.shader = Shader.Find("Custom/transparent");
 					//_ghost.renderer.material.SetFloat(_Trans, 1f);
-					_ghost.renderer.material.SetColor("_MainColor11", _block.color);
+					_ghost.GetComponent<Renderer>().material.SetColor("_MainColor11", _block.color);
 					//_ghost.renderer.shader.color = _block.color;
 					//_ghost
 					//_ghost.renderer.material.

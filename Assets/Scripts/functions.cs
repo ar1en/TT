@@ -59,9 +59,9 @@ public class functions : MonoBehaviour
 					_brick.tag = "preview";
 					//задание цвета
 					//_brick.renderer.material.color = _block.color;
-					_brick.renderer.material.SetColor("_Color1", _block.color);
-					_brick.renderer.material.SetFloat("_Power1", _brick.renderer.material.GetFloat("_Power1") * _block.mainColorCorrection);
-					_brick.renderer.material.SetFloat("_Power2", _brick.renderer.material.GetFloat("_Power2") * _block.mainColorCorrection);
+					_brick.GetComponent<Renderer>().material.SetColor("_Color1", _block.color);
+					_brick.GetComponent<Renderer>().material.SetFloat("_Power1", _brick.GetComponent<Renderer>().material.GetFloat("_Power1") * _block.mainColorCorrection);
+					_brick.GetComponent<Renderer>().material.SetFloat("_Power2", _brick.GetComponent<Renderer>().material.GetFloat("_Power2") * _block.mainColorCorrection);
 					//\задание цвета
 					//_brick.parent = _transform;
 				}

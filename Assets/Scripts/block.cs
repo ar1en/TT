@@ -57,9 +57,9 @@ public class block : MonoBehaviour
 				{
 					_brickMatrix[x, y] = true;
 					_brick = Instantiate(_main.cube, new Vector3(x - _halfSizeFloat, (_size - y) + _halfSizeFloat - _size, 0.0f), Quaternion.identity) as Transform;
-					_brick.renderer.material.SetColor("_Color1", color);
-					_brick.renderer.material.SetFloat("_Power1", _brick.renderer.material.GetFloat("_Power1") * mainColorCorrection);
-					_brick.renderer.material.SetFloat("_Power2", _brick.renderer.material.GetFloat("_Power2") * mainColorCorrection);
+					_brick.GetComponent<Renderer>().material.SetColor("_Color1", color);
+					_brick.GetComponent<Renderer>().material.SetFloat("_Power1", _brick.GetComponent<Renderer>().material.GetFloat("_Power1") * mainColorCorrection);
+					_brick.GetComponent<Renderer>().material.SetFloat("_Power2", _brick.GetComponent<Renderer>().material.GetFloat("_Power2") * mainColorCorrection);
 					_brick.parent = transform;		//делаем созданные кубики дочерними
 					transform.tag = "block";
 				}
