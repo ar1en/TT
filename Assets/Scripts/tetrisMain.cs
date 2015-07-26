@@ -194,7 +194,10 @@ public class tetrisMain : MonoBehaviour
 					cube.AddComponent<Rigidbody>();
 				cube.GetComponent<Collider>().enabled = true;
 				cube.GetComponent<Rigidbody>().velocity = new Vector3(Random.Range(-15, 15), Random.Range(-10, 10), Random.Range(-3, -10));
-				cube.GetComponent<Rigidbody>().MoveRotation(new Quaternion(Random.Range(-10, 10), Random.Range(-10, 10), Random.Range(-10, 10), Random.Range(-10, 10)));
+				//cube.GetComponent<Rigidbody>().MoveRotation(new Quaternion(Random.Range(-10, 10), Random.Range(-10, 10), Random.Range(-10, 10), Random.Range(-10, 10)));
+				Quaternion rotation = new Quaternion();
+				rotation.eulerAngles = new Vector3(Random.Range(-10, 10), Random.Range(-10, 10), Random.Range(-10, 10));
+				cube.GetComponent<Rigidbody>().MoveRotation(rotation);
 				Destroy(cube, 4f);
 			}
 		}
