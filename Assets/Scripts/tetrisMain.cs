@@ -79,6 +79,7 @@ public class tetrisMain : MonoBehaviour
 	private int _scoreLvl;
 	private GameObject _border;
 	private Transform[] _cubeReferences;
+	private int[] _briksRates;
 
 	void Start () 
 	{
@@ -106,6 +107,11 @@ public class tetrisMain : MonoBehaviour
 		_cubePositions = new int[_fieldWidth * _fieldHeight];
 		spawnBrick (true);
 		_scoreLvl = 0;
+
+		for (var i = 0; i < briks.Length; i++) 
+		{
+			_briksRates[i] = briks[i].GetComponent<block>().rate;
+		}
 	}
 	
 	void spawnBrick(bool first)

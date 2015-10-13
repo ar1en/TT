@@ -13,6 +13,8 @@ public class block : MonoBehaviour
 	public float brightnessLampGradient = 0;			//4
 	public float brightnessReflectorGradient = 0;		//5
 
+	public int rate = 1;
+
 	[HideInInspector]
 	public bool[,] _brickMatrix;							//матрица для кирпичика
 	[HideInInspector]
