@@ -40,6 +40,40 @@ public class functions : MonoBehaviour
 		return false;
 	}
 
+    public static int randomBrick()
+    {
+        tetrisMain _main = GameObject.Find("main").GetComponent<tetrisMain>();
+        var sum = 0;
+        int[] rates = new int[_main.briks.Length];
+        int k = 0;
+        for (var i = 0; i < _main.briks.Length; i++)
+        {
+            sum += _main.briks[i].GetComponent<block>().rate;
+            rates[i] = _main.briks[i].GetComponent<block>().rate;
+        }
+        //Debug.Log(sum);
+        
+        var rand = Random.Range(0, sum*10);
+        Debug.Log("rand=" + rand);
+        for (var i = 0; i < _main.briks.Length; i++)
+        {
+            if (i==0)
+                k = 0;
+            else
+                k = rates[i-1];
+
+            if ((rand > rates[i] / sum * 10) && (rand < ((rates[i]+k)/sum*10)))
+                Debug.Log(i);
+        }
+            //var rnd = Random.Range(0, _bricksRateSum * 10);
+            //Debug.Log("test " + _bricksRateSum);
+            //for (var i = 0; i < _briksRates.Length; i++)
+            //{
+
+            //}
+        return 0;
+    }
+
 	public static void printNextBrick(GameObject brick, Transform cube)
 	{
 //		GameObject _border = GameObject.FindGameObjectWithTag("border");

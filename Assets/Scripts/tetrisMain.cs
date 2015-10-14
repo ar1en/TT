@@ -80,6 +80,7 @@ public class tetrisMain : MonoBehaviour
 	private GameObject _border;
 	private Transform[] _cubeReferences;
 	private int[] _briksRates;
+    private int _bricksRateSum;
 
 	void Start () 
 	{
@@ -108,15 +109,33 @@ public class tetrisMain : MonoBehaviour
 		spawnBrick (true);
 		_scoreLvl = 0;
 
-		for (var i = 0; i < briks.Length; i++) 
+        /*//считываение коэффициентов вероятности повления и подсчет их суммы
+		_briksRates = new int[briks.Length];
+        for (var i = 0; i < briks.Length; i++) 
 		{
-			_briksRates[i] = briks[i].GetComponent<block>().rate;
+            _bricksRateSum += briks[i].GetComponent<block>().rate;
+            _briksRates[i] = briks[i].GetComponent<block>().rate;
+            //Debug.Log(i);
 		}
+        //*/
 	}
 	
 	void spawnBrick(bool first)
 	{
-		if (first) 
+       /* var rnd = Random.Range(0, _bricksRateSum*10);
+        //Debug.Log("rnd" + rnd);
+        for (var i = 0; i < briks.Length; i++)
+        { 
+            //if ((rnd >= (briks[i].GetComponent<block>().rate / _bricksRangeSum * 10) && (rnd < ((briks[i].GetComponent<block>().rate + briks[i-1].GetComponent<block>().rate))/_bricksRangeSum * 10)))
+            //if (rnd >= (briks[i].GetComponent<block>().rate / _bricksRangeSum * 10))
+            if (rnd > _briksRates[i])
+               // Debug.Log(_briksRates[i]);
+                Debug.Log(i-1);
+                //Debug.Log(briks[i].GetComponent<block>().rate);
+        }*/
+        functions.randomBrick();
+
+        if (first) 
 		{
 			_firstBrick = Random.Range(0, briks.Length);
 			_secondBrick = Random.Range(0, briks.Length);
