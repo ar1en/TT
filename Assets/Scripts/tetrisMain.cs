@@ -133,17 +133,20 @@ public class tetrisMain : MonoBehaviour
                 Debug.Log(i-1);
                 //Debug.Log(briks[i].GetComponent<block>().rate);
         }*/
-        functions.randomBrick();
+        //functions.randomBrick();
 
         if (first) 
 		{
-			_firstBrick = Random.Range(0, briks.Length);
-			_secondBrick = Random.Range(0, briks.Length);
+			/*_firstBrick = Random.Range(0, briks.Length);
+			_secondBrick = Random.Range(0, briks.Length);*/
+            _firstBrick = functions.randomBrick();
+            _secondBrick = functions.randomBrick();
 		}
 		else
 		{
 			_firstBrick = _secondBrick;
-			_secondBrick = Random.Range(0, briks.Length);
+            _secondBrick = functions.randomBrick();
+			/*_secondBrick = Random.Range(0, briks.Length);*/
 		}
 		Instantiate (briks [_firstBrick]);
 		functions.printNextBrick (briks [_secondBrick], cube);

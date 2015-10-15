@@ -43,35 +43,44 @@ public class functions : MonoBehaviour
     public static int randomBrick()
     {
         tetrisMain _main = GameObject.Find("main").GetComponent<tetrisMain>();
-        var sum = 0;
+        int sum = 0;
+        int result = 0;
+
         int[] rates = new int[_main.briks.Length];
-        int k = 0;
+
         for (var i = 0; i < _main.briks.Length; i++)
         {
             sum += _main.briks[i].GetComponent<block>().rate;
             rates[i] = _main.briks[i].GetComponent<block>().rate;
         }
-        //Debug.Log(sum);
         
         var rand = Random.Range(0, sum*10);
-        Debug.Log("rand=" + rand);
+
         for (var i = 0; i < _main.briks.Length; i++)
         {
-            if (i==0)
-                k = 0;
-            else
-                k = rates[i-1];
+            
+            var sumJ = 0;
+            var sumM = 0;
+            for (var j = 0; j <= i; j++)
+            {
+                sumJ += rates[j];
+                if (j <= i - 1)
+                    sumM += rates[j];
+            }
 
-            if ((rand > rates[i] / sum * 10) && (rand < ((rates[i]+k)/sum*10)))
-                Debug.Log(i);
-        }
-            //var rnd = Random.Range(0, _bricksRateSum * 10);
-            //Debug.Log("test " + _bricksRateSum);
-            //for (var i = 0; i < _briksRates.Length; i++)
+            if ((rand > sumM * 10) && (rand <= sumJ * 10))
+            {
+                Debug.Log(rand + " " + _main.briks[i].name);
+                Debug.Log(" ОТ " + sumM * 10 + " ДО " + sumJ * 10);
+                result = i;
+            }
+            //else
             //{
-
+                //Debug.LogWarning("RANDOM GENERATION ERROR");
+                //result = 0;
             //}
-        return 0;
+        }
+        return (result);
     }
 
 	public static void printNextBrick(GameObject brick, Transform cube)
