@@ -117,7 +117,38 @@ public class tetrisMain : MonoBehaviour
             _briksRates[i] = briks[i].GetComponent<block>().rate;
             //Debug.Log(i);
 		}
+
         //*/
+		/*var n = 0;
+		var i = 0;
+		var o = 0;
+		var j = 0;
+		var l = 0;
+		var z = 0;
+		var s = 0;
+		var t = 0;
+
+		for (var nn = 0; nn < 10000; nn++)
+		{
+			n = functions.randomBrick();
+
+			if (briks[n].name == "iBlock")
+				i++;
+			else if(briks[n].name == "oBlock")
+				o++;
+			else if(briks[n].name == "jBlock")
+				j++;
+			else if(briks[n].name == "lBlock")
+				l++;
+			else if(briks[n].name == "zBlock")
+				z++;
+			else if(briks[n].name == "sBlock")
+				s++;
+			else if(briks[n].name == "tBlock")
+				t++;
+			//n = functions.randomBrick();
+		}
+		Debug.Log ("i-"+i+"; o-"+o+"; j-"+j+"; l-"+l+"; z-"+z+"; s-"+s+"; t-"+t);*/
 	}
 	
 	void spawnBrick(bool first)

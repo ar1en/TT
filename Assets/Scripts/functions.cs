@@ -70,8 +70,8 @@ public class functions : MonoBehaviour
 
             if ((rand > sumM * 10) && (rand <= sumJ * 10))
             {
-                Debug.Log(rand + " " + _main.briks[i].name);
-                Debug.Log(" ОТ " + sumM * 10 + " ДО " + sumJ * 10);
+                //Debug.Log(rand + " " + _main.briks[i].name);
+                //Debug.Log(" ОТ " + sumM * 10 + " ДО " + sumJ * 10);
                 result = i;
             }
             //else
