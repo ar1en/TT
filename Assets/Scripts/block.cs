@@ -103,9 +103,11 @@ public class block : MonoBehaviour
 					Destroy(GameObject.Find("ghost(Clone)"));
 				break;	
 			}
-			for (float i = _yPosition + 1; i > _yPosition; i -= Time.deltaTime * _fallSpeed)
+			//for (float i = _yPosition + 1; i > _yPosition; i -= Time.deltaTime * _fallSpeed) //физика
+			for (float i = _yPosition + 1; i > _yPosition; i -= _fallSpeed)
 			{
-				transform.position = new Vector3 (transform.position.x, i - _halfSizeFloat, 0);
+				transform.position = new Vector3 (transform.position.x, i - _halfSizeFloat*Time.deltaTime, 0);
+				//transform.position = new Vector3 (transform.position.x, i, 0);
 				_shaderManager.coord = i;
 				yield return 0;
 			}
