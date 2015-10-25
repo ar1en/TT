@@ -69,16 +69,7 @@ public class functions : MonoBehaviour
             }
 
             if ((rand > sumM * 10) && (rand <= sumJ * 10))
-            {
-                //Debug.Log(rand + " " + _main.briks[i].name);
-                //Debug.Log(" ОТ " + sumM * 10 + " ДО " + sumJ * 10);
                 result = i;
-            }
-            //else
-            //{
-                //Debug.LogWarning("RANDOM GENERATION ERROR");
-                //result = 0;
-            //}
         }
         return (result);
     }
@@ -89,6 +80,7 @@ public class functions : MonoBehaviour
 		tetrisMain _main = GameObject.Find ("main").GetComponent<tetrisMain>();
 		foreach (GameObject _cube in GameObject.FindGameObjectsWithTag("preview")) 
 			Destroy(_cube);
+			//_cube.gameObject.SetActive (false);
 		block _block = brick.GetComponent<block>();
 		//_border.renderer.material.SetColor("_Color4", _block.color);
 		_main.nextBrickColor2 = _main.nextBrickColor;
@@ -99,6 +91,8 @@ public class functions : MonoBehaviour
 				if (_block.brick[x][y] == "1"[0])				
 				{
 					var _brick = Instantiate(cube, new Vector3(y - _size*0.5f + _main.previewX, (_size - x) + _size * 0.5f - _size + _main.previewY, -0.3f), Quaternion.identity) as Transform;
+					//var _brick = _main.getCubeFromPool();
+					//_brick.transform.position = new Vector3(y - _size*0.5f + _main.previewX, (_size - x) + _size * 0.5f - _size + _main.previewY, -0.3f);
 					_brick.tag = "preview";
 					//задание цвета
 					//_brick.renderer.material.color = _block.color;

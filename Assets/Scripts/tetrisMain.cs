@@ -6,6 +6,7 @@ public class tetrisMain : MonoBehaviour
 	[Header("Настройки Блоков")]
 	public Transform cube;
 	public int maxBlockSize = 5;
+	public int poolSize = 150;
 	public GameObject[] briks;
 
 	[Header("Настройки размеров поля")]
@@ -18,7 +19,7 @@ public class tetrisMain : MonoBehaviour
 	public GameObject ghost;
 	
 	[Header("Настройки скорости игры")]
-	public float fallSpeed = 2.0f;							//скорость падения кирпичика
+	public float fallSpeed = 2.0f;								//скорость падения кирпичика
 	public float fallSpeedUltra = 50.0f;						//скорость во время ускорения при падении
 	
 	[Header("Настройки управления")]
@@ -26,10 +27,13 @@ public class tetrisMain : MonoBehaviour
 	public int sensivity = 70;
 
 	[Header("Настройки шейдера куба")]
-	public float fallingCubeLight = 0.56f;					
-	public float cubeLight = 1.0f;
+	//public float fallingCubeLight = 0.56f;					
+	//public float cubeLight = 1.0f;
+	public float power1 = 1.6f;
+	public float power2 = 1.5f;
 
-	[Header("Расположение превью")]						
+	[Header("Настройки превью")]
+	public bool usePreview = true;
 	public float previewX = 20;
 	public float previewY = 16;
 	
@@ -71,6 +75,8 @@ public class tetrisMain : MonoBehaviour
 	public float currentFallSpeed;
 	[HideInInspector]
 	public bool blockDown = false;
+	[HideInInspector]
+	public Transform[] pool;
 
 	private int[] _cubePositions;
 	private int[] _rowsForDeleting;
@@ -109,67 +115,34 @@ public class tetrisMain : MonoBehaviour
 		spawnBrick (true);
 		_scoreLvl = 0;
 
-        /*//считываение коэффициентов вероятности повления и подсчет их суммы
-		_briksRates = new int[briks.Length];
-        for (var i = 0; i < briks.Length; i++) 
+		//create pool
+		pool = new Transform[poolSize];
+
+		for (int i = 0; i < poolSize; i++) 
 		{
-            _bricksRateSum += briks[i].GetComponent<block>().rate;
-            _briksRates[i] = briks[i].GetComponent<block>().rate;
-            //Debug.Log(i);
+			pool[i] = Instantiate(cube) as Transform;
+			pool[i].gameObject.SetActive(false);
 		}
-
-        //*/
-		/*var n = 0;
-		var i = 0;
-		var o = 0;
-		var j = 0;
-		var l = 0;
-		var z = 0;
-		var s = 0;
-		var t = 0;
-
-		for (var nn = 0; nn < 10000; nn++)
-		{
-			n = functions.randomBrick();
-
-			if (briks[n].name == "iBlock")
-				i++;
-			else if(briks[n].name == "oBlock")
-				o++;
-			else if(briks[n].name == "jBlock")
-				j++;
-			else if(briks[n].name == "lBlock")
-				l++;
-			else if(briks[n].name == "zBlock")
-				z++;
-			else if(briks[n].name == "sBlock")
-				s++;
-			else if(briks[n].name == "tBlock")
-				t++;
-			//n = functions.randomBrick();
-		}
-		Debug.Log ("i-"+i+"; o-"+o+"; j-"+j+"; l-"+l+"; z-"+z+"; s-"+s+"; t-"+t);*/
+		//\create pool
 	}
-	
+
+	public Transform getCubeFromPool()
+	{
+		for (int i = 0; i < poolSize; i++) 
+		{
+			if (pool[i].gameObject.activeSelf == false)
+			{
+				pool[i].gameObject.SetActive(true);
+				return pool[i];
+			}
+		}
+		return null;
+	}
+
 	void spawnBrick(bool first)
 	{
-       /* var rnd = Random.Range(0, _bricksRateSum*10);
-        //Debug.Log("rnd" + rnd);
-        for (var i = 0; i < briks.Length; i++)
-        { 
-            //if ((rnd >= (briks[i].GetComponent<block>().rate / _bricksRangeSum * 10) && (rnd < ((briks[i].GetComponent<block>().rate + briks[i-1].GetComponent<block>().rate))/_bricksRangeSum * 10)))
-            //if (rnd >= (briks[i].GetComponent<block>().rate / _bricksRangeSum * 10))
-            if (rnd > _briksRates[i])
-               // Debug.Log(_briksRates[i]);
-                Debug.Log(i-1);
-                //Debug.Log(briks[i].GetComponent<block>().rate);
-        }*/
-        //functions.randomBrick();
-
         if (first) 
 		{
-			/*_firstBrick = Random.Range(0, briks.Length);
-			_secondBrick = Random.Range(0, briks.Length);*/
             _firstBrick = functions.randomBrick();
             _secondBrick = functions.randomBrick();
 		}
@@ -177,10 +150,10 @@ public class tetrisMain : MonoBehaviour
 		{
 			_firstBrick = _secondBrick;
             _secondBrick = functions.randomBrick();
-			/*_secondBrick = Random.Range(0, briks.Length);*/
 		}
 		Instantiate (briks [_firstBrick]);
-		functions.printNextBrick (briks [_secondBrick], cube);
+		if (usePreview)
+			functions.printNextBrick (briks [_secondBrick], cube);
 	}
 	
 	public void setBrick(bool[,] brickMatrix, int xPosition, int yPosition, Color color, float mainColorCorrection)
@@ -195,10 +168,15 @@ public class tetrisMain : MonoBehaviour
 			for (var x = 0; x < size; x++)
 				if (brickMatrix[x, y])
 				{
-					var cubeOnField = Instantiate(cube, new Vector3(xPosition + x, yPosition - y, 0), Quaternion.identity) as Transform;
+					//var cubeOnField = Instantiate(cube, new Vector3(xPosition + x, yPosition - y, 0), Quaternion.identity) as Transform;
+					//pool
+					var cubeOnField = getCubeFromPool();
+					cubeOnField.position = new Vector3(xPosition + x, yPosition - y, 0);
+					//\pool
+					cubeOnField.gameObject.isStatic = true; //оптимизация (?)
 					cubeOnField.GetComponent<Renderer>().material.SetColor("_Color1", color);
-					cubeOnField.GetComponent<Renderer>().material.SetFloat("_Power1", cubeOnField.GetComponent<Renderer>().material.GetFloat("_Power1") * mainColorCorrection);
-					cubeOnField.GetComponent<Renderer>().material.SetFloat("_Power2", cubeOnField.GetComponent<Renderer>().material.GetFloat("_Power2") * mainColorCorrection);
+					cubeOnField.GetComponent<Renderer>().material.SetFloat("_Power1", power1 * mainColorCorrection);
+					cubeOnField.GetComponent<Renderer>().material.SetFloat("_Power2", power2 * mainColorCorrection);
 					cubeOnField.GetComponent<Renderer>().material.SetFloat("_Power5", cubeOnField.GetComponent<Renderer>().material.GetFloat("_Power5") + 0.2f);
 					cubeOnField.tag = "Cube";
 					_field[(int) xPosition + x, (int) yPosition - y] = true;		
@@ -257,12 +235,25 @@ public class tetrisMain : MonoBehaviour
 				Quaternion rotation = new Quaternion();
 				rotation.eulerAngles = new Vector3(Random.Range(-10, 10), Random.Range(-10, 10), Random.Range(-10, 10));
 				cube.GetComponent<Rigidbody>().MoveRotation(rotation);
-				Destroy(cube, 4f);
+				//Destroy(cube, 4f);
+				StartCoroutine(hideCube(cube, 4f));
 			}
 		}
 		StartCoroutine(fallEnd(_cubeReferences, _cubePositions, cubesToMove));
 	}
-	
+
+	IEnumerator hideCube(GameObject cube, float ping)
+	{
+		yield return new WaitForSeconds (ping);
+		Destroy(cube.GetComponent<Rigidbody>());
+		cube.transform.position = new Vector3 (0, 0, 0);
+		Quaternion rotation = new Quaternion();
+		rotation.eulerAngles = new Vector3(0, 0, 0);
+		cube.transform.rotation = rotation;
+		cube.GetComponent<Collider>().enabled = false;
+		cube.SetActive (false);
+	}
+
 	IEnumerator fallEnd(Transform[] cubeReferences, int[] cubePositions, int cubesToMove)
 	{
 		var t = 0.0f;
@@ -273,26 +264,12 @@ public class tetrisMain : MonoBehaviour
 				cubeReferences[i].position = new Vector3 (cubeReferences[i].position.x, (Mathf.Lerp (cubePositions[i], cubePositions[i]-1f, t)), 0);
 			yield return new WaitForSeconds(0.0001f);
 		}
-		/*for (var t = 0.5f; t <= 1.0f; t += Time.deltaTime)
-		{
-			//yield return new WaitForSeconds(0.005f);
-			//Debug.Log (cubesToMove);
-			//yield return new WaitForSeconds(0.01f);
-			for (var i = 0; i < cubesToMove; i++) 
-			{
-				//Debug.Log (cubeRF[i].position.y);
-				cubeReferences[i].position = new Vector3 (cubeReferences[i].position.x, (Mathf.Lerp (cubePositions[i], cubePositions[i] - 1f, t)), 0);
-				//cubeReferences[i].position = new Vector3 (cubeReferences[i].position.x, cubePositions[i] - t, 0);
-				//Debug.Log(cubePositions[i]);
-			}
-		}*/
-		//Debug.Log (t);
 		yield return 0;
 	}
 
 	void addScore(int scoreLvl)
 	{
-		score += 100*Mathf.Pow (2, scoreLvl) - 100; //миленько, красиво и изящно, спасибо Коляше)
+		score += 100 * Mathf.Pow (2, scoreLvl) - 100; //миленько, красиво и изящно, спасибо Коляше)
 		_scoreLvl = 0;
 	}
 

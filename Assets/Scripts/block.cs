@@ -58,10 +58,16 @@ public class block : MonoBehaviour
 				if (brick[y][x] == "1"[0])				
 				{
 					_brickMatrix[x, y] = true;
-					_brick = Instantiate(_main.cube, new Vector3(x - _halfSizeFloat, (_size - y) + _halfSizeFloat - _size, 0.0f), Quaternion.identity) as Transform;
+					//_brick = Instantiate(_main.cube, new Vector3(x - _halfSizeFloat, (_size - y) + _halfSizeFloat - _size, 0.0f), Quaternion.identity) as Transform;
+					//pool
+					_brick = _main.getCubeFromPool();
+					_brick.transform.position = new Vector3(x - _halfSizeFloat, (_size - y) + _halfSizeFloat - _size, 0.0f);
+					//\pool
 					_brick.GetComponent<Renderer>().material.SetColor("_Color1", color);
-					_brick.GetComponent<Renderer>().material.SetFloat("_Power1", _brick.GetComponent<Renderer>().material.GetFloat("_Power1") * mainColorCorrection);
-					_brick.GetComponent<Renderer>().material.SetFloat("_Power2", _brick.GetComponent<Renderer>().material.GetFloat("_Power2") * mainColorCorrection);
+					//_brick.GetComponent<Renderer>().material.SetFloat("_Power1", _brick.GetComponent<Renderer>().material.GetFloat("_Power1") * mainColorCorrection);
+					//_brick.GetComponent<Renderer>().material.SetFloat("_Power2", _brick.GetComponent<Renderer>().material.GetFloat("_Power2") * mainColorCorrection);
+					_brick.GetComponent<Renderer>().material.SetFloat("_Power1", _main.power1 * mainColorCorrection);
+					_brick.GetComponent<Renderer>().material.SetFloat("_Power2", _main.power2 * mainColorCorrection);
 					_brick.parent = transform;		//делаем созданные кубики дочерними
 					transform.tag = "block";
 				}
@@ -72,7 +78,7 @@ public class block : MonoBehaviour
 			Instantiate (_main.ghost);
 		StartCoroutine (Fall ());
 	}
-
+	
 	void Update ()
 	{
 		_main.currentFallSpeed = _fallSpeed;
@@ -98,6 +104,12 @@ public class block : MonoBehaviour
 				_main.blockDown = true;
 				_shaderManager.coord2 = _yPosition;
 				_main.setBrick(_brickMatrix, _xPosition, _yPosition + 1, color, mainColorCorrection);
+
+
+				foreach(Transform cube in gameObject.GetComponentsInChildren<Transform>())
+				{
+					cube.gameObject.SetActive(false);
+				}
 				Destroy(gameObject);
 				if (_main.useGhost)
 					Destroy(GameObject.Find("ghost(Clone)"));
@@ -106,7 +118,6 @@ public class block : MonoBehaviour
 			for (float i = _yPosition + 1; i > _yPosition; i -= Time.deltaTime * _fallSpeed) //физика
 			{
 				transform.position = new Vector3 (transform.position.x, i - _halfSizeFloat, 0);
-				Debug.Log(i-_halfSizeFloat);
 				_shaderManager.coord = i;
 				yield return 0;
 			}
