@@ -95,10 +95,11 @@ public class functions : MonoBehaviour
 					//_brick.transform.position = new Vector3(y - _size*0.5f + _main.previewX, (_size - x) + _size * 0.5f - _size + _main.previewY, -0.3f);
 					_brick.tag = "preview";
 					//задание цвета
+                    _brick.GetComponent<Renderer>().material = _block.cubeMatherial;
 					//_brick.renderer.material.color = _block.color;
-					_brick.GetComponent<Renderer>().material.SetColor("_Color1", _block.color);
-					_brick.GetComponent<Renderer>().material.SetFloat("_Power1", _brick.GetComponent<Renderer>().material.GetFloat("_Power1") * _block.mainColorCorrection);
-					_brick.GetComponent<Renderer>().material.SetFloat("_Power2", _brick.GetComponent<Renderer>().material.GetFloat("_Power2") * _block.mainColorCorrection);
+					//_brick.GetComponent<Renderer>().material.SetColor("_Color1", _block.color);
+					//_brick.GetComponent<Renderer>().material.SetFloat("_Power1", _brick.GetComponent<Renderer>().material.GetFloat("_Power1") * _block.mainColorCorrection);
+					//_brick.GetComponent<Renderer>().material.SetFloat("_Power2", _brick.GetComponent<Renderer>().material.GetFloat("_Power2") * _block.mainColorCorrection);
 					//\задание цвета
 					//_brick.parent = _transform;
 				}

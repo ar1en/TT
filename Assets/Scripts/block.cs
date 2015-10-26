@@ -13,12 +13,17 @@ public class block : MonoBehaviour
 	public float brightnessLampGradient = 0;			//4
 	public float brightnessReflectorGradient = 0;		//5
 
+
 	public int rate = 1;
 
 	[HideInInspector]
 	public bool[,] _brickMatrix;							//матрица для кирпичика
 	[HideInInspector]
 	public float _fallSpeed;
+    [HideInInspector]
+    public Material cubeMatherial;
+    [HideInInspector]
+    public Material cubeOnFieldMatherial;
 
 	private int _yPosition;
 	private int _xPosition;
@@ -28,7 +33,7 @@ public class block : MonoBehaviour
 	private Transform _brick;
 	private tetrisMain _main;
 	private borderShaderManager _shaderManager;
-
+    
 
 	void Start () 
 	{
@@ -53,7 +58,14 @@ public class block : MonoBehaviour
 		_size = brick.Length;						//число элементов текстового массива
 		_halfSizeFloat = _size * 0.5f;
 		_brickMatrix = new bool[_size, _size];		//создание логической матрицы заданной размерности
-		for (int y = 0; y < _size; y++)
+		
+        //brickMatherial = new Material(Shader.Find("Cubik universal 2"));
+        //brickMatherial.SetColor("_Color1", color);
+        //brickMatherial.SetFloat("_Power1", _main.power1 * mainColorCorrection);
+        //brickMatherial.SetFloat("_Power2", _main.power2 * mainColorCorrection);
+        //brickMatherial.SetTexture("_1stTex", _main.cubeTexture);
+
+        for (int y = 0; y < _size; y++)
 			for (int x = 0; x < _size; x++)
 				if (brick[y][x] == "1"[0])				
 				{
@@ -62,16 +74,18 @@ public class block : MonoBehaviour
 					//pool
 					_brick = _main.getCubeFromPool();
 					_brick.transform.position = new Vector3(x - _halfSizeFloat, (_size - y) + _halfSizeFloat - _size, 0.0f);
+                    _brick.GetComponent<Renderer>().material = cubeMatherial;
 					//\pool
-					_brick.GetComponent<Renderer>().material.SetColor("_Color1", color);
+					//_brick.GetComponent<Renderer>().material.SetColor("_Color1", color);
 					//_brick.GetComponent<Renderer>().material.SetFloat("_Power1", _brick.GetComponent<Renderer>().material.GetFloat("_Power1") * mainColorCorrection);
 					//_brick.GetComponent<Renderer>().material.SetFloat("_Power2", _brick.GetComponent<Renderer>().material.GetFloat("_Power2") * mainColorCorrection);
-					_brick.GetComponent<Renderer>().material.SetFloat("_Power1", _main.power1 * mainColorCorrection);
-					_brick.GetComponent<Renderer>().material.SetFloat("_Power2", _main.power2 * mainColorCorrection);
+					//_brick.GetComponent<Renderer>().material.SetFloat("_Power1", _main.power1 * mainColorCorrection);
+					//_brick.GetComponent<Renderer>().material.SetFloat("_Power2", _main.power2 * mainColorCorrection);
 					_brick.parent = transform;		//делаем созданные кубики дочерними
 					transform.tag = "block";
 				}
 		transform.position = new Vector3 (_main._fieldWidth / 2 + (_size%2 == 0? 0.0f : 0.5f), _main._fieldHeight - _halfSizeFloat, 0);	//выставляем кирпичик сверху и по центру
+        //this.GetComponent<Renderer>().material = _main.cubeMaterial;
 		_yPosition = _main._fieldHeight - 1;
 		_xPosition = (int)transform.position.x - (int) _halfSizeFloat;
 		if (_main.useGhost)
@@ -103,7 +117,7 @@ public class block : MonoBehaviour
 			{
 				_main.blockDown = true;
 				_shaderManager.coord2 = _yPosition;
-				_main.setBrick(_brickMatrix, _xPosition, _yPosition + 1, color, mainColorCorrection);
+                _main.setBrick(_brickMatrix, _xPosition, _yPosition + 1, color, mainColorCorrection, cubeOnFieldMatherial);
 
 
 				foreach(Transform cube in gameObject.GetComponentsInChildren<Transform>())

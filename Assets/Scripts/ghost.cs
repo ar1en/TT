@@ -7,24 +7,21 @@ public class ghost : MonoBehaviour
 	private tetrisMain _main;
 	private Transform _ghost;
 	private int _size;
+    private Material _material;
 	void Start () 
 	{
 		_main = GameObject.Find ("main").GetComponent<tetrisMain>();
 		_block = GameObject.FindGameObjectWithTag("block").GetComponent<block>();
 		_size = _block.brick.Length;
+        _material = new Material(Shader.Find("Custom/transparent"));
+        _material.SetColor("_MainColor11", _block.color);
 		for (int j=0; j < _size; j++)
 			for (int i=0; i < _size; i++)
 				if (_block._brickMatrix[i, j])
 				{
 					_ghost = Instantiate(_main.ghostCube, new Vector3(i - _size*0.5f, (_size - j) + _size*0.5f - _size, 0.0f), Quaternion.identity) as Transform;
-					_ghost.parent = transform;	
-					//_ghost.renderer.material.color =_block.color;
-					//_ghost.renderer.material.shader = Shader.Find("Custom/transparent");
-					//_ghost.renderer.material.SetFloat(_Trans, 1f);
-					_ghost.GetComponent<Renderer>().material.SetColor("_MainColor11", _block.color);
-					//_ghost.renderer.shader.color = _block.color;
-					//_ghost
-					//_ghost.renderer.material.
+					_ghost.parent = transform;
+                    _ghost.GetComponent<Renderer>().material = _material;
 				}
 		transform.position = new Vector3 (10, 10, 0);		//что-бы в первое мгновение после создания position.x не был равен нулю
 	}

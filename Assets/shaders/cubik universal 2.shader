@@ -4,18 +4,18 @@
 	{
 		_Color1 ("Main color", Color) = (1,1,1,1)
 		_Color2 ("Sec color", Color) = (1,1,1,1)
-		_Power1 ("Pw 2468", float) = 1
-		_Power2 ("Pw 13579", Float) = 1
-		_Power3 ("Pw inGrani", Float) = 1
-		_Power4 ("Pw GrKvadr", Float) = 1
-		_Power5 ("Pw All", float) = 1
-		_Power6 ("Pw outsurf", float) = 1
-		_Power7 ("Pw outsurf lerp", float) = 0.5
-		_LerpSt1 ("LerpSt inGrani", Float) = 0.5
-		_LerpSt2 ("LerpSt GrKvadr", Float) = 0.5
-		_LerpSt3 ("LerpSt Outsurf", float) = 0.5
+		_Power1 ("Pw 2468", float) = 1.6
+		_Power2 ("Pw 13579", Float) = 1.5
+		_Power3 ("Pw inGrani", Float) = 1.7
+		_Power4 ("Pw GrKvadr", Float) = 8
+		_Power5 ("Pw All", float) = 0.8
+		_Power6 ("Pw outsurf", float) = 0.5
+		_Power7 ("Pw outsurf lerp", float) = 0.4
+		_LerpSt1 ("LerpSt inGrani", Float) = 0.2
+		_LerpSt2 ("LerpSt GrKvadr", Float) = 0.7
+		_LerpSt3 ("LerpSt Outsurf", float) = 0.8
 		_1stTex ("First Tex", 2D) = "white"
-		_2ndTex ("Second Tex", 2D) = "white" {}	
+		//_2ndTex ("Second Tex", 2D) = "white" {}	
 	}
 	
 	SubShader 

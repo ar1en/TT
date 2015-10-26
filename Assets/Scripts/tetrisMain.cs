@@ -26,10 +26,13 @@ public class tetrisMain : MonoBehaviour
 	public bool useMobileControl = false;
 	public int sensivity = 70;
 
-	[Header("Настройки шейдера куба")]
-	//public float fallingCubeLight = 0.56f;					
-	//public float cubeLight = 1.0f;
-	public float power1 = 1.6f;
+    [Header("Настройки шейдера куба")]
+    //public float fallingCubeLight = 0.56f;					
+    //public float cubeLight = 1.0f;
+    //public Material cubeMaterial;
+    public Shader cubeShader;
+    public Texture cubeTexture;
+    public float power1 = 1.6f;
 	public float power2 = 1.5f;
 
 	[Header("Настройки превью")]
@@ -77,6 +80,8 @@ public class tetrisMain : MonoBehaviour
 	public bool blockDown = false;
 	[HideInInspector]
 	public Transform[] pool;
+    [HideInInspector]
+    //public Material[] cubeMaterials;
 
 	private int[] _cubePositions;
 	private int[] _rowsForDeleting;
@@ -112,20 +117,38 @@ public class tetrisMain : MonoBehaviour
 
 		_cubeReferences = new Transform[_fieldWidth * _fieldHeight];
 		_cubePositions = new int[_fieldWidth * _fieldHeight];
-		spawnBrick (true);
 		_scoreLvl = 0;
 
-		//create pool
+        for (int i = 0; i < briks.Length; i++)
+        {
+            briks[i].GetComponent<block>().cubeMatherial = createMaterial(briks[i].GetComponent<block>().color, briks[i].GetComponent<block>().mainColorCorrection, false);
+            briks[i].GetComponent<block>().cubeOnFieldMatherial = createMaterial(briks[i].GetComponent<block>().color, briks[i].GetComponent<block>().mainColorCorrection, true);
+        }
+        
+        //create pool
 		pool = new Transform[poolSize];
 
 		for (int i = 0; i < poolSize; i++) 
 		{
 			pool[i] = Instantiate(cube) as Transform;
+            //pool[i].GetComponent<Renderer>().material = null;//cubeMaterial;
 			pool[i].gameObject.SetActive(false);
 		}
 		//\create pool
+        spawnBrick(true);
 	}
 
+    public Material createMaterial(Color color, float colorCorrection, bool light)
+    {
+        var result = new Material(cubeShader);
+        result.SetColor("_Color1", color);
+        result.SetFloat("_Power1", power1 * colorCorrection);
+        result.SetFloat("_Power2", power2 * colorCorrection);
+        result.SetTexture("_1stTex", cubeTexture);
+        if (light)
+            result.SetFloat("_Power5", 1f);
+        return result;
+    }
 	public Transform getCubeFromPool()
 	{
 		for (int i = 0; i < poolSize; i++) 
@@ -156,7 +179,7 @@ public class tetrisMain : MonoBehaviour
 			functions.printNextBrick (briks [_secondBrick], cube);
 	}
 	
-	public void setBrick(bool[,] brickMatrix, int xPosition, int yPosition, Color color, float mainColorCorrection)
+	public void setBrick(bool[,] brickMatrix, int xPosition, int yPosition, Color color, float mainColorCorrection, Material material)
 	{
 		if (currentFallSpeed > 30)
 			colorAnimationChangeSpeed = 30;
@@ -174,10 +197,11 @@ public class tetrisMain : MonoBehaviour
 					cubeOnField.position = new Vector3(xPosition + x, yPosition - y, 0);
 					//\pool
 					cubeOnField.gameObject.isStatic = true; //оптимизация (?)
-					cubeOnField.GetComponent<Renderer>().material.SetColor("_Color1", color);
-					cubeOnField.GetComponent<Renderer>().material.SetFloat("_Power1", power1 * mainColorCorrection);
-					cubeOnField.GetComponent<Renderer>().material.SetFloat("_Power2", power2 * mainColorCorrection);
-					cubeOnField.GetComponent<Renderer>().material.SetFloat("_Power5", cubeOnField.GetComponent<Renderer>().material.GetFloat("_Power5") + 0.2f);
+                    cubeOnField.GetComponent<Renderer>().material = material;
+					//cubeOnField.GetComponent<Renderer>().material.SetColor("_Color1", color);
+					//cubeOnField.GetComponent<Renderer>().material.SetFloat("_Power1", power1 * mainColorCorrection);
+					//cubeOnField.GetComponent<Renderer>().material.SetFloat("_Power2", power2 * mainColorCorrection);
+					//cubeOnField.GetComponent<Renderer>().material.SetFloat("_Power5", cubeOnField.GetComponent<Renderer>().material.GetFloat("_Power5") + 0.2f);
 					cubeOnField.tag = "Cube";
 					_field[(int) xPosition + x, (int) yPosition - y] = true;		
 				}
