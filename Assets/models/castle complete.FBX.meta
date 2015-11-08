@@ -1,15 +1,52 @@
 fileFormatVersion: 2
-guid: 230acbeb725b54e53acd1300ec371c99
-timeCreated: 1445121429
+guid: 0fe358706abe67448a03551a75c2c140
+timeCreated: 1446934775
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: Box004
+    100000: bridge
+    100002: castle 1
+    100004: castle 2
+    100006: //RootNode
+    100008: ground
+    100010: Tower 1
+    100012: tower 2
+    100014: Tower 3
+    100016: Tower 4
+    400000: bridge
+    400002: castle 1
+    400004: castle 2
+    400006: //RootNode
+    400008: ground
+    400010: Tower 1
+    400012: tower 2
+    400014: Tower 3
+    400016: Tower 4
+    2300000: bridge
+    2300002: castle 1
+    2300004: castle 2
+    2300006: ground
+    2300008: Tower 1
+    2300010: tower 2
+    2300012: Tower 3
+    2300014: Tower 4
+    3300000: bridge
+    3300002: castle 1
+    3300004: castle 2
+    3300006: ground
+    3300008: Tower 1
+    3300010: tower 2
+    3300012: Tower 3
+    3300014: Tower 4
+    4300000: ground
+    4300002: Tower 1
+    4300004: bridge
+    4300006: tower 2
+    4300008: castle 1
+    4300010: Tower 4
+    4300012: castle 2
+    4300014: Tower 3
     9500000: //RootNode
   materials:
     importMaterials: 1
