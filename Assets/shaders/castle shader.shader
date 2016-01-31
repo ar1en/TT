@@ -34,21 +34,10 @@ Shader "castle shader"
 			fixed2 scrolledUV1 = IN.uv_1stTex;
 			fixed xscroll1 = scrolledUV1.x;
 			fixed yscroll1 = scrolledUV1.y;
-			
-			fixed2 scrolledUV2 = IN.uv_2ndTex;
-			fixed xscroll2 = scrolledUV2.x;
-			fixed yscroll2 = scrolledUV2.y;
-			
-			
+		
 			half4 c = tex2D (_1stTex, half2(scrolledUV1.x, scrolledUV1.y));
-			half4 d = tex2D (_2ndTex, half2(scrolledUV2.x, scrolledUV2.y));
-			alptex1 = c.a;
-			alptex2 = d.a;
-			
-			if (scrolledUV1.y < 0.6) 
-				o.Emission = c.rgb * _Power1;
-			else 
-				o.Emission = c.rgb * _Power2;
+
+			o.Emission = c.rgb * _Power1;
 
 		}
 		ENDCG
