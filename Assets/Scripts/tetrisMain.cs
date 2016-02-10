@@ -8,6 +8,8 @@ public class tetrisMain : MonoBehaviour
 	public int maxBlockSize = 5;
 	public int poolSize = 150;
 	public GameObject[] briks;
+    public bool noUseRandomGeneration = false;
+    public int[] blockBuffer = new int[] {8, 8, 8, 0, 0, 0, 0, 7};
 
 	[Header("Настройки размеров поля")]
 	public int fieldWidth = 10;
@@ -151,19 +153,39 @@ public class tetrisMain : MonoBehaviour
     }
 	public Transform getCubeFromPool()
 	{
-		for (int i = 0; i < poolSize; i++) 
+       //int m = 12;
+        for (int i = 0; i < poolSize; i++) 
 		{
-			if (pool[i].gameObject.activeSelf == false)
+			if (pool[i].gameObject.activeSelf == false)// && (m == 0))
 			{
-				pool[i].gameObject.SetActive(true);
-				return pool[i];
+                //if (m == 0)
+               // {
+                    pool[i].gameObject.SetActive(true);
+                    return pool[i];
+               // }
+               // m--;
 			}
 		}
+        Debug.Log("WARNING NULL FROM POOL!!!");
 		return null;
 	}
 
+    void debugGetPoolStatus()
+    {
+        int active = 0;
+        int passive = 0;
+        for (int i = 0; i < poolSize; i++)
+            if (pool[i].gameObject.activeSelf == true)
+                active++;
+            else
+                passive++;
+        Debug.Log("Пул на " + poolSize + " элементов. " + passive + " в резерве. " + active + " используется");
+    }
+
 	void spawnBrick(bool first)
 	{
+        //debugGetPoolStatus();
+
         if (first) 
 		{
             _firstBrick = functions.randomBrick();
@@ -194,6 +216,7 @@ public class tetrisMain : MonoBehaviour
 					//var cubeOnField = Instantiate(cube, new Vector3(xPosition + x, yPosition - y, 0), Quaternion.identity) as Transform;
 					//pool
 					var cubeOnField = getCubeFromPool();
+                    //cubeOnField.gameObject.SetActive(true);
 					cubeOnField.position = new Vector3(xPosition + x, yPosition - y, 0);
 					//\pool
 					cubeOnField.gameObject.isStatic = true; //оптимизация (?)
@@ -260,22 +283,16 @@ public class tetrisMain : MonoBehaviour
 				rotation.eulerAngles = new Vector3(Random.Range(-10, 10), Random.Range(-10, 10), Random.Range(-10, 10));
 				cube.GetComponent<Rigidbody>().MoveRotation(rotation);
 				//Destroy(cube, 4f);
-				StartCoroutine(hideCube(cube, 4f));
+				StartCoroutine(hideCubeWithPing(cube, 4f));
 			}
 		}
 		StartCoroutine(fallEnd(_cubeReferences, _cubePositions, cubesToMove));
 	}
 
-	IEnumerator hideCube(GameObject cube, float ping)
+	IEnumerator hideCubeWithPing(GameObject cube, float ping)
 	{
 		yield return new WaitForSeconds (ping);
-		Destroy(cube.GetComponent<Rigidbody>());
-		cube.transform.position = new Vector3 (0, 0, 0);
-		Quaternion rotation = new Quaternion();
-		rotation.eulerAngles = new Vector3(0, 0, 0);
-		cube.transform.rotation = rotation;
-		cube.GetComponent<Collider>().enabled = false;
-		cube.SetActive (false);
+        functions.hideCube(cube.transform);
 	}
 
 	IEnumerator fallEnd(Transform[] cubeReferences, int[] cubePositions, int cubesToMove)
@@ -310,6 +327,7 @@ public class tetrisMain : MonoBehaviour
 			{
 				Destroy(this);
 				Application.LoadLevel(0);
+                //SceneManager.LoadScene;
 			}
 		}
 	}

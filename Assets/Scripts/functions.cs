@@ -8,17 +8,17 @@ public class functions : MonoBehaviour
 		bool[,] field = new bool[width, height];
 		
 		//генерация стен																	//+++++----------+++++
-		for (int i = 0; i < height; i++) 														//+++++----------+++++
+		for (int i = 0; i < height; i++) 													//+++++----------+++++
 			for (int j = 0; j < maxBlockSize; j++) 											//+++++----------+++++
 		{																					//+++++----------+++++
 			field[j, i] = true;								//левая стена					//+++++----------+++++
-			field[width-1-j, i] = true;						//правая стена				//+++++----------+++++
+			field[width-1-j, i] = true;						//правая стена				    //+++++----------+++++
 		}																					//+++++----------+++++
-		//\генерация стен																//+++++----------+++++
+		//\генерация стен																    //+++++----------+++++
 		//генерация пола																	//+++++----------+++++
-		for (int i = 0; i < width; i++) 														//+++++----------+++++
+		for (int i = 0; i < width; i++) 													//+++++----------+++++
 			field[i, 0] = true;								//пол							//+++++----------+++++
-		//\генерация пола																//++++++++++++++++++++
+		//\генерация пола																    //++++++++++++++++++++
 		return field;
 	}
 
@@ -32,7 +32,8 @@ public class functions : MonoBehaviour
 
 	public static bool checkBrick(bool[,] brickMatrix, int xPosition, int yPosition, bool[,] field)
 	{
-		int size = brickMatrix.GetLength (0);
+        //Debug.Log("Check normal");
+        int size = brickMatrix.GetLength (0);
 		for (var y = size - 1; y >= 0; y--)
 			for (var x = 0; x < size; x++)
 				if ((brickMatrix[x, y]) && (field[xPosition + x, yPosition - y]))
@@ -40,9 +41,62 @@ public class functions : MonoBehaviour
 		return false;
 	}
 
+    public static bool checkBrickSpecial(bool[,] brickMatrix, int xPosition, int yPosition, bool[,] field)
+    {
+        //Debug.Log("Check special");
+        int hole = 0;
+        int size = brickMatrix.GetLength(0);
+        for (var y = size - 1; y >= 0; y--)
+            for (var x = 0; x < size; x++)
+            {
+                for (var y1 = 0; y1 < field.GetLength(1); y1++)
+                {
+                    if (field[xPosition + x, y1] == false)
+                    {
+                        hole = y1;
+                        break;
+                    }
+                }
+                if ((brickMatrix[x, y]) && (field[xPosition + x, yPosition - y]) && (yPosition == hole))
+                    return true;
+            }
+                
+        /*int hole = 0;
+
+        int size = brickMatrix.GetLength(0);
+
+        for (var y = 0; y < field.GetLength(1); y++)
+        {
+            if (field[xPosition, y] == false)
+            {
+                hole = y;
+                break;
+            }
+        }
+        if (yPosition == hole)
+            return true;*/
+        return false;
+    }
+
     public static int randomBrick()
     {
         tetrisMain _main = GameObject.Find("main").GetComponent<tetrisMain>();
+        ////////////////////debug-->
+        if (_main.noUseRandomGeneration)
+        {
+            int brickNumber = 0;
+            for (int i = 0; i < _main.blockBuffer.Length; i++)
+            {
+                if (_main.blockBuffer[i] != 99)
+                {
+                    brickNumber = _main.blockBuffer[i];
+                    _main.blockBuffer[i] = 99;
+                    break;
+                }
+            }
+            return brickNumber;
+        }
+        ////////////////////<--debug
         int sum = 0;
         int result = 0;
 
@@ -72,6 +126,21 @@ public class functions : MonoBehaviour
                 result = i;
         }
         return (result);
+    }
+
+    public static void hideCube(Transform cube)
+    {
+        Destroy(cube.GetComponent<Rigidbody>());
+        cube.DetachChildren();
+        cube.transform.position = new Vector3(0, 0, 0);
+        Quaternion rotation = new Quaternion();
+        rotation.eulerAngles = new Vector3(0, 0, 0);
+        cube.transform.rotation = rotation;
+        if (cube.GetComponent<Collider>())
+            cube.GetComponent<Collider>().enabled = false;
+        //cube.SetActive(false);
+        cube.gameObject.isStatic = false;
+        cube.gameObject.SetActive(false);
     }
 
 	public static void printNextBrick(GameObject brick, Transform cube)

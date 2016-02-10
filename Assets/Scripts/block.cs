@@ -13,7 +13,7 @@ public class block : MonoBehaviour
 	public float brightnessLampGradient = 0;			//4
 	public float brightnessReflectorGradient = 0;		//5
 
-
+    public int special = 0;
 	public int rate = 1;
 
 	[HideInInspector]
@@ -70,26 +70,30 @@ public class block : MonoBehaviour
 				if (brick[y][x] == "1"[0])				
 				{
 					_brickMatrix[x, y] = true;
-					//_brick = Instantiate(_main.cube, new Vector3(x - _halfSizeFloat, (_size - y) + _halfSizeFloat - _size, 0.0f), Quaternion.identity) as Transform;
 					//pool
 					_brick = _main.getCubeFromPool();
+                    
 					_brick.transform.position = new Vector3(x - _halfSizeFloat, (_size - y) + _halfSizeFloat - _size, 0.0f);
+                    //Debug.Log(_brick.transform.position.x + "  :   " + _brick.transform.position.y);
                     _brick.GetComponent<Renderer>().material = cubeMatherial;
 					//\pool
-					//_brick.GetComponent<Renderer>().material.SetColor("_Color1", color);
-					//_brick.GetComponent<Renderer>().material.SetFloat("_Power1", _brick.GetComponent<Renderer>().material.GetFloat("_Power1") * mainColorCorrection);
-					//_brick.GetComponent<Renderer>().material.SetFloat("_Power2", _brick.GetComponent<Renderer>().material.GetFloat("_Power2") * mainColorCorrection);
-					//_brick.GetComponent<Renderer>().material.SetFloat("_Power1", _main.power1 * mainColorCorrection);
-					//_brick.GetComponent<Renderer>().material.SetFloat("_Power2", _main.power2 * mainColorCorrection);
 					_brick.parent = transform;		//делаем созданные кубики дочерними
 					transform.tag = "block";
 				}
 		transform.position = new Vector3 (_main._fieldWidth / 2 + (_size%2 == 0? 0.0f : 0.5f), _main._fieldHeight - _halfSizeFloat, 0);	//выставляем кирпичик сверху и по центру
-        //this.GetComponent<Renderer>().material = _main.cubeMaterial;
-		_yPosition = _main._fieldHeight - 1;
+
+
+        /*foreach (Transform cube in gameObject.GetComponentsInChildren<Transform>())
+        {
+            Debug.Log(cube.transform.position.x + "  :   " + cube.transform.position.y);
+        }*/
+
+
+        _yPosition = _main._fieldHeight - 1;
 		_xPosition = (int)transform.position.x - (int) _halfSizeFloat;
 		if (_main.useGhost)
 			Instantiate (_main.ghost);
+        Debug.Log("block was created!");
 		StartCoroutine (Fall ());
 	}
 	
@@ -110,19 +114,29 @@ public class block : MonoBehaviour
 
 	IEnumerator  Fall ()
 	{
-		while (true) 
+        Debug.Log("falling start");
+        while (true) 
 		{
 			_yPosition --;
-			if (functions.checkBrick(_brickMatrix, _xPosition, _yPosition, _main._field))
+            Debug.Log("until 'checkBrickSpecial'");
+            //if (functions.checkBrick(_brickMatrix, _xPosition, _yPosition, _main._field))
+			if (((special == 0) && (functions.checkBrick(_brickMatrix, _xPosition, _yPosition, _main._field))) || (((special == 1) && (functions.checkBrickSpecial(_brickMatrix, _xPosition, _yPosition, _main._field)))))
 			{
 				_main.blockDown = true;
 				_shaderManager.coord2 = _yPosition;
                 _main.setBrick(_brickMatrix, _xPosition, _yPosition + 1, color, mainColorCorrection, cubeOnFieldMatherial);
 
-
 				foreach(Transform cube in gameObject.GetComponentsInChildren<Transform>())
 				{
-					cube.gameObject.SetActive(false);
+                    functions.hideCube(cube);
+                    //cube.DetachChildren();
+                    //Destroy(cube.GetComponent<Rigidbody>());
+                    //cube.transform.position = new Vector3(0, 0, 0);
+                    //Quaternion rotation = new Quaternion();
+                    //rotation.eulerAngles = new Vector3(0, 0, 0);
+                    //cube.transform.rotation = rotation;
+                    //cube.GetComponent<Collider>().enabled = false;
+                    //cube.gameObject.SetActive(false);
 				}
 				Destroy(gameObject);
 				if (_main.useGhost)
