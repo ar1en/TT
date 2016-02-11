@@ -139,6 +139,7 @@ public class functions : MonoBehaviour
         if (cube.GetComponent<Collider>())
             cube.GetComponent<Collider>().enabled = false;
         //cube.SetActive(false);
+        cube.tag = "Untagged";
         cube.gameObject.isStatic = false;
         cube.gameObject.SetActive(false);
     }

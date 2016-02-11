@@ -72,7 +72,7 @@ public class block : MonoBehaviour
 					_brickMatrix[x, y] = true;
 					//pool
 					_brick = _main.getCubeFromPool();
-                    
+                    //Debug.Log((_size - y) + _halfSizeFloat);
 					_brick.transform.position = new Vector3(x - _halfSizeFloat, (_size - y) + _halfSizeFloat - _size, 0.0f);
                     //Debug.Log(_brick.transform.position.x + "  :   " + _brick.transform.position.y);
                     _brick.GetComponent<Renderer>().material = cubeMatherial;
@@ -93,7 +93,7 @@ public class block : MonoBehaviour
 		_xPosition = (int)transform.position.x - (int) _halfSizeFloat;
 		if (_main.useGhost)
 			Instantiate (_main.ghost);
-        Debug.Log("block was created!");
+        //Debug.Log("block was created!");
 		StartCoroutine (Fall ());
 	}
 	
@@ -114,11 +114,11 @@ public class block : MonoBehaviour
 
 	IEnumerator  Fall ()
 	{
-        Debug.Log("falling start");
+       // Debug.Log("falling start");
         while (true) 
 		{
 			_yPosition --;
-            Debug.Log("until 'checkBrickSpecial'");
+            //Debug.Log("until 'checkBrickSpecial'");
             //if (functions.checkBrick(_brickMatrix, _xPosition, _yPosition, _main._field))
 			if (((special == 0) && (functions.checkBrick(_brickMatrix, _xPosition, _yPosition, _main._field))) || (((special == 1) && (functions.checkBrickSpecial(_brickMatrix, _xPosition, _yPosition, _main._field)))))
 			{
@@ -146,6 +146,7 @@ public class block : MonoBehaviour
 			for (float i = _yPosition + 1; i > _yPosition; i -= Time.deltaTime * _fallSpeed) //физика
 			{
 				transform.position = new Vector3 (transform.position.x, i - _halfSizeFloat, 0);
+                //Debug.Log(i);
 				_shaderManager.coord = i;
 				yield return 0;
 			}
