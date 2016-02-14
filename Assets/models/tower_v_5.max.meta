@@ -1,0 +1,166 @@
+fileFormatVersion: 2
+guid: 2758c480d9d86fa40b8af842cac07af8
+timeCreated: 1455458141
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Camera001
+    100002: Camera001.Target
+    100004: caps
+    100006: central cap
+    100008: Direct003
+    100010: Direct004
+    100012: Direct005
+    100014: Direct005.Target
+    100016: Direct006
+    100018: FDirect001
+    100020: fences
+    100022: fountain cube
+    100024: fountain pillar
+    100026: ground
+    100028: lower castle
+    100030: Plane001
+    100032: Plane002
+    100034: rocks
+    100036: stair
+    100038: tower 1
+    100040: tower 2
+    100042: //RootNode
+    100044: fall water
+    100046: Water
+    400000: Camera001
+    400002: Camera001.Target
+    400004: caps
+    400006: central cap
+    400008: Direct003
+    400010: Direct004
+    400012: Direct005
+    400014: Direct005.Target
+    400016: Direct006
+    400018: FDirect001
+    400020: fences
+    400022: fountain cube
+    400024: fountain pillar
+    400026: ground
+    400028: lower castle
+    400030: Plane001
+    400032: Plane002
+    400034: rocks
+    400036: stair
+    400038: tower 1
+    400040: tower 2
+    400042: //RootNode
+    400044: fall water
+    400046: Water
+    2300000: caps
+    2300002: central cap
+    2300004: fences
+    2300006: fountain cube
+    2300008: fountain pillar
+    2300010: ground
+    2300012: lower castle
+    2300014: Plane001
+    2300016: Plane002
+    2300018: rocks
+    2300020: stair
+    2300022: tower 1
+    2300024: tower 2
+    2300026: fall water
+    2300028: Water
+    3300000: caps
+    3300002: central cap
+    3300004: fences
+    3300006: fountain cube
+    3300008: fountain pillar
+    3300010: ground
+    3300012: lower castle
+    3300014: Plane001
+    3300016: Plane002
+    3300018: rocks
+    3300020: stair
+    3300022: tower 1
+    3300024: tower 2
+    3300026: fall water
+    3300028: Water
+    4300000: central cap
+    4300002: tower 2
+    4300004: caps
+    4300006: fences
+    4300008: lower castle
+    4300010: stair
+    4300012: rocks
+    4300014: tower 1
+    4300016: ground
+    4300018: fountain cube
+    4300020: fountain pillar
+    4300022: Plane001
+    4300024: Plane002
+    4300026: Water
+    4300028: fall water
+    7400000: Take 001
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
