@@ -33,6 +33,9 @@ public class block : MonoBehaviour
 	private Transform _brick;
 	private tetrisMain _main;
 	private borderShaderManager _shaderManager;
+	private bool _count = true;
+
+	private float _brightnes = 1.5f;
     
 
 	void Start () 
@@ -72,9 +75,7 @@ public class block : MonoBehaviour
 					_brickMatrix[x, y] = true;
 					//pool
 					_brick = _main.getCubeFromPool();
-                    //Debug.Log((_size - y) + _halfSizeFloat);
 					_brick.transform.position = new Vector3(x - _halfSizeFloat, (_size - y) + _halfSizeFloat - _size, 0.0f);
-                    //Debug.Log(_brick.transform.position.x + "  :   " + _brick.transform.position.y);
                     _brick.GetComponent<Renderer>().material = cubeMatherial;
 					//\pool
 					_brick.parent = transform;		//делаем созданные кубики дочерними
@@ -110,11 +111,27 @@ public class block : MonoBehaviour
 			_main.blockDown = false;
 			firstFrame++;
 		}
+
+		if (special == 1)
+		{
+			if (_count == true) {
+				_brightnes = _brightnes + 0.05f;
+				if (_brightnes > 2.5f)
+					_count = false;
+			} 
+			else 
+			{
+				_brightnes = _brightnes - 0.05f;
+				if (_brightnes < 1f)
+					_count = true;
+			}
+			gameObject.GetComponentInChildren<Renderer> ().material.SetFloat ("_Power2", _brightnes);
+		}
 	}
 
 	IEnumerator  Fall ()
 	{
-       // Debug.Log("falling start");
+		
         while (true) 
 		{
 			_yPosition --;
