@@ -33,7 +33,7 @@ public class block : MonoBehaviour
 	private Transform _brick;
 	private tetrisMain _main;
 	private borderShaderManager _shaderManager;
-	private bool _count = true;
+	private int _count = 1;
 
 	private float _brightnes = 1.5f;
     
@@ -56,18 +56,10 @@ public class block : MonoBehaviour
 		
 		_main.currentBrickColor2 = _main.currentBrickColor;
 		_main.currentBrickColor = color;
-
 		_fallSpeed = _main.fallSpeed;
 		_size = brick.Length;						//число элементов текстового массива
 		_halfSizeFloat = _size * 0.5f;
 		_brickMatrix = new bool[_size, _size];		//создание логической матрицы заданной размерности
-		
-        //brickMatherial = new Material(Shader.Find("Cubik universal 2"));
-        //brickMatherial.SetColor("_Color1", color);
-        //brickMatherial.SetFloat("_Power1", _main.power1 * mainColorCorrection);
-        //brickMatherial.SetFloat("_Power2", _main.power2 * mainColorCorrection);
-        //brickMatherial.SetTexture("_1stTex", _main.cubeTexture);
-
         for (int y = 0; y < _size; y++)
 			for (int x = 0; x < _size; x++)
 				if (brick[y][x] == "1"[0])				
@@ -82,19 +74,10 @@ public class block : MonoBehaviour
 					transform.tag = "block";
 				}
 		transform.position = new Vector3 (_main._fieldWidth / 2 + (_size%2 == 0? 0.0f : 0.5f), _main._fieldHeight - _halfSizeFloat, 0);	//выставляем кирпичик сверху и по центру
-
-
-        /*foreach (Transform cube in gameObject.GetComponentsInChildren<Transform>())
-        {
-            Debug.Log(cube.transform.position.x + "  :   " + cube.transform.position.y);
-        }*/
-
-
         _yPosition = _main._fieldHeight - 1;
 		_xPosition = (int)transform.position.x - (int) _halfSizeFloat;
 		if (_main.useGhost)
 			Instantiate (_main.ghost);
-        //Debug.Log("block was created!");
 		StartCoroutine (Fall ());
 	}
 	
@@ -111,10 +94,14 @@ public class block : MonoBehaviour
 			_main.blockDown = false;
 			firstFrame++;
 		}
-
-		if (special == 1)
+		if (special == 1) 
 		{
-			if (_count == true) {
+			
+		}
+		/*if (special == 1)
+		{
+			if (_count == true)
+			{
 				_brightnes = _brightnes + 0.05f;
 				if (_brightnes > 2.5f)
 					_count = false;
@@ -126,7 +113,7 @@ public class block : MonoBehaviour
 					_count = true;
 			}
 			gameObject.GetComponentInChildren<Renderer> ().material.SetFloat ("_Power2", _brightnes);
-		}
+		}*/
 	}
 
 	IEnumerator  Fall ()
@@ -135,8 +122,6 @@ public class block : MonoBehaviour
         while (true) 
 		{
 			_yPosition --;
-            //Debug.Log("until 'checkBrickSpecial'");
-            //if (functions.checkBrick(_brickMatrix, _xPosition, _yPosition, _main._field))
 			if (((special == 0) && (functions.checkBrick(_brickMatrix, _xPosition, _yPosition, _main._field))) || (((special == 1) && (functions.checkBrickSpecial(_brickMatrix, _xPosition, _yPosition, _main._field)))))
 			{
 				_main.blockDown = true;
@@ -146,14 +131,6 @@ public class block : MonoBehaviour
 				foreach(Transform cube in gameObject.GetComponentsInChildren<Transform>())
 				{
                     functions.hideCube(cube);
-                    //cube.DetachChildren();
-                    //Destroy(cube.GetComponent<Rigidbody>());
-                    //cube.transform.position = new Vector3(0, 0, 0);
-                    //Quaternion rotation = new Quaternion();
-                    //rotation.eulerAngles = new Vector3(0, 0, 0);
-                    //cube.transform.rotation = rotation;
-                    //cube.GetComponent<Collider>().enabled = false;
-                    //cube.gameObject.SetActive(false);
 				}
 				Destroy(gameObject);
 				if (_main.useGhost)
@@ -163,7 +140,6 @@ public class block : MonoBehaviour
 			for (float i = _yPosition + 1; i > _yPosition; i -= Time.deltaTime * _fallSpeed) //физика
 			{
 				transform.position = new Vector3 (transform.position.x, i - _halfSizeFloat, 0);
-                //Debug.Log(i);
 				_shaderManager.coord = i;
 				yield return 0;
 			}
