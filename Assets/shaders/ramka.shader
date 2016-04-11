@@ -6,9 +6,9 @@
 		_NextColor("NextColor", Color) = (1,1,1,1)
 		_DiffColor("Diffuse", Color) = (1,1,1,1)
 		_ColorChangeCounter("Counter", float) = 1
-		_Power1("FtClPw", float) = 1
-		_Power2("ScClPw", float) = 1
-		_Power3("ZonePW", float) = 1
+		_Power("FtClPw", float) = 1
+		_Step2("Pw2", float) = 1
+		_Step3("Pw3", float) = 1
 		_Step("Lamp Step", float) = 1
 		_MainTex("Base (RGB)", 2D) = "white"  {}
 	}
@@ -21,10 +21,11 @@
 #pragma surface surf Lambert
 
 
-		sampler2D _MainTex, _SecTex;
+		sampler2D _MainTex;
 	float3 _ColorLerp1, _ColorLerp2;
 	float4 _CurrentColor, _NextColor, _DiffColor;
-	float coefsetki, alpTex1, _Power, _Step, _Coord, _ColorChangeCounter;
+	float coefsetki, alpTex1, _Power, _Power2, _Power3,
+			_Step, _Step2, _Step3, _Coord, _ColorChangeCounter;
 
 	struct Input
 	{
@@ -41,15 +42,14 @@
 
 		alpTex1 = c.a;
 
-		if (coordUV.x >= 0.5)
+		if (coordUV.x > 0.5)
 		{
 			o.Emission = _DiffColor.rgb;
 		}
-
-		if (coordUV.x < 0.5)
+		else
 		{
-			o.Emission = lerp(_CurrentColor.rgb * pow(alpTex1, _Step) * _Power,
-				_NextColor.rgb * pow(alpTex1, _Step) * _Power, _ColorChangeCounter);
+			o.Emission = lerp(_CurrentColor.rgb * pow(alpTex1, _Step2) * _Power,
+				_NextColor.rgb * pow(alpTex1, _Step3) * _Power, _ColorChangeCounter);
 		}
 
 	}
