@@ -6,9 +6,9 @@
 		_NextColor("NextColor", Color) = (1,1,1,1)
 		_DiffColor("Diffuse", Color) = (1,1,1,1)
 		_ColorChangeCounter("Counter", float) = 1
-		_Power1("FtClPw", float) = 1
-		_Power2("ScClPw", float) = 1
-		_Power3("ZonePW", float) = 1
+		_Power("FtClPw", float) = 1
+//		_Power2("ScClPw", float) = 1
+//		_Power3("ZonePW", float) = 1
 		_Step("Lamp Step", float) = 1
 		_MainTex("Base (RGB)", 2D) = "white"  {}
 	}
@@ -43,11 +43,9 @@
 
 		if (coordUV.x >= 0.5)
 		{
-			o.Emission = _DiffColor.rgb;
+			o.Albedo = _DiffColor.rgb;
 		}
-
-		if (coordUV.x < 0.5)
-		{
+		else {
 			o.Emission = lerp(_CurrentColor.rgb * pow(alpTex1, _Step) * _Power,
 				_NextColor.rgb * pow(alpTex1, _Step) * _Power, _ColorChangeCounter);
 		}
