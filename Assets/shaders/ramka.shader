@@ -6,10 +6,10 @@
 		_NextColor("NextColor", Color) = (1,1,1,1)
 		_DiffColor("Diffuse", Color) = (1,1,1,1)
 		_ColorChangeCounter("Counter", float) = 1
-		_Power("FtClPw", float) = 1
-//		_Power2("ScClPw", float) = 1
-//		_Power3("ZonePW", float) = 1
-		_Step("Lamp Step", float) = 1
+		_Power("Power", float) = 1
+		_Power2("Pow2", float) = 1
+		_Step1("Step1", float) = 1
+		_Step2("Step2", float) = 1
 		_MainTex("Base (RGB)", 2D) = "white"  {}
 	}
 		SubShader
@@ -24,7 +24,7 @@
 		sampler2D _MainTex, _SecTex;
 	float3 _ColorLerp1, _ColorLerp2;
 	float4 _CurrentColor, _NextColor, _DiffColor;
-	float coefsetki, alpTex1, _Power, _Step, _Coord, _ColorChangeCounter;
+	float alpTex, _Power, _Power2,_Step1, _Step2, _Coord, _ColorChangeCounter;
 
 	struct Input
 	{
@@ -39,15 +39,15 @@
 
 		float4 c = tex2D(_MainTex, fixed2(xcoord,ycoord));
 
-		alpTex1 = c.a;
+		alpTex = c.a;
 
 		if (coordUV.x >= 0.5)
 		{
 			o.Albedo = _DiffColor.rgb;
 		}
 		else {
-			o.Emission = lerp(_CurrentColor.rgb * pow(alpTex1, _Step) * _Power,
-				_NextColor.rgb * pow(alpTex1, _Step) * _Power, _ColorChangeCounter);
+			o.Emission = lerp(_CurrentColor.rgb * pow(alpTex, _Step1) * _Power,
+				_NextColor.rgb * pow(alpTex, _Step2) * _Power, _ColorChangeCounter);
 		}
 
 	}
