@@ -325,7 +325,7 @@ public class tetrisMain : MonoBehaviour
 		{
 			if (_field[i,fieldHeight] == true)
 			{
-				Destroy(this);
+				//Destroy(this);
 				Application.LoadLevel(0);
                 //SceneManager.LoadScene;
 			}
