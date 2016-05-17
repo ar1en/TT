@@ -32,7 +32,6 @@ public class functions : MonoBehaviour
 
 	public static bool checkBrick(bool[,] brickMatrix, int xPosition, int yPosition, bool[,] field)
 	{
-        //Debug.Log("Check normal");
         int size = brickMatrix.GetLength (0);
 		for (var y = size - 1; y >= 0; y--)
 			for (var x = 0; x < size; x++)
@@ -43,7 +42,6 @@ public class functions : MonoBehaviour
 
     public static bool checkBrickSpecial(bool[,] brickMatrix, int xPosition, int yPosition, bool[,] field)
     {
-        //Debug.Log("Check special");
         int hole = 0;
         int size = brickMatrix.GetLength(0);
         for (var y = size - 1; y >= 0; y--)
@@ -60,21 +58,6 @@ public class functions : MonoBehaviour
                 if ((brickMatrix[x, y]) && (field[xPosition + x, yPosition - y]) && (yPosition == hole))
                     return true;
             }
-                
-        /*int hole = 0;
-
-        int size = brickMatrix.GetLength(0);
-
-        for (var y = 0; y < field.GetLength(1); y++)
-        {
-            if (field[xPosition, y] == false)
-            {
-                hole = y;
-                break;
-            }
-        }
-        if (yPosition == hole)
-            return true;*/
         return false;
     }
 

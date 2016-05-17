@@ -36,6 +36,7 @@ public class block : MonoBehaviour
 	private int _count = 1;
 
 	private float _brightnes = 1.5f;
+    private bool _stopFall = false;
     
 
 	void Start () 
@@ -94,10 +95,10 @@ public class block : MonoBehaviour
 			_main.blockDown = false;
 			firstFrame++;
 		}
-		if (special == 1) 
+		/*if (special == 1) 
 		{
 			
-		}
+		}*/
 		/*if (special == 1)
 		{
 			if (_count == true)
@@ -117,11 +118,15 @@ public class block : MonoBehaviour
 	}
 
 	IEnumerator  Fall ()
-	{
-		
+	{	
         while (true) 
 		{
-			_yPosition --;
+            if (!_stopFall)
+                _yPosition --;
+
+            if (!functions.checkBrick(_brickMatrix, _xPosition, _yPosition, _main._field) && functions.checkBrick(_brickMatrix, _xPosition, _yPosition - 1, _main._field))
+                Destroy(GameObject.FindGameObjectWithTag("ghost"));
+
 			if (((special == 0) && (functions.checkBrick(_brickMatrix, _xPosition, _yPosition, _main._field))) || (((special == 1) && (functions.checkBrickSpecial(_brickMatrix, _xPosition, _yPosition, _main._field)))))
 			{
 				_main.blockDown = true;
@@ -134,7 +139,8 @@ public class block : MonoBehaviour
 				}
 				Destroy(gameObject);
 				if (_main.useGhost)
-					Destroy(GameObject.Find("ghost(Clone)"));
+                    Destroy(GameObject.FindGameObjectWithTag("ghost"));
+					//Destroy(GameObject.Find("ghost(Clone)"));
 				break;	
 			}
 			for (float i = _yPosition + 1; i > _yPosition; i -= Time.deltaTime * _fallSpeed) //физика
@@ -157,7 +163,9 @@ public class block : MonoBehaviour
 
 	public void Rotate()
 	{
-		bool[,] tempMatrix = new bool[_size, _size];
+
+        _stopFall = true;
+        bool[,] tempMatrix = new bool[_size, _size];
 		for (int y = 0; y < _size; y++)
 			for (int x = 0; x < _size; x++)
 				tempMatrix[y, x] = _brickMatrix[x, (_size-1) - y];
@@ -172,5 +180,6 @@ public class block : MonoBehaviour
 				transform.GetChild(i).position = new Vector3 (transform.GetChild(i).position.x - 1, transform.GetChild(i).position.y, transform.GetChild(i).position.z);
 			}
 		}
+        _stopFall = false;
 	}
 }
