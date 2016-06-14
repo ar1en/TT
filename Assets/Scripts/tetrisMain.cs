@@ -133,6 +133,7 @@ public class tetrisMain : MonoBehaviour
 		for (int i = 0; i < poolSize; i++) 
 		{
 			pool[i] = Instantiate(cube) as Transform;
+			pool [i].gameObject.layer = 8;
             //pool[i].GetComponent<Renderer>().material = null;//cubeMaterial;
 			pool[i].gameObject.SetActive(false);
 		}
