@@ -1,0 +1,134 @@
+fileFormatVersion: 2
+guid: 50d344ab9d563744f94f86380000d2de
+timeCreated: 1466202347
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: maket_kadavra_1
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 9
+  spritePivot: {x: 0.49999997, y: 0.8075397}
+  spriteBorder: {x: 0, y: 704, z: 0, w: 105}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: maket_kadavra_1
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 710
+        width: 976
+        height: 184
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 409, y: -6}
+        - {x: -426, y: 11}
+        - {x: -488, y: 11}
+        - {x: -488, y: -78}
+        - {x: -361, y: -92}
+        - {x: 408, y: -92}
+        - {x: 424, y: -33}
+        - {x: 424, y: -19}
+        - {x: 413, y: -3}
+      - - {x: -235, y: 62}
+        - {x: -273, y: 20}
+        - {x: -273, y: -60}
+        - {x: -182, y: -60}
+        - {x: -158, y: 14}
+        - {x: -147, y: 51}
+        - {x: -147, y: 62}
+      - - {x: -110, y: 38}
+        - {x: -138, y: -42}
+        - {x: -138, y: -60}
+        - {x: -112, y: -60}
+        - {x: -84, y: 19}
+        - {x: -84, y: 38}
+      - - {x: 54, y: 15}
+        - {x: 54, y: 39}
+        - {x: 30, y: 62}
+        - {x: -25, y: 62}
+        - {x: -61, y: -50}
+        - {x: -61, y: -58}
+        - {x: -60, y: -60}
+        - {x: -40, y: -60}
+        - {x: -35, y: -51}
+        - {x: -1, y: -60}
+        - {x: 27, y: -60}
+      - - {x: 93, y: 62}
+        - {x: 56, y: -44}
+        - {x: 56, y: -60}
+        - {x: 169, y: -60}
+        - {x: 181, y: 17}
+        - {x: 181, y: 62}
+      - - {x: 220, y: 38}
+        - {x: 192, y: -42}
+        - {x: 192, y: -60}
+        - {x: 217, y: -60}
+        - {x: 246, y: 19}
+        - {x: 246, y: 38}
+      - - {x: -408, y: 92}
+        - {x: -424, y: 34}
+        - {x: -424, y: 18}
+        - {x: -413, y: 1}
+        - {x: 420, y: -12}
+        - {x: 488, y: -12}
+        - {x: 488, y: 78}
+        - {x: 360, y: 92}
+      - - {x: -133, y: 62}
+        - {x: -138, y: 52}
+        - {x: -138, y: 39}
+        - {x: -50, y: 39}
+        - {x: -46, y: 52}
+        - {x: -46, y: 62}
+      - - {x: 197, y: 62}
+        - {x: 192, y: 56}
+        - {x: 192, y: 39}
+        - {x: 280, y: 39}
+        - {x: 284, y: 52}
+        - {x: 284, y: 62}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
