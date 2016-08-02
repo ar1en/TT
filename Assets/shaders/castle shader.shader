@@ -4,9 +4,9 @@ Shader "castle shader"
 		{
 		_Color1("Main color", Color) = (1,1,1,1)
 		_Color2("Sec color", Color) = (1,1,1,1)
-		_Power1("PwTex", float) = 1
-		_Power2("PwGradMAP", Float) = 1
-		_LerpSt("LerpSt", Float) = 0.5
+		_Power1("PwTex", range (0,1)) = 1
+		_Power2("PwGradMAP", range (0,1)) = 1
+		_LerpSt("LerpSt", Float) = 1
 		_1stTex ("Texture", 2D) = "white"
 		_2ndTex ("Grad MAP", 2D) = "white" {}	
 	}
@@ -37,8 +37,8 @@ Shader "castle shader"
 
 			alptex2 = d.a;
 
-			o.Albedo = _LerpSt * pow ( c.rgb * _Power1, alptex2 * _Power2);
-
+			//o.Albedo = pow ( c.rgb * _Power1, (1-alptex2)*_Power2+1);
+			o.Albedo = c.rgb * (1-(alptex2) * _Power2);
 		}
 		ENDCG
 	} 
