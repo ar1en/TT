@@ -33,6 +33,8 @@
 			float2 uv_1stTex;
 			float2 uv_2ndTex;
 		};	
+
+
 					
 		void surf (Input IN, inout SurfaceOutput o) 
 		{
@@ -40,13 +42,6 @@
 			fixed xscroll1 = scrolledUV1.x;
 			fixed yscroll1 = scrolledUV1.y;
 
-			
-			//_Power1 *= _Power5;
-			//_Power2 *= _Power5;
-			//_Power3 *= _Power5;
-			//_Power4 *= _Power5;
-			
-			//_LerpSt31 = frac(_LerpSt3);
 			
 			if (scrolledUV1.y < 0.5)
 				o.Emission = _Color22 * _Power2; //внешние грани
