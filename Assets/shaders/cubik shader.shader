@@ -4,8 +4,8 @@
 	{
 		_Color1("Main color", Color) = (1,1,1,1)
 		_Color2("sec color", Color) = (1,1,1,1)
-		_Color22("in faces", Color) = (1,1,1,1)
-		_Color3("out faces", Color) = (1,1,1,1)
+		_Color3("in faces", Color) = (1,1,1,1)
+		_Color4("out faces", Color) = (1,1,1,1)
 		_Power1("Pw main", float) = 1.6
 		_Power2("Pw in faces", Float) = 1.5
 		_Power3("Pw out faces", Float) = 1.7
@@ -22,7 +22,7 @@
 #pragma surface surf Lambert
 
 		sampler2D _AlphaMap;
-	float4 _Color1, _Color2, _Color22, _Color3;
+	float4 _Color1, _Color2, _Color3, _Color4;
 	float _Power1, _Power2, _Power3, _Power4, _AlphaPow;
 
 	struct Input
@@ -41,11 +41,11 @@
 		_AlphaPow = tex2D(_AlphaMap, IN.uv_AlphaMap).a;
 
 		if (scrolledUV1.y < 0.5)
-			o.Albedo = _Color22 * _Power2 * _AlphaPow; //внешние грани
+			o.Albedo = _Color4; //внешние грани
 		else if (scrolledUV1.y > 0.5 && scrolledUV1.y < 0.7)
-			o.Albedo = _Color3 * _Power3; // внутренние грани
+			o.Albedo = _Color3; // внутренние грани
 		else if (scrolledUV1.y > 0.7)
-			o.Albedo = _Color1 * _Power1; // основна грань
+			o.Emission = _Color1; // основна грань
 
 	}
 	ENDCG
