@@ -32,8 +32,8 @@ public class tetrisMain : MonoBehaviour
     //public float fallingCubeLight = 0.56f;					
     //public float cubeLight = 1.0f;
     //public Material cubeMaterial;
-    public Shader cubeShader;
-    public Texture cubeTexture;
+    /*public Shader cubeShader;
+    /*public Texture cubeTexture;
     public float power1 = 1.6f;
 	public float power2 = 1.5f;*/
 
@@ -143,11 +143,11 @@ public class tetrisMain : MonoBehaviour
 
     public Material createMaterial(Color color, bool light)
     {
-		var result = cube.GetComponent<Renderer> ().sharedMaterial;
+		var result = new Material(cube.GetComponent<Renderer> ().sharedMaterial);
 		result.SetColor("_Color1", color);
-		/*var result = new Material(cubeShader);
-        result.SetColor("_Color1", color);
-		result.SetFloat("_Power1", power1);
+		//var result = new Material(cubeShader);
+        /*esult.SetColor("_Color1", color);
+		/*result.SetFloat("_Power1", power1);
 		result.SetFloat("_Power2", power2);
         result.SetTexture("_1stTex", cubeTexture);
         
