@@ -5,13 +5,14 @@ public class block : MonoBehaviour
 {
 	public string[] brick;
 	public Color color;
-	public float mainColorCorrection = 0;
+
+	/*public float mainColorCorrection = 0;
 	
 	public float brightnessCentral = 0;					//1
 	public float brightnessLampInside = 0;				//2
 	public float brightnessLampOutside = 0;				//3
 	public float brightnessLampGradient = 0;			//4
-	public float brightnessReflectorGradient = 0;		//5
+	public float brightnessReflectorGradient = 0;		//5*/
 
     public int special = 0;
 	public int rate = 1;
@@ -33,9 +34,9 @@ public class block : MonoBehaviour
 	private Transform _brick;
 	private tetrisMain _main;
 	private borderShaderManager _shaderManager;
-	private int _count = 1;
+	//private int _count = 1;
 
-	private float _brightnes = 1.5f;
+	//private float _brightnes = 1.5f;
     private bool _stopFall = false;
     
 
@@ -44,7 +45,7 @@ public class block : MonoBehaviour
 		_shaderManager = GameObject.FindGameObjectWithTag("border").GetComponent<borderShaderManager>();
 		_main = GameObject.Find ("main").GetComponent<tetrisMain>();
 
-		if (brightnessCentral != 0)
+		/*if (brightnessCentral != 0)
 			_shaderManager.setCustomBrightness("1", brightnessCentral);
 		if (brightnessLampInside != 0)
 			_shaderManager.setCustomBrightness("2", brightnessLampInside);
@@ -53,7 +54,7 @@ public class block : MonoBehaviour
 		if (brightnessLampGradient != 0)
 			_shaderManager.setCustomBrightness("4", brightnessLampGradient);
 		if (brightnessReflectorGradient != 0)
-			_shaderManager.setCustomBrightness("5",brightnessReflectorGradient);
+			_shaderManager.setCustomBrightness("5",brightnessReflectorGradient);*/
 		
 		_main.currentBrickColor2 = _main.currentBrickColor;
 		_main.currentBrickColor = color;
@@ -131,7 +132,7 @@ public class block : MonoBehaviour
 			{
 				_main.blockDown = true;
 				_shaderManager.coord2 = _yPosition;
-                _main.setBrick(_brickMatrix, _xPosition, _yPosition + 1, color, mainColorCorrection, cubeOnFieldMatherial);
+                _main.setBrick(_brickMatrix, _xPosition, _yPosition + 1, color, cubeOnFieldMatherial);
 
 				foreach(Transform cube in gameObject.GetComponentsInChildren<Transform>())
 				{

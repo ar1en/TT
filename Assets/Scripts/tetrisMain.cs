@@ -28,14 +28,14 @@ public class tetrisMain : MonoBehaviour
 	public bool useMobileControl = false;
 	public int sensivity = 70;
 
-    [Header("Настройки шейдера куба")]
+    /*[Header("Настройки шейдера куба")]
     //public float fallingCubeLight = 0.56f;					
     //public float cubeLight = 1.0f;
     //public Material cubeMaterial;
     public Shader cubeShader;
     public Texture cubeTexture;
     public float power1 = 1.6f;
-	public float power2 = 1.5f;
+	public float power2 = 1.5f;*/
 
 	[Header("Настройки превью")]
 	public bool usePreview = true;
@@ -98,12 +98,12 @@ public class tetrisMain : MonoBehaviour
 	void Start () 
 	{
 		
-		_border = GameObject.FindGameObjectWithTag("border");
+		/*_border = GameObject.FindGameObjectWithTag("border");
 		_border.GetComponent<Renderer>().material.SetFloat ("_Power1", brightnessCentral);
 		_border.GetComponent<Renderer>().material.SetFloat ("_Power2", brightnessLampInside);
 		_border.GetComponent<Renderer>().material.SetFloat ("_Power3", brightnessLampOutside);
 		_border.GetComponent<Renderer>().material.SetFloat ("_Step", brightnessLampGradient);
-		_border.GetComponent<Renderer>().material.SetFloat ("_Step2", brightnessReflectorGradient);
+		_border.GetComponent<Renderer>().material.SetFloat ("_Step2", brightnessReflectorGradient);*/
 
 		if (useMobileControl)
 			gameObject.AddComponent<mobileControl>();
@@ -123,8 +123,8 @@ public class tetrisMain : MonoBehaviour
 
         for (int i = 0; i < briks.Length; i++)
         {
-            briks[i].GetComponent<block>().cubeMatherial = createMaterial(briks[i].GetComponent<block>().color, briks[i].GetComponent<block>().mainColorCorrection, false);
-            briks[i].GetComponent<block>().cubeOnFieldMatherial = createMaterial(briks[i].GetComponent<block>().color, briks[i].GetComponent<block>().mainColorCorrection, true);
+            briks[i].GetComponent<block>().cubeMatherial = createMaterial(briks[i].GetComponent<block>().color, false);
+            briks[i].GetComponent<block>().cubeOnFieldMatherial = createMaterial(briks[i].GetComponent<block>().color, true);
         }
         
         //create pool
@@ -141,17 +141,21 @@ public class tetrisMain : MonoBehaviour
         spawnBrick(true);
 	}
 
-    public Material createMaterial(Color color, float colorCorrection, bool light)
+    public Material createMaterial(Color color, bool light)
     {
-        var result = new Material(cubeShader);
+		var result = cube.GetComponent<Renderer> ().sharedMaterial;
+		result.SetColor("_Color1", color);
+		/*var result = new Material(cubeShader);
         result.SetColor("_Color1", color);
-        result.SetFloat("_Power1", power1 * colorCorrection);
-        result.SetFloat("_Power2", power2 * colorCorrection);
+		result.SetFloat("_Power1", power1);
+		result.SetFloat("_Power2", power2);
         result.SetTexture("_1stTex", cubeTexture);
-        if (light)
-            result.SetFloat("_Power5", 1f);
+        
+		if (light)
+            result.SetFloat("_Power5", 1f);*/
         return result;
     }
+
 	public Transform getCubeFromPool()
 	{
        //int m = 12;
@@ -202,7 +206,7 @@ public class tetrisMain : MonoBehaviour
 			functions.printNextBrick (briks [_secondBrick], cube);
 	}
 	
-	public void setBrick(bool[,] brickMatrix, int xPosition, int yPosition, Color color, float mainColorCorrection, Material material)
+	public void setBrick(bool[,] brickMatrix, int xPosition, int yPosition, Color color, Material material)
 	{
 		if (currentFallSpeed > 30)
 			colorAnimationChangeSpeed = 30;
