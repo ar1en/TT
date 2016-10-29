@@ -10,7 +10,7 @@
 		_Power2("Pw in faces", Float) = 1.5
 		_Power3("Pw out faces", Float) = 1.7
 		_Power4("Pw common", Float) = 8
-		_AlphaMap("AlphaMap", 2D) = "white"
+		_1stTex("AlphaMap", 2D) = "white"
 	}
 
 		SubShader
@@ -21,24 +21,24 @@
 		CGPROGRAM
 #pragma surface surf Lambert
 
-		sampler2D _AlphaMap;
+		sampler2D _1stTex;
 	float4 _Color1, _Color2, _Color3, _Color4;
 	float _Power1, _Power2, _Power3, _Power4, _AlphaPow;
 
 	struct Input
 	{
-		float2 uv_AlphaMap;
+		float2 uv_1stTex;
 	};
 
 	//sampler2D _AlphaMap;
 
 	void surf(Input IN, inout SurfaceOutput o)
 	{
-		fixed2 scrolledUV1 = IN.uv_AlphaMap;
+		fixed2 scrolledUV1 = IN.uv_1stTex;
 		fixed xscroll1 = scrolledUV1.x;
 
 
-		_AlphaPow = tex2D(_AlphaMap, IN.uv_AlphaMap).a;
+		_AlphaPow = tex2D(_1stTex, IN.uv_1stTex).a;
 
 		if (scrolledUV1.y < 0.5)
 			o.Albedo = _Color4; //внешние грани

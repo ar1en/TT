@@ -149,6 +149,7 @@ public class functions : MonoBehaviour
 					_brick.tag = "preview";
 					//задание цвета
                     _brick.GetComponent<Renderer>().material = _block.cubeMatherial;
+					_brick.gameObject.layer = 8;
 					//_brick.renderer.material.color = _block.color;
 					//_brick.GetComponent<Renderer>().material.SetColor("_Color1", _block.color);
 					//_brick.GetComponent<Renderer>().material.SetFloat("_Power1", _brick.GetComponent<Renderer>().material.GetFloat("_Power1") * _block.mainColorCorrection);

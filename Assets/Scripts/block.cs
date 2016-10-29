@@ -9,7 +9,7 @@ public class block : MonoBehaviour
 	
 	public float brightnessCentral = 0;					//1
 	public float brightnessLampInside = 0;				//2
-	public float brightnessLampOutside = 0;			//3
+	public float brightnessLampOutside = 0;				//3
 	public float brightnessLampGradient = 0;			//4
 	public float brightnessReflectorGradient = 0;		//5
 
