@@ -40,12 +40,12 @@
 
 		_AlphaPow = tex2D(_1stTex, IN.uv_1stTex).a;
 
-		if (scrolledUV1.y < 0.5)
+		if (scrolledUV1.y < 0.3)
 			o.Albedo = _Color4; //внешние грани
-		else if (scrolledUV1.y > 0.5 && scrolledUV1.y < 0.7)
+		else if (scrolledUV1.y > 0.3 && scrolledUV1.y < 0.7)
 			o.Albedo = _Color3; // внутренние грани
 		else if (scrolledUV1.y > 0.7)
-			o.Emission = _Color1; // основна грань
+			o.Emission = _Color1 * (1/(_AlphaPow + 0.001))*_Power1; // основна грань
 
 	}
 	ENDCG
