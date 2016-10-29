@@ -11,7 +11,7 @@ public class borderShaderManager : MonoBehaviour
 	private float _downCounter;
 	private tetrisMain _main;
 
-	public void setCustomBrightness (string parametr, float value)
+	/*public void setCustomBrightness (string parametr, float value)
 	{
 		switch (parametr)
 		{
@@ -31,7 +31,7 @@ public class borderShaderManager : MonoBehaviour
 				gameObject.GetComponent<Renderer>().material.SetFloat ("_Step2", value);
 				break;
 		}
-	}
+	}*/
 
 	void Start () 
 	{
@@ -40,7 +40,7 @@ public class borderShaderManager : MonoBehaviour
 	
 	void Update () 
 	{
-		//изменение координаты
+		/*//изменение координаты
 		if (_main.blockDown)
 		{
 			_downCounter = coord2;
@@ -53,28 +53,28 @@ public class borderShaderManager : MonoBehaviour
 		}
 		else
 			gameObject.GetComponent<Renderer>().material.SetFloat ("_Coord", coord);
-		//\изменение координаты
+		//\изменение координаты*/
 
 		if ((colorChangeCounter < _main.colorAnimationChangeSpeed) && !_main.blockDown)
 		{
 			colorChangeCounter++;
-			gameObject.GetComponent<Renderer>().material.SetFloat ("_ColorChangeCounter", colorChangeCounter * (1/_main.colorAnimationChangeSpeed));
+			gameObject.GetComponent<Renderer>().material.SetFloat ("_BoorderColorCounter", colorChangeCounter * (1/_main.colorAnimationChangeSpeed));
 		}
 		else if ((colorChangeCounter >= _main.colorAnimationChangeSpeed) && !_main.blockDown)
 		{
 			if (!colorIsSend)
 			{
-				gameObject.GetComponent<Renderer>().material.SetColor("_CurrentColor", _main.currentBrickColor);
-				gameObject.GetComponent<Renderer>().material.SetColor("_NextColor", _main.nextBrickColor);
-				gameObject.GetComponent<Renderer>().material.SetInt("_ColorChangeCounter", 0);
+				gameObject.GetComponent<Renderer>().material.SetColor("_BorderCurrentColor", _main.currentBrickColor);
+				gameObject.GetComponent<Renderer>().material.SetColor("_BorderNextColor", _main.nextBrickColor);
+				gameObject.GetComponent<Renderer>().material.SetInt("_BorderColorCounter", 0);
 				colorIsSend = true;
 			}
 		}
 		else if (_main.blockDown && (colorChangeCounter < _main.colorAnimationChangeSpeed))
 		{
-			gameObject.GetComponent<Renderer>().material.SetColor("_CurrentColor", _main.currentBrickColor2);
-			gameObject.GetComponent<Renderer>().material.SetColor("_NextColor", _main.nextBrickColor2);
-			gameObject.GetComponent<Renderer>().material.SetInt("_ColorChangeCounter", 0);
+			gameObject.GetComponent<Renderer>().material.SetColor("_BorderCurrentColor", _main.currentBrickColor2);
+			gameObject.GetComponent<Renderer>().material.SetColor("_BorderNextColor", _main.nextBrickColor2);
+			gameObject.GetComponent<Renderer>().material.SetInt("_BorderColorCounter", 0);
 			_main.blockDown = false;
 		}
 	}

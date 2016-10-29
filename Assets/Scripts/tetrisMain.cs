@@ -90,7 +90,7 @@ public class tetrisMain : MonoBehaviour
 	private int _firstBrick;
 	private int _secondBrick;
 	private int _scoreLvl;
-	private GameObject _border;
+	//private GameObject _border;
 	private Transform[] _cubeReferences;
 	private int[] _briksRates;
     private int _bricksRateSum;
@@ -144,7 +144,7 @@ public class tetrisMain : MonoBehaviour
     public Material createMaterial(Color color, bool light)
     {
 		var result = new Material(cube.GetComponent<Renderer> ().sharedMaterial);
-		result.SetColor("_Color1", color);
+		result.SetColor("_MainColorCube", color);
 		//var result = new Material(cubeShader);
         /*esult.SetColor("_Color1", color);
 		/*result.SetFloat("_Power1", power1);
