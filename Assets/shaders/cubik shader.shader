@@ -9,7 +9,7 @@
 		_Power1("Pw main", float) = 1.6
 		_Power2("Pw in faces", Float) = 1.5
 		_Power3("Pw out faces", Float) = 1.7
-		_Power4("Pw common", Float) = 8
+		_Power4("Pw common", Float) = 0.5
 		_1stTex("AlphaMap", 2D) = "white"
 	}
 
@@ -41,11 +41,11 @@
 		_AlphaPow = tex2D(_1stTex, IN.uv_1stTex).a;
 
 		if (scrolledUV1.y < 0.3)
-			o.Albedo = _Color4; //внешние грани
+			o.Emission = _Color4 * _Power2; //внешние грани
 		else if (scrolledUV1.y > 0.3 && scrolledUV1.y < 0.7)
-			o.Albedo = _Color3; // внутренние грани
+			o.Emission = _Color3 * _Power3; // внутренние грани
 		else if (scrolledUV1.y > 0.7)
-			o.Emission = _Color1 * (1/(_AlphaPow + 0.001))*_Power1; // основна грань
+			o.Emission = _Color1 * (_AlphaPow + _Power4) * _Power1; // основна грань
 
 	}
 	ENDCG
