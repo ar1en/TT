@@ -2,15 +2,16 @@
 {
 	Properties
 	{
-		_Color1("Main color", Color) = (1,1,1,1)
-		_Color2("sec color", Color) = (1,1,1,1)
-		_Color3("in faces", Color) = (1,1,1,1)
-		_Color4("out faces", Color) = (1,1,1,1)
-		_Power1("Pw main", float) = 1.6
-		_Power2("Pw in faces", Float) = 1.5
-		_Power3("Pw out faces", Float) = 1.7
-		_Power4("Pw common", Float) = 0.5
-		_1stTex("AlphaMap", 2D) = "white"
+		_MainColorCube("Main color", Color) = (1,1,1,1) // Основной цвет куба, зависящий от типа фигуры
+		_InCubeColor("In Face", Color) = (1,1,1,1) // Цвет внутренних граней куба
+		_OutCubeFaceColor("Out Faces", Color) = (1,1,1,1) // Цвет внешних граней куба
+		_MainColorCubePw("Pw main", float) = 1 // коэффициент умножения для основного цвета куба
+		_InCubeFaceColorPw("Pw in faces", Float) = 1 // коэффициент умножения для цвета внутренних граней
+		_OutCubeFaceColorPw("Pw out faces", Float) = 1 // коэффициент умножения для цвета внешний граней
+		_CubePower1("Cmn pow 1", Float) = 1 // свободный коэффициент 1 только для шейдера куба
+		_CubePower2("Cmn pow 2", Float) = 1 // свободный коэффициент 2 только для шейдера куба
+		_CubeColorMap("Cube Color Map", 2D) = "white" // текстура цветовой карты для шейдера кубика
+		_CubeAlphaMap("Cube Alpha Map", 2D) = "white" // карта альфа канала для шейдера кубика
 	}
 
 		SubShader
@@ -21,31 +22,29 @@
 		CGPROGRAM
 #pragma surface surf Lambert
 
-		sampler2D _1stTex;
-	float4 _Color1, _Color2, _Color3, _Color4;
-	float _Power1, _Power2, _Power3, _Power4, _AlphaPow;
+		sampler2D _CubeColorMap, _CubeAlphaMap;
+	float4 _MainColorCube, _InCubeColor, _OutCubeFaceColor;
+	float _MainColorCubePw, _OutCubeFaceColorPw, _InCubeFaceColorPw, _CubePower1, _AlphaPow;
 
 	struct Input
 	{
-		float2 uv_1stTex;
+		float2 uv_CubeAlphaMap;
 	};
-
-	//sampler2D _AlphaMap;
 
 	void surf(Input IN, inout SurfaceOutput o)
 	{
-		fixed2 scrolledUV1 = IN.uv_1stTex;
+		fixed2 scrolledUV1 = IN.uv_CubeAlphaMap;
 		fixed xscroll1 = scrolledUV1.x;
 
 
-		_AlphaPow = tex2D(_1stTex, IN.uv_1stTex).a;
+		_AlphaPow = tex2D(_CubeAlphaMap, IN.uv_CubeAlphaMap).a;
 
 		if (scrolledUV1.y < 0.3)
-			o.Emission = _Color4 * _Power2; //внешние грани
+			o.Emission = _OutCubeFaceColor * _OutCubeFaceColorPw; //внешние грани
 		else if (scrolledUV1.y > 0.3 && scrolledUV1.y < 0.7)
-			o.Emission = _Color3 * _Power3; // внутренние грани
+			o.Emission = _InCubeColor * _InCubeFaceColorPw; // внутренние грани
 		else if (scrolledUV1.y > 0.7)
-			o.Emission = _Color1 * (_AlphaPow + _Power4) * _Power1; // основна грань
+			o.Emission = _MainColorCube * (_AlphaPow + _CubePower1) * _MainColorCubePw; // основна грань
 
 	}
 	ENDCG
