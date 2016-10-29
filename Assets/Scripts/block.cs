@@ -131,7 +131,7 @@ public class block : MonoBehaviour
 			if (((special == 0) && (functions.checkBrick(_brickMatrix, _xPosition, _yPosition, _main._field))) || (((special == 1) && (functions.checkBrickSpecial(_brickMatrix, _xPosition, _yPosition, _main._field)))))
 			{
 				_main.blockDown = true;
-				_shaderManager.coord2 = _yPosition;
+				//_shaderManager.coord2 = _yPosition;
                 _main.setBrick(_brickMatrix, _xPosition, _yPosition + 1, color, cubeOnFieldMatherial);
 
 				foreach(Transform cube in gameObject.GetComponentsInChildren<Transform>())
@@ -147,7 +147,7 @@ public class block : MonoBehaviour
 			for (float i = _yPosition + 1; i > _yPosition; i -= Time.deltaTime * _fallSpeed) //физика
 			{
 				transform.position = new Vector3 (transform.position.x, i - _halfSizeFloat, 0);
-				_shaderManager.coord = i;
+				//_shaderManager.coord = i;
 				yield return 0;
 			}
 		}

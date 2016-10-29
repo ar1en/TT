@@ -43,11 +43,11 @@ public class tetrisMain : MonoBehaviour
 	public float previewY = 16;
 	
 	[Header("Настройки шейдера рамки")]
-	public float brightnessCentral;
+	/*public float brightnessCentral;
 	public float brightnessLampInside;
 	public float brightnessLampOutside;
 	public float brightnessLampGradient;
-	public float brightnessReflectorGradient;
+	public float brightnessReflectorGradient;*/
 	public float colorAnimationChangeSpeed = 120;
 
 	[Header("Ограничитель FPS")]
