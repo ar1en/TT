@@ -1,4 +1,4 @@
-﻿Shader "Cubik shader"
+﻿Shader "Cubik shader" 
 {
 	Properties
 	{
@@ -23,7 +23,7 @@
 #pragma surface surf Lambert
 
 		sampler2D _CubeColorMap, _CubeAlphaMap;
-	float4 _MainColorCube, _InCubeColor, _OutCubeFaceColor;
+	float4 _MainColorCube, _InCubeColor, _OutCubeFaceColor, _ColorfromMap;
 	float _MainColorCubePw, _OutCubeFaceColorPw, _InCubeFaceColorPw, _CubePower1, _AlphaPow;
 
 	struct Input
@@ -37,12 +37,13 @@
 		fixed xscroll1 = scrolledUV1.x;
 
 
+		_ColorfromMap = tex2D(_CubeColorMap, IN.uv_CubeAlphaMap);
 		_AlphaPow = tex2D(_CubeAlphaMap, IN.uv_CubeAlphaMap).a;
 
 		if (scrolledUV1.y < 0.3)
-			o.Emission = _OutCubeFaceColor * _OutCubeFaceColorPw; //внешние грани
+			o.Emission = _ColorfromMap * _OutCubeFaceColorPw; //внешние грани
 		else if (scrolledUV1.y > 0.3 && scrolledUV1.y < 0.7)
-			o.Emission = _InCubeColor * _InCubeFaceColorPw; // внутренние грани
+			o.Emission = _ColorfromMap * _InCubeFaceColorPw; // внутренние грани
 		else if (scrolledUV1.y > 0.7)
 			o.Emission = _MainColorCube * (_AlphaPow + _CubePower1) * _MainColorCubePw; // основна грань
 
