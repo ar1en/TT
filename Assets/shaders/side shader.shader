@@ -40,7 +40,7 @@
 		_ColorfromMap = tex2D(_CubeColorMap, IN.uv_CubeAlphaMap);
 		_AlphaPow = tex2D(_CubeAlphaMap, IN.uv_CubeAlphaMap).a;
 
-			o.Emission = _ColorfromMap * _OutCubeFaceColorPw; //внешние грани
+			o.Albedo = _ColorfromMap * _OutCubeFaceColorPw; //внешние грани
 
 	}
 	ENDCG

@@ -16,6 +16,8 @@ ModelImporter:
     100016: lover plane cover
     100018: left plane 2
     100020: right plane 2
+    100022: Box002
+    100024: column of light
     400000: center cube
     400002: left plane
     400004: left plane cover
@@ -27,6 +29,8 @@ ModelImporter:
     400016: lover plane cover
     400018: left plane 2
     400020: right plane 2
+    400022: Box002
+    400024: column of light
     2300000: center cube
     2300002: left plane
     2300004: left plane cover
@@ -37,6 +41,8 @@ ModelImporter:
     2300014: lover plane cover
     2300016: left plane 2
     2300018: right plane 2
+    2300020: Box002
+    2300022: column of light
     3300000: center cube
     3300002: left plane
     3300004: left plane cover
@@ -47,6 +53,8 @@ ModelImporter:
     3300014: lover plane cover
     3300016: left plane 2
     3300018: right plane 2
+    3300020: Box002
+    3300022: column of light
     4300000: lower plane
     4300002: left plane
     4300004: right plane
@@ -57,6 +65,8 @@ ModelImporter:
     4300014: lover plane cover
     4300016: right plane 2
     4300018: left plane 2
+    4300020: Box002
+    4300022: column of light
     9500000: //RootNode
   materials:
     importMaterials: 1
