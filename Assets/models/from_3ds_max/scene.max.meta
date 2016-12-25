@@ -1,37 +1,80 @@
 fileFormatVersion: 2
-guid: df426da2188a824488531ee8809efa36
-timeCreated: 1482092326
+guid: bc55dc983ce7a514e85fb6c1d29a52f4
+timeCreated: 1482593962
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: center cube
-    100002: left plane
-    100004: light cube
-    100006: lower plane
-    100008: right plane
-    100010: //RootNode
-    400000: center cube
-    400002: left plane
-    400004: light cube
-    400006: lower plane
-    400008: right plane
-    400010: //RootNode
-    2300000: center cube
-    2300002: left plane
-    2300004: light cube
-    2300006: lower plane
-    2300008: right plane
-    3300000: center cube
-    3300002: left plane
-    3300004: light cube
-    3300006: lower plane
-    3300008: right plane
+    100000: Box001
+    100002: center cube
+    100004: Fspot001
+    100006: left plane
+    100008: light cube
+    100010: lower plane
+    100012: right plane
+    100014: //RootNode
+    100016: Spot001
+    100018: left plane cover
+    100020: right plane cover
+    100022: scene camera
+    100024: scene camera.Target
+    100026: lover plane cover
+    100028: left plane 2
+    100030: right plane 2
+    100032: Tape001
+    100034: Tape001.Target
+    400000: Box001
+    400002: center cube
+    400004: Fspot001
+    400006: left plane
+    400008: light cube
+    400010: lower plane
+    400012: right plane
+    400014: //RootNode
+    400016: Spot001
+    400018: left plane cover
+    400020: right plane cover
+    400022: scene camera
+    400024: scene camera.Target
+    400026: lover plane cover
+    400028: left plane 2
+    400030: right plane 2
+    400032: Tape001
+    400034: Tape001.Target
+    2300000: Box001
+    2300002: center cube
+    2300004: left plane
+    2300006: light cube
+    2300008: lower plane
+    2300010: right plane
+    2300012: left plane cover
+    2300014: right plane cover
+    2300016: lover plane cover
+    2300018: left plane 2
+    2300020: right plane 2
+    3300000: Box001
+    3300002: center cube
+    3300004: left plane
+    3300006: light cube
+    3300008: lower plane
+    3300010: right plane
+    3300012: left plane cover
+    3300014: right plane cover
+    3300016: lover plane cover
+    3300018: left plane 2
+    3300020: right plane 2
     4300000: lower plane
     4300002: left plane
     4300004: right plane
     4300006: light cube
     4300008: center cube
+    4300010: Box001
+    4300012: left plane cover
+    4300014: right plane cover
+    4300016: lover plane cover
+    4300018: right plane 2
+    4300020: left plane 2
+    7400000: Take 001
     9500000: //RootNode
   materials:
     importMaterials: 1
