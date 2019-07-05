@@ -111,22 +111,6 @@ public class functions : MonoBehaviour
         return (result);
     }
 
-    public static void hideCube(Transform cube)
-    {
-        Destroy(cube.GetComponent<Rigidbody>());
-        cube.DetachChildren();
-        cube.transform.position = new Vector3(0, 0, 0);
-        Quaternion rotation = new Quaternion();
-        rotation.eulerAngles = new Vector3(0, 0, 0);
-        cube.transform.rotation = rotation;
-        if (cube.GetComponent<Collider>())
-            cube.GetComponent<Collider>().enabled = false;
-        //cube.SetActive(false);
-        cube.tag = "Untagged";
-        cube.gameObject.isStatic = false;
-        cube.gameObject.SetActive(false);
-    }
-
 	public static void printNextBrick(GameObject brick, Transform cube)
 	{
 //		GameObject _border = GameObject.FindGameObjectWithTag("border");

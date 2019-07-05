@@ -67,8 +67,8 @@ public class block : MonoBehaviour
 				if (brick[y][x] == "1"[0])				
 				{
 					_brickMatrix[x, y] = true;
-					//pool
-					_brick = _main.getCubeFromPool();
+                    //pool
+                    _brick = poolManager.Instance.getCubeFromPool();//_main.getCubeFromPool();
 					_brick.transform.position = new Vector3(x - _halfSizeFloat, (_size - y) + _halfSizeFloat - _size, 0.0f);
                     _brick.GetComponent<Renderer>().material = cubeMatherial;
 					//\pool
@@ -93,7 +93,7 @@ public class block : MonoBehaviour
 		{
 			_shaderManager.colorChangeCounter = 0;
 			_shaderManager.colorIsSend = false;
-			_main.blockDown = false;
+            tetrisMain.Instance.blockDown = false;//_main.blockDown = false;
 			firstFrame++;
 		}
 		/*if (special == 1) 
@@ -130,13 +130,13 @@ public class block : MonoBehaviour
 
 			if (((special == 0) && (functions.checkBrick(_brickMatrix, _xPosition, _yPosition, _main._field))) || (((special == 1) && (functions.checkBrickSpecial(_brickMatrix, _xPosition, _yPosition, _main._field)))))
 			{
-				_main.blockDown = true;
+                tetrisMain.Instance.blockDown = true;
 				//_shaderManager.coord2 = _yPosition;
                 _main.setBrick(_brickMatrix, _xPosition, _yPosition + 1, color, cubeOnFieldMatherial);
 
 				foreach(Transform cube in gameObject.GetComponentsInChildren<Transform>())
 				{
-                    functions.hideCube(cube);
+                    poolManager.Instance.returnCubeToPool(cube);//functions.hideCube(cube);
 				}
 				Destroy(gameObject);
 				if (_main.useGhost)

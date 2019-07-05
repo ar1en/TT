@@ -3,10 +3,13 @@ using System.Collections;
 
 public class tetrisMain : MonoBehaviour
 {
-	[Header("Настройки Блоков")]
+    public static tetrisMain Instance { get; private set; }
+
+    [Header("Настройки Блоков")]
 	public Transform cube;
 	public int maxBlockSize = 5;
-	public int poolSize = 150;
+    [HideInInspector]
+    public int poolSize;
 	public GameObject[] briks;
     public bool noUseRandomGeneration = false;
     public int[] blockBuffer = new int[] {8, 8, 8, 0, 0, 0, 0, 7};
@@ -80,9 +83,10 @@ public class tetrisMain : MonoBehaviour
 	public float currentFallSpeed;
 	[HideInInspector]
 	public bool blockDown = false;
-	[HideInInspector]
-	public Transform[] pool;
-    [HideInInspector]
+    //[HideInInspector]
+    //public logicCubesPool cubesPool;
+	//public Transform[] pool;
+    //[HideInInspector]
     //public Material[] cubeMaterials;
 
 	private int[] _cubePositions;
@@ -126,17 +130,10 @@ public class tetrisMain : MonoBehaviour
             briks[i].GetComponent<block>().cubeMatherial = createMaterial(briks[i].GetComponent<block>().color, false);
             briks[i].GetComponent<block>().cubeOnFieldMatherial = createMaterial(briks[i].GetComponent<block>().color, true);
         }
-        
-        //create pool
-		pool = new Transform[poolSize];
 
-		for (int i = 0; i < poolSize; i++) 
-		{
-			pool[i] = Instantiate(cube) as Transform;
-			pool [i].gameObject.layer = 8;
-            //pool[i].GetComponent<Renderer>().material = null;//cubeMaterial;
-			pool[i].gameObject.SetActive(false);
-		}
+        //create pool
+        poolSize = fieldHeight * fieldWidth;
+        poolManager.Instance.createPool(poolSize, cube);
 		//\create pool
         spawnBrick(true);
 	}
@@ -154,37 +151,6 @@ public class tetrisMain : MonoBehaviour
 		if (light)
             result.SetFloat("_Power5", 1f);*/
         return result;
-    }
-
-	public Transform getCubeFromPool()
-	{
-       //int m = 12;
-        for (int i = 0; i < poolSize; i++) 
-		{
-			if (pool[i].gameObject.activeSelf == false)// && (m == 0))
-			{
-                //if (m == 0)
-               // {
-                    pool[i].gameObject.SetActive(true);
-                    return pool[i];
-               // }
-               // m--;
-			}
-		}
-        Debug.Log("WARNING NULL FROM POOL!!!");
-		return null;
-	}
-
-    void debugGetPoolStatus()
-    {
-        int active = 0;
-        int passive = 0;
-        for (int i = 0; i < poolSize; i++)
-            if (pool[i].gameObject.activeSelf == true)
-                active++;
-            else
-                passive++;
-        Debug.Log("Пул на " + poolSize + " элементов. " + passive + " в резерве. " + active + " используется");
     }
 
 	void spawnBrick(bool first)
@@ -220,7 +186,7 @@ public class tetrisMain : MonoBehaviour
 				{
 					//var cubeOnField = Instantiate(cube, new Vector3(xPosition + x, yPosition - y, 0), Quaternion.identity) as Transform;
 					//pool
-					var cubeOnField = getCubeFromPool();
+					var cubeOnField = poolManager.Instance.getCubeFromPool();
                     //cubeOnField.gameObject.SetActive(true);
 					cubeOnField.position = new Vector3(xPosition + x, yPosition - y, 0);
 					//\pool
@@ -277,7 +243,7 @@ public class tetrisMain : MonoBehaviour
 				_cubeReferences[cubesToMove] = cube.transform as Transform;
 				cubesToMove++;
 			}
-			else if (cube.transform.position.y == yStart) 
+			else if (yStart == cube.transform.position.y) 
 			{
 				if (!cube.GetComponent<Rigidbody>())
 					cube.AddComponent<Rigidbody>();
@@ -297,7 +263,7 @@ public class tetrisMain : MonoBehaviour
 	IEnumerator hideCubeWithPing(GameObject cube, float ping)
 	{
 		yield return new WaitForSeconds (ping);
-        functions.hideCube(cube.transform);
+        poolManager.Instance.returnCubeToPool(cube.transform);//functions.hideCube(cube.transform);
 	}
 
 	IEnumerator fallEnd(Transform[] cubeReferences, int[] cubePositions, int cubesToMove)
@@ -339,7 +305,8 @@ public class tetrisMain : MonoBehaviour
 	
 	void Awake() 
 	{
-		if (frameRate != 0)
+        Instance = this;
+        if (frameRate != 0)
 			Application.targetFrameRate = frameRate;
 	}
 }
