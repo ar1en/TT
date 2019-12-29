@@ -1,18 +1,21 @@
 fileFormatVersion: 2
 guid: 50d344ab9d563744f94f86380000d2de
-timeCreated: 1466202347
-licenseType: Free
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: maket_kadavra_1
-  serializedVersion: 2
+  internalIDToNameTable:
+  - first:
+      213: 21300000
+    second: maket_kadavra_1
+  externalObjects: {}
+  serializedVersion: 10
   mipmaps:
     mipMapMode: 0
     enableMipMap: 1
+    sRGBTexture: 1
     linearTexture: 0
-    correctGamma: 0
     fadeOut: 0
     borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
     mipMapFadeDistanceStart: 1
     mipMapFadeDistanceEnd: 3
   bumpmap:
@@ -21,37 +24,60 @@ TextureImporter:
     heightScale: 0.25
     normalMapFilter: 0
   isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
   grayScaleToAlpha: 0
-  generateCubemap: 0
+  generateCubemap: 6
   cubemapConvolution: 0
-  cubemapConvolutionSteps: 7
-  cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
   textureFormat: -1
   maxTextureSize: 2048
   textureSettings:
+    serializedVersion: 2
     filterMode: -1
     aniso: 16
-    mipBias: -1
-    wrapMode: 1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
   nPOTScale: 0
   lightmap: 0
-  rGBM: 0
   compressionQuality: 50
-  allowsAlphaSplitting: 0
   spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 9
   spritePivot: {x: 0.49999997, y: 0.8075397}
-  spriteBorder: {x: 0, y: 704, z: 0, w: 105}
   spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 704, z: 0, w: 105}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
   alphaIsTransparency: 1
+  spriteTessellationDetail: -1
   textureType: 8
-  buildTargetSettings: []
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
+    serializedVersion: 2
     sprites:
-    - name: maket_kadavra_1
+    - serializedVersion: 2
+      name: maket_kadavra_1
       rect:
         serializedVersion: 2
         x: 11
@@ -61,74 +87,29 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 409, y: -6}
-        - {x: -426, y: 11}
-        - {x: -488, y: 11}
-        - {x: -488, y: -78}
-        - {x: -361, y: -92}
-        - {x: 408, y: -92}
-        - {x: 424, y: -33}
-        - {x: 424, y: -19}
-        - {x: 413, y: -3}
-      - - {x: -235, y: 62}
-        - {x: -273, y: 20}
-        - {x: -273, y: -60}
-        - {x: -182, y: -60}
-        - {x: -158, y: 14}
-        - {x: -147, y: 51}
-        - {x: -147, y: 62}
-      - - {x: -110, y: 38}
-        - {x: -138, y: -42}
-        - {x: -138, y: -60}
-        - {x: -112, y: -60}
-        - {x: -84, y: 19}
-        - {x: -84, y: 38}
-      - - {x: 54, y: 15}
-        - {x: 54, y: 39}
-        - {x: 30, y: 62}
-        - {x: -25, y: 62}
-        - {x: -61, y: -50}
-        - {x: -61, y: -58}
-        - {x: -60, y: -60}
-        - {x: -40, y: -60}
-        - {x: -35, y: -51}
-        - {x: -1, y: -60}
-        - {x: 27, y: -60}
-      - - {x: 93, y: 62}
-        - {x: 56, y: -44}
-        - {x: 56, y: -60}
-        - {x: 169, y: -60}
-        - {x: 181, y: 17}
-        - {x: 181, y: 62}
-      - - {x: 220, y: 38}
-        - {x: 192, y: -42}
-        - {x: 192, y: -60}
-        - {x: 217, y: -60}
-        - {x: 246, y: 19}
-        - {x: 246, y: 38}
-      - - {x: -408, y: 92}
-        - {x: -424, y: 34}
-        - {x: -424, y: 18}
-        - {x: -413, y: 1}
-        - {x: 420, y: -12}
-        - {x: 488, y: -12}
-        - {x: 488, y: 78}
-        - {x: 360, y: 92}
-      - - {x: -133, y: 62}
-        - {x: -138, y: 52}
-        - {x: -138, y: 39}
-        - {x: -50, y: 39}
-        - {x: -46, y: 52}
-        - {x: -46, y: 62}
-      - - {x: 197, y: 62}
-        - {x: 192, y: 56}
-        - {x: 192, y: 39}
-        - {x: 280, y: 39}
-        - {x: 284, y: 52}
-        - {x: 284, y: 62}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 02305410000000000800000000000000
+      internalID: 21300000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
   spritePackingTag: 
+  pSDRemoveMatte: 1
+  pSDShowRemoveMatteOption: 1
   userData: 
   assetBundleName: 
   assetBundleVariant: 
