@@ -63,7 +63,7 @@ public class functions : MonoBehaviour
 
     public static int randomBrick()
     {
-        tetrisMain _main = GameObject.Find("main").GetComponent<tetrisMain>();
+        tetrisMain _main = tetrisMain.Instance;
         ////////////////////debug-->
         if (_main.noUseRandomGeneration)
         {

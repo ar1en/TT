@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class tetrisMain : MonoBehaviour
 {
-    public static tetrisMain Instance { get; private set; }
+    public static tetrisMain Instance;
 
     [Header("Настройки Блоков")]
 	public Transform cube;
@@ -322,7 +322,10 @@ public class tetrisMain : MonoBehaviour
 	
 	void Awake() 
 	{
-        Instance = this;
+        if (Instance == null)
+			Instance = this;
+		else if (Instance != this)
+			Destroy(gameObject);
         if (frameRate != 0)
 			Application.targetFrameRate = frameRate;
 	}

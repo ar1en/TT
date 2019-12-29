@@ -43,7 +43,7 @@ public class block : MonoBehaviour
 	void Start () 
 	{
 		_shaderManager = GameObject.FindGameObjectWithTag("border").GetComponent<borderShaderManager>();
-		_main = GameObject.Find ("main").GetComponent<tetrisMain>();
+		_main = tetrisMain.Instance;
 
 		/*if (brightnessCentral != 0)
 			_shaderManager.setCustomBrightness("1", brightnessCentral);
