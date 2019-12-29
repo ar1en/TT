@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class tetrisMain : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class tetrisMain : MonoBehaviour
 
 	[Header("Настройки размеров поля")]
 	public int fieldWidth = 10;
-	public int fieldHeight = 20;
+	public int fieldHeight = 30;
 
 	[Header("Настройки призрака")]
 	public bool useGhost = true;
@@ -134,7 +135,7 @@ public class tetrisMain : MonoBehaviour
         //create pool
         poolSize = fieldHeight * fieldWidth;
         poolManager.Instance.createPool(poolSize, cube);
-		//\create pool
+        //\create pool
         spawnBrick(true);
 	}
 
@@ -200,7 +201,8 @@ public class tetrisMain : MonoBehaviour
 					_field[(int) xPosition + x, (int) yPosition - y] = true;		
 				}
 		StartCoroutine (checkRows (yPosition - size, size));
-		spawnBrick (false);
+        endGameCheck();
+        spawnBrick (false);
 	}
 
 	IEnumerator checkRows(int yStart, int size)
@@ -285,6 +287,21 @@ public class tetrisMain : MonoBehaviour
 		_scoreLvl = 0;
 	}
 
+    void endGameCheck()
+    {
+        Debug.Log("1");
+        for (int i = _fieldWidth / maxBlockSize + 1; i < _fieldWidth / maxBlockSize + fieldWidth + 1; i++)
+        {
+            if (_field[i, fieldHeight - maxBlockSize] == true)
+                endGame();
+        }
+    }
+
+    void endGame()
+    {
+        SceneManager.LoadScene("Main");
+    }
+
 	void Update()
 	{
 		if (pause) 
@@ -292,15 +309,15 @@ public class tetrisMain : MonoBehaviour
 		else
 			Time.timeScale = 1;
 
-		for (int i= _fieldWidth/maxBlockSize + 1; i<_fieldWidth/maxBlockSize + fieldWidth + 1; i++)
+		/*for (int i= _fieldWidth/maxBlockSize + 1; i<_fieldWidth/maxBlockSize + fieldWidth + 1; i++)
 		{
 			if (_field[i,fieldHeight] == true)
 			{
 				//Destroy(this);
-				Application.LoadLevel(0);
-                //SceneManager.LoadScene;
+				//Application.LoadLevel(0);
+                SceneManager.LoadScene("Main");
 			}
-		}
+		}*/
 	}
 	
 	void Awake() 
