@@ -162,24 +162,46 @@ public class block : MonoBehaviour
 		}
 	}
 
-	public void Rotate()
-	{
+    public void Rotate()
+    {
 
         _stopFall = true;
+
         bool[,] tempMatrix = new bool[_size, _size];
-		for (int y = 0; y < _size; y++)
-			for (int x = 0; x < _size; x++)
-				tempMatrix[y, x] = _brickMatrix[x, (_size-1) - y];
-		
-		if ((!functions.checkBrick(_brickMatrix, _xPosition, _yPosition, _main._field)) && (!functions.checkBrick(tempMatrix, _xPosition, _yPosition, _main._field)))
-		{
-			System.Array.Copy (tempMatrix, _brickMatrix, _size * _size);
+        int xShift = 0;
+
+        for (int y = 0; y < _size; y++)      //поворачиваем матрицу падающего блока на +90 градусов
+            for (int x = 0; x < _size; x++)
+                tempMatrix[y, x] = _brickMatrix[x, (_size - 1) - y];
+
+        if (functions.checkBrick(tempMatrix, _xPosition, _yPosition, _main._field)) //расчитываем необходимый сдвиг, если блок не может повернуться.
+        {
+            while (functions.checkBrick(tempMatrix, _xPosition + xShift, _yPosition, _main._field))
+            {
+                if (_xPosition <=9)
+                    xShift++;
+                else if (_xPosition > 9)
+                    xShift--;
+                if ((xShift>4) || (xShift < -4)) //Если для разворота требуется сдвиг больше чем на 4, заблокировтаь разваорот
+                {
+                    xShift = 0;
+                     break;
+                }
+            }
+        }
+      
+        if ((!functions.checkBrick(_brickMatrix, _xPosition+xShift, _yPosition, _main._field)) && (!functions.checkBrick(tempMatrix, _xPosition + xShift, _yPosition, _main._field)))
+        {
+            //Debug.Log("Rotate start! " + xShift);
+            _xPosition += xShift;
+            System.Array.Copy (tempMatrix, _brickMatrix, _size * _size);
 			transform.Rotate(Vector3.forward * - 90.0f );
-			for (int i=0;  i< transform.childCount; i++)
-			{
+            transform.position = new Vector3(transform.position.x + xShift, _brick.transform.position.y, 0);
+            for (int i=0;  i< transform.childCount; i++)
+            {
 				transform.GetChild(i).Rotate(Vector3.forward * + 90.0f );
 				transform.GetChild(i).position = new Vector3 (transform.GetChild(i).position.x - 1, transform.GetChild(i).position.y, transform.GetChild(i).position.z);
-			}
+            }
 		}
         _stopFall = false;
 	}
