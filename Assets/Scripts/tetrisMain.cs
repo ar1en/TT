@@ -143,8 +143,6 @@ public class tetrisMain : MonoBehaviour
 		//debugGetPoolStatus();
 
 		if (first) 
-        if (first) 
-		if (first) 
 		{
 			_firstBrick = functions.randomBrick();
 			_secondBrick = functions.randomBrick();

@@ -4,7 +4,6 @@ using System.Collections;
 public class functions : MonoBehaviour
 
 {
-
     public static int randomBrick()
     {
         tetrisMain _main = tetrisMain.Instance;
