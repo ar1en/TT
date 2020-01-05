@@ -106,8 +106,8 @@ public class tetrisMain : MonoBehaviour
 		else
 			gameObject.AddComponent<pcControl>();
 
-		_cubeReferences = new Transform[gameField.Instance.width * gameField.Instance.height];
-		_cubePositions = new int[gameField.Instance.width * gameField.Instance.height];
+		_cubeReferences = new Transform[fieldWidth * fieldHeight];
+		_cubePositions = new int[fieldWidth * fieldHeight];
 		_scoreLvl = 0;
 
 		for (int i = 0; i < briks.Length; i++)
