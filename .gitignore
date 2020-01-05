@@ -35,6 +35,7 @@
 # Custom #
 # ====== #
 win/
+.idea/
 
 # =============== #
 # Unity generated #
