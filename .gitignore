@@ -35,7 +35,6 @@
 # Custom #
 # ====== #
 win/
-.idea/
 
 # =============== #
 # Unity generated #
@@ -70,5 +69,6 @@ ExportedObj/
 Icon?
 ehthumbs.db
 Thumbs.db
-.vscode/settings.json
-.vscode/launch.json
+.vscode/
+.vs/
+.idea/
