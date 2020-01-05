@@ -10,7 +10,7 @@ public class ghost : MonoBehaviour
     private Material _material;
 	void Start () 
 	{
-		_main = GameObject.Find ("main").GetComponent<tetrisMain>();
+		_main = tetrisMain.Instance;
 		_block = GameObject.FindGameObjectWithTag("block").GetComponent<block>();
 		_size = _block.brick.Length;
         _material = new Material(Shader.Find("Custom/transparent"));
@@ -30,7 +30,7 @@ public class ghost : MonoBehaviour
 	void Update () 
 	{
         for (int i= _main.fieldHeight; i>0; i--)
-			if ((functions.checkBrick (_block._brickMatrix, (int)transform.position.x - (int)(_size * 0.5f), i, _main._field)) && (_block.transform.position.y > i-_size * 0.5f))
+			if ((gameField.Instance.checkBrick (_block._brickMatrix, (int)transform.position.x - (int)(_size * 0.5f), i)) && (_block.transform.position.y > i-_size * 0.5f))
 			{
 				transform.position = new Vector3 (_block.transform.position.x, i - _size * 0.5f + 1, 0);
 				break;

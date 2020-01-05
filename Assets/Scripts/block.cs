@@ -14,17 +14,17 @@ public class block : MonoBehaviour
 	public float brightnessLampGradient = 0;			//4
 	public float brightnessReflectorGradient = 0;		//5*/
 
-    public int special = 0;
+	public int special = 0;
 	public int rate = 1;
 
 	[HideInInspector]
 	public bool[,] _brickMatrix;							//матрица для кирпичика
 	[HideInInspector]
 	public float _fallSpeed;
-    [HideInInspector]
-    public Material cubeMatherial;
-    [HideInInspector]
-    public Material cubeOnFieldMatherial;
+	[HideInInspector]
+	public Material cubeMatherial;
+	[HideInInspector]
+	public Material cubeOnFieldMatherial;
 
 	private int _yPosition;
 	private int _xPosition;
@@ -37,8 +37,8 @@ public class block : MonoBehaviour
 	//private int _count = 1;
 
 	//private float _brightnes = 1.5f;
-    private bool _stopFall = false;
-    
+	private bool _stopFall = false;
+	
 
 	void Start () 
 	{
@@ -62,21 +62,21 @@ public class block : MonoBehaviour
 		_size = brick.Length;						//число элементов текстового массива
 		_halfSizeFloat = _size * 0.5f;
 		_brickMatrix = new bool[_size, _size];		//создание логической матрицы заданной размерности
-        for (int y = 0; y < _size; y++)
+		for (int y = 0; y < _size; y++)
 			for (int x = 0; x < _size; x++)
 				if (brick[y][x] == "1"[0])				
 				{
 					_brickMatrix[x, y] = true;
-                    //pool
-                    _brick = poolManager.Instance.getCubeFromPool();//_main.getCubeFromPool();
+					//pool
+					_brick = poolManager.Instance.getCubeFromPool();//_main.getCubeFromPool();
 					_brick.transform.position = new Vector3(x - _halfSizeFloat, (_size - y) + _halfSizeFloat - _size, 0.0f);
-                    _brick.GetComponent<Renderer>().material = cubeMatherial;
+					_brick.GetComponent<Renderer>().material = cubeMatherial;
 					//\pool
 					_brick.parent = transform;		//делаем созданные кубики дочерними
 					transform.tag = "block";
 				}
-		transform.position = new Vector3 (_main._fieldWidth / 2 + (_size%2 == 0? 0.0f : 0.5f), _main._fieldHeight - _halfSizeFloat, 0);	//выставляем кирпичик сверху и по центру
-        _yPosition = _main._fieldHeight - 1;
+		transform.position = new Vector3 (gameField.Instance.width / 2 + (_size%2 == 0? 0.0f : 0.5f), gameField.Instance.height - _halfSizeFloat, 0);	//выставляем кирпичик сверху и по центру
+		_yPosition = gameField.Instance.height - 1;
 		_xPosition = (int)transform.position.x - (int) _halfSizeFloat;
 		if (_main.useGhost)
 			Instantiate (_main.ghost);
@@ -93,7 +93,7 @@ public class block : MonoBehaviour
 		{
 			_shaderManager.colorChangeCounter = 0;
 			_shaderManager.colorIsSend = false;
-            tetrisMain.Instance.blockDown = false;//_main.blockDown = false;
+			tetrisMain.Instance.blockDown = false;//_main.blockDown = false;
 			firstFrame++;
 		}
 		/*if (special == 1) 
@@ -120,27 +120,27 @@ public class block : MonoBehaviour
 
 	IEnumerator  Fall ()
 	{	
-        while (true) 
+		while (true) 
 		{
-            if (!_stopFall)
-                _yPosition --;
+			if (!_stopFall)
+				_yPosition --;
 
-            if (!functions.checkBrick(_brickMatrix, _xPosition, _yPosition, _main._field) && functions.checkBrick(_brickMatrix, _xPosition, _yPosition - 1, _main._field))
-                Destroy(GameObject.FindGameObjectWithTag("ghost"));
+			if (!gameField.Instance.checkBrick(_brickMatrix, _xPosition, _yPosition) && gameField.Instance.checkBrick(_brickMatrix, _xPosition, _yPosition - 1))
+				Destroy(GameObject.FindGameObjectWithTag("ghost"));
 
-			if (((special == 0) && (functions.checkBrick(_brickMatrix, _xPosition, _yPosition, _main._field))) || (((special == 1) && (functions.checkBrickSpecial(_brickMatrix, _xPosition, _yPosition, _main._field)))))
+			if (((special == 0) && (gameField.Instance.checkBrick(_brickMatrix, _xPosition, _yPosition))) || (((special == 1) && (gameField.Instance.checkBrickSpecial(_brickMatrix, _xPosition, _yPosition)))))
 			{
-                tetrisMain.Instance.blockDown = true;
+				tetrisMain.Instance.blockDown = true;
 				//_shaderManager.coord2 = _yPosition;
-                _main.setBrick(_brickMatrix, _xPosition, _yPosition + 1, color, cubeOnFieldMatherial);
+				setBrick(_brickMatrix, _xPosition, _yPosition + 1, color, cubeOnFieldMatherial);
 
 				foreach(Transform cube in gameObject.GetComponentsInChildren<Transform>())
 				{
-                    poolManager.Instance.returnCubeToPool(cube);//functions.hideCube(cube);
+					poolManager.Instance.returnCubeToPool(cube);//functions.hideCube(cube);
 				}
 				Destroy(gameObject);
 				if (_main.useGhost)
-                    Destroy(GameObject.FindGameObjectWithTag("ghost"));
+					Destroy(GameObject.FindGameObjectWithTag("ghost"));
 					//Destroy(GameObject.Find("ghost(Clone)"));
 				break;	
 			}
@@ -153,56 +153,88 @@ public class block : MonoBehaviour
 		}
 	}
 
+	public void setBrick(bool[,] brickMatrix, int xPosition, int yPosition, Color color, Material material)
+	{
+		if (_main.currentFallSpeed > 30)
+			_main.colorAnimationChangeSpeed = 30;
+		else
+			_main.colorAnimationChangeSpeed = 120;
+		_main.blockDown = true;
+		int size = brickMatrix.GetLength (0);
+		for (var y = 0; y < size; y++)
+			for (var x = 0; x < size; x++)
+				if (brickMatrix[x, y])
+				{
+					//var cubeOnField = Instantiate(cube, new Vector3(xPosition + x, yPosition - y, 0), Quaternion.identity) as Transform;
+					//pool
+					var cubeOnField = poolManager.Instance.getCubeFromPool();
+					//cubeOnField.gameObject.SetActive(true);
+					cubeOnField.position = new Vector3(xPosition + x, yPosition - y, 0);
+					//\pool
+					cubeOnField.gameObject.isStatic = true; //оптимизация (?)
+					cubeOnField.GetComponent<Renderer>().material = material;
+					//cubeOnField.GetComponent<Renderer>().material.SetColor("_Color1", color);
+					//cubeOnField.GetComponent<Renderer>().material.SetFloat("_Power1", power1 * mainColorCorrection);
+					//cubeOnField.GetComponent<Renderer>().material.SetFloat("_Power2", power2 * mainColorCorrection);
+					//cubeOnField.GetComponent<Renderer>().material.SetFloat("_Power5", cubeOnField.GetComponent<Renderer>().material.GetFloat("_Power5") + 0.2f);
+					cubeOnField.tag = "Cube";
+					gameField.Instance.field[(int) xPosition + x, (int) yPosition - y] = true;		
+				}
+		StartCoroutine (_main.checkRows());
+		_main.endGameCheck();
+		_main.spawnBrick (false);
+	}
+
 	public void horizontalMove (int dir)
 	{
-		if (!functions.checkBrick(_brickMatrix, _xPosition + dir, _yPosition,_main._field))
+		if (!gameField.Instance.checkBrick(_brickMatrix, _xPosition + dir, _yPosition))
 		{
 			transform.position = new Vector3 (transform.position.x + dir, _brick.transform.position.y, 0);
 			_xPosition += dir;
 		}
 	}
 
-    public void Rotate()
-    {
+	public void Rotate()
+	{
 
-        _stopFall = true;
+		_stopFall = true;
 
-        bool[,] tempMatrix = new bool[_size, _size];
-        int xShift = 0;
+		bool[,] tempMatrix = new bool[_size, _size];
+		int xShift = 0;
 
-        for (int y = 0; y < _size; y++)      //поворачиваем матрицу падающего блока на +90 градусов
-            for (int x = 0; x < _size; x++)
-                tempMatrix[y, x] = _brickMatrix[x, (_size - 1) - y];
+		for (int y = 0; y < _size; y++)      //поворачиваем матрицу падающего блока на +90 градусов
+			for (int x = 0; x < _size; x++)
+				tempMatrix[y, x] = _brickMatrix[x, (_size - 1) - y];
 
-        if (functions.checkBrick(tempMatrix, _xPosition, _yPosition, _main._field)) //расчитываем необходимый сдвиг, если блок не может повернуться.
-        {
-            while (functions.checkBrick(tempMatrix, _xPosition + xShift, _yPosition, _main._field))
-            {
-                if (_xPosition <=9)
-                    xShift++;
-                else if (_xPosition > 9)
-                    xShift--;
-                if ((xShift>4) || (xShift < -4)) //Если для разворота требуется сдвиг больше чем на 4, заблокировтаь разваорот
-                {
-                    xShift = 0;
-                     break;
-                }
-            }
-        }
-      
-        if ((!functions.checkBrick(_brickMatrix, _xPosition+xShift, _yPosition, _main._field)) && (!functions.checkBrick(tempMatrix, _xPosition + xShift, _yPosition, _main._field)))
-        {
-            //Debug.Log("Rotate start! " + xShift);
-            _xPosition += xShift;
-            System.Array.Copy (tempMatrix, _brickMatrix, _size * _size);
+		if (gameField.Instance.checkBrick(tempMatrix, _xPosition, _yPosition)) //расчитываем необходимый сдвиг, если блок не может повернуться.
+		{
+			while (gameField.Instance.checkBrick(tempMatrix, _xPosition + xShift, _yPosition))
+			{
+				if (_xPosition <=9)
+					xShift++;
+				else if (_xPosition > 9)
+					xShift--;
+				if ((xShift>4) || (xShift < -4)) //Если для разворота требуется сдвиг больше чем на 4, заблокировтаь разваорот
+				{
+					xShift = 0;
+					 break;
+				}
+			}
+		}
+	  
+		if ((!gameField.Instance.checkBrick(_brickMatrix, _xPosition+xShift, _yPosition)) && (!gameField.Instance.checkBrick(tempMatrix, _xPosition + xShift, _yPosition)))
+		{
+			//Debug.Log("Rotate start! " + xShift);
+			_xPosition += xShift;
+			System.Array.Copy (tempMatrix, _brickMatrix, _size * _size);
 			transform.Rotate(Vector3.forward * - 90.0f );
-            transform.position = new Vector3(transform.position.x + xShift, _brick.transform.position.y, 0);
-            for (int i=0;  i< transform.childCount; i++)
-            {
+			transform.position = new Vector3(transform.position.x + xShift, _brick.transform.position.y, 0);
+			for (int i=0;  i< transform.childCount; i++)
+			{
 				transform.GetChild(i).Rotate(Vector3.forward * + 90.0f );
 				transform.GetChild(i).position = new Vector3 (transform.GetChild(i).position.x - 1, transform.GetChild(i).position.y, transform.GetChild(i).position.z);
-            }
+			}
 		}
-        _stopFall = false;
+		_stopFall = false;
 	}
 }
