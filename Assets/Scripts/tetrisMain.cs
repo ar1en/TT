@@ -257,14 +257,18 @@ public class tetrisMain : MonoBehaviour
 		SceneManager.LoadScene("Main");
 	}
 
+	void FixedUpdate()
+	{
+		if (blockDown) StartCoroutine(checkRows());
+	}
+
+
 	void Update()
 	{
 		if (pause) 
 			Time.timeScale = 0;
 		else
 			Time.timeScale = 1;
-
-		if (blockDown) StartCoroutine(checkRows());
 
 		/*for (int i= gameField.Instance.width/maxBlockSize + 1; i<gameField.Instance.width/maxBlockSize + fieldWidth + 1; i++)
 		{

@@ -87,9 +87,9 @@ public class block : MonoBehaviour
 	{
 		_main.currentFallSpeed = _fallSpeed;
 		
-		if (firstFrame == 0)								//задержка в 1 кадр для  смены цвета
+		if (firstFrame < 3)								//задержка в 3 кадрa для  смены цвета
 			firstFrame++;
-		if(firstFrame == 1)
+		if(firstFrame == 3)
 		{
 			_shaderManager.colorChangeCounter = 0;
 			_shaderManager.colorIsSend = false;
