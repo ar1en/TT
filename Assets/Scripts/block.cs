@@ -180,7 +180,6 @@ public class block : MonoBehaviour
 					cubeOnField.tag = "Cube";
 					gameField.Instance.field[(int) xPosition + x, (int) yPosition - y] = true;		
 				}
-		StartCoroutine (_main.checkRows());
 		_main.endGameCheck();
 		_main.spawnBrick (false);
 	}

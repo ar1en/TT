@@ -90,6 +90,7 @@ public class tetrisMain : MonoBehaviour
 	private Transform[] _cubeReferences;
 	private int[] _briksRates;
 	private int _bricksRateSum;
+	private bool _checkingRows = false;
 
 	void Start () 
 	{
@@ -159,21 +160,26 @@ public class tetrisMain : MonoBehaviour
 	
 	public IEnumerator checkRows()
 	{
-		for (int y = 1; y < fieldHeight; y++) 
+		if (!_checkingRows) 
 		{
-			int cubesInRow = 0;
-			for (int x = maxBlockSize; x < gameField.Instance.width - maxBlockSize; x++) 
-				if (gameField.Instance.field[x, y] == true)
-					cubesInRow++;
-			if (cubesInRow == fieldWidth)
+			_checkingRows = true;
+			for (int y = 1; y < fieldHeight; y++) 
 			{
-				deleteRow(y);
-				yield return new WaitForSeconds(0.13f);
-				y--;
-				_scoreLvl++;
+				int cubesInRow = 0;
+				for (int x = maxBlockSize; x < gameField.Instance.width - maxBlockSize; x++) 
+					if (gameField.Instance.field[x, y] == true)
+						cubesInRow++;
+					if (cubesInRow == fieldWidth)
+					{
+						deleteRow(y);
+						yield return new WaitForSeconds(0.13f);
+						y--;
+						_scoreLvl++;
+					}
 			}
+			addScore (_scoreLvl);
+			_checkingRows = false;
 		}
-		addScore (_scoreLvl);
 	}
 
 	void deleteRow(int yStart)
@@ -257,6 +263,8 @@ public class tetrisMain : MonoBehaviour
 			Time.timeScale = 0;
 		else
 			Time.timeScale = 1;
+
+		if (blockDown) StartCoroutine(checkRows());
 
 		/*for (int i= gameField.Instance.width/maxBlockSize + 1; i<gameField.Instance.width/maxBlockSize + fieldWidth + 1; i++)
 		{
