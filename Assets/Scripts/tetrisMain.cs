@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
 public class tetrisMain : MonoBehaviour
@@ -91,17 +92,27 @@ public class tetrisMain : MonoBehaviour
 	private int[] _briksRates;
 	private int _bricksRateSum;
 	private bool _checkingRows = false;
+	//public List<observer> observers;
+	private List<observer> Observers = new List<observer>();
+	
+	public void notify ()
+     {
+         for (int i=0; i < Observers.Count; i++)
+         {
+             //Debug.Log(i);
+             Observers[i].onNotify();
+         }
+     }
+
+     public void addObserver (observer observer)
+     {
+         Observers.Add(observer);
+         //Debug.Log("observer added!");
+     }
+
 
 	void Start () 
 	{
-		
-		/*_border = GameObject.FindGameObjectWithTag("border");
-		_border.GetComponent<Renderer>().material.SetFloat ("_Power1", brightnessCentral);
-		_border.GetComponent<Renderer>().material.SetFloat ("_Power2", brightnessLampInside);
-		_border.GetComponent<Renderer>().material.SetFloat ("_Power3", brightnessLampOutside);
-		_border.GetComponent<Renderer>().material.SetFloat ("_Step", brightnessLampGradient);
-		_border.GetComponent<Renderer>().material.SetFloat ("_Step2", brightnessReflectorGradient);*/
-
 		if (useMobileControl)
 			gameObject.AddComponent<mobileControl>();
 		else
@@ -158,8 +169,14 @@ public class tetrisMain : MonoBehaviour
 			functions.printNextBrick (briks [_secondBrick], cube);
 	}
 	
-	public IEnumerator checkRows()
+	public void checkRows2()
 	{
+		StartCoroutine (checkRows());
+	}
+	
+	IEnumerator checkRows()
+	{
+		//Debug.Log("rows check started!");
 		if (!_checkingRows) 
 		{
 			_checkingRows = true;
@@ -212,7 +229,7 @@ public class tetrisMain : MonoBehaviour
 				rotation.eulerAngles = new Vector3(Random.Range(-10, 10), Random.Range(-10, 10), Random.Range(-10, 10));
 				cube.GetComponent<Rigidbody>().MoveRotation(rotation);
 				//Destroy(cube, 4f);
-				StartCoroutine(hideCubeWithPing(cube, 4f));
+				StartCoroutine(hideCubeWithPing(cube, 2f));
 			}
 		}
 		StartCoroutine(fallEnd(_cubeReferences, _cubePositions, cubesToMove));
@@ -259,7 +276,7 @@ public class tetrisMain : MonoBehaviour
 
 	void FixedUpdate()
 	{
-		if (blockDown) StartCoroutine(checkRows());
+		//if (blockDown) StartCoroutine(checkRows());
 	}
 
 

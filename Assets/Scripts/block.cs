@@ -32,18 +32,22 @@ public class block : MonoBehaviour
 	private float _halfSizeFloat;
 	private byte firstFrame = 0;
 	private Transform _brick;
-	private tetrisMain _main;
+	//private tetrisMain _main;
 	private borderShaderManager _shaderManager;
 	//private int _count = 1;
 
 	//private float _brightnes = 1.5f;
 	private bool _stopFall = false;
 	
-
+	
+	
 	void Start () 
 	{
+		blockObserver BlockObserver = new blockObserver();
+		tetrisMain.Instance.addObserver(BlockObserver);
+
 		_shaderManager = GameObject.FindGameObjectWithTag("border").GetComponent<borderShaderManager>();
-		_main = tetrisMain.Instance;
+		//_main = tetrisMain.Instance;
 
 		/*if (brightnessCentral != 0)
 			_shaderManager.setCustomBrightness("1", brightnessCentral);
@@ -56,9 +60,9 @@ public class block : MonoBehaviour
 		if (brightnessReflectorGradient != 0)
 			_shaderManager.setCustomBrightness("5",brightnessReflectorGradient);*/
 		
-		_main.currentBrickColor2 = _main.currentBrickColor;
-		_main.currentBrickColor = color;
-		_fallSpeed = _main.fallSpeed;
+		tetrisMain.Instance.currentBrickColor2 = tetrisMain.Instance.currentBrickColor;
+		tetrisMain.Instance.currentBrickColor = color;
+		_fallSpeed = tetrisMain.Instance.fallSpeed;
 		_size = brick.Length;						//число элементов текстового массива
 		_halfSizeFloat = _size * 0.5f;
 		_brickMatrix = new bool[_size, _size];		//создание логической матрицы заданной размерности
@@ -78,14 +82,14 @@ public class block : MonoBehaviour
 		transform.position = new Vector3 (gameField.Instance.width / 2 + (_size%2 == 0? 0.0f : 0.5f), gameField.Instance.height - _halfSizeFloat, 0);	//выставляем кирпичик сверху и по центру
 		_yPosition = gameField.Instance.height - 1;
 		_xPosition = (int)transform.position.x - (int) _halfSizeFloat;
-		if (_main.useGhost)
-			Instantiate (_main.ghost);
+		if (tetrisMain.Instance.useGhost)
+			Instantiate (tetrisMain.Instance.ghost);
 		StartCoroutine (Fall ());
 	}
 	
 	void Update ()
 	{
-		_main.currentFallSpeed = _fallSpeed;
+		tetrisMain.Instance.currentFallSpeed = _fallSpeed;
 		
 		if (firstFrame < 3)								//задержка в 3 кадрa для  смены цвета
 			firstFrame++;
@@ -139,7 +143,7 @@ public class block : MonoBehaviour
 					poolManager.Instance.returnCubeToPool(cube);//functions.hideCube(cube);
 				}
 				Destroy(gameObject);
-				if (_main.useGhost)
+				if (tetrisMain.Instance.useGhost)
 					Destroy(GameObject.FindGameObjectWithTag("ghost"));
 					//Destroy(GameObject.Find("ghost(Clone)"));
 				break;	
@@ -155,11 +159,11 @@ public class block : MonoBehaviour
 
 	public void setBrick(bool[,] brickMatrix, int xPosition, int yPosition, Color color, Material material)
 	{
-		if (_main.currentFallSpeed > 30)
-			_main.colorAnimationChangeSpeed = 30;
+		if (tetrisMain.Instance.currentFallSpeed > 30)
+			tetrisMain.Instance.colorAnimationChangeSpeed = 30;
 		else
-			_main.colorAnimationChangeSpeed = 120;
-		_main.blockDown = true;
+			tetrisMain.Instance.colorAnimationChangeSpeed = 120;
+		tetrisMain.Instance.blockDown = true;
 		int size = brickMatrix.GetLength (0);
 		for (var y = 0; y < size; y++)
 			for (var x = 0; x < size; x++)
@@ -180,8 +184,9 @@ public class block : MonoBehaviour
 					cubeOnField.tag = "Cube";
 					gameField.Instance.field[(int) xPosition + x, (int) yPosition - y] = true;		
 				}
-		_main.endGameCheck();
-		_main.spawnBrick (false);
+		tetrisMain.Instance.notify();
+		tetrisMain.Instance.endGameCheck();
+		tetrisMain.Instance.spawnBrick (false);
 	}
 
 	public void horizontalMove (int dir)
