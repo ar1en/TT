@@ -8,7 +8,6 @@ public class gui : MonoBehaviour
 	void OnGUI()
 	{
 		tetrisMain _main = this.GetComponent<tetrisMain> ();
-		//mobileControl _mobC = this.GetComponent<mobileControl> ();
 
 		accum += Time.timeScale/Time.deltaTime;
 		++frames;

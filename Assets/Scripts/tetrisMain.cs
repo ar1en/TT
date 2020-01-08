@@ -33,28 +33,12 @@ public class tetrisMain : MonoBehaviour
 	public bool useMobileControl = false;
 	public int sensivity = 70;
 
-	/*[Header("Настройки шейдера куба")]
-	//public float fallingCubeLight = 0.56f;					
-    //public float fallingCubeLight = 0.56f;					
-	//public float fallingCubeLight = 0.56f;					
-	//public float cubeLight = 1.0f;
-	//public Material cubeMaterial;
-	/*public Shader cubeShader;
-	/*public Texture cubeTexture;
-	public float power1 = 1.6f;
-	public float power2 = 1.5f;*/
-
 	[Header("Настройки превью")]
 	public bool usePreview = true;
 	public float previewX = 20;
 	public float previewY = 16;
 	
 	[Header("Настройки шейдера рамки")]
-	/*public float brightnessCentral;
-	public float brightnessLampInside;
-	public float brightnessLampOutside;
-	public float brightnessLampGradient;
-	public float brightnessReflectorGradient;*/
 	public float colorAnimationChangeSpeed = 120;
 
 	[Header("Ограничитель FPS")]
@@ -76,30 +60,22 @@ public class tetrisMain : MonoBehaviour
 	public float currentFallSpeed;
 	[HideInInspector]
 	public bool blockDown = false;
-	//[HideInInspector]
-	//public logicCubesPool cubesPool;
-	//public Transform[] pool;
-	//[HideInInspector]
-	//public Material[] cubeMaterials;
 
 	private int[] _cubePositions;
 	private int[] _rowsForDeleting;
 	private int _firstBrick;
 	private int _secondBrick;
 	private int _scoreLvl;
-	//private GameObject _border;
 	private Transform[] _cubeReferences;
 	private int[] _briksRates;
 	private int _bricksRateSum;
 	private bool _checkingRows = false;
-	//public List<observer> observers;
 	private List<observer> Observers = new List<observer>();
 	
 	public void notify ()
      {
          for (int i=0; i < Observers.Count; i++)
          {
-             //Debug.Log(i);
              Observers[i].onNotify();
          }
      }
@@ -107,7 +83,6 @@ public class tetrisMain : MonoBehaviour
      public void addObserver (observer observer)
      {
          Observers.Add(observer);
-         //Debug.Log("observer added!");
      }
 
 
@@ -128,10 +103,8 @@ public class tetrisMain : MonoBehaviour
 			briks[i].GetComponent<block>().cubeOnFieldMatherial = createMaterial(briks[i].GetComponent<block>().color, true);
 		}
 
-		//create pool
 		poolSize = fieldHeight * fieldWidth;
 		poolManager.Instance.createPool(poolSize, cube);
-		//\create pool
 		spawnBrick(true);
 	}
 
@@ -139,21 +112,11 @@ public class tetrisMain : MonoBehaviour
 	{
 		var result = new Material(cube.GetComponent<Renderer> ().sharedMaterial);
 		result.SetColor("_MainColorCube", color);
-		//var result = new Material(cubeShader);
-		/*esult.SetColor("_Color1", color);
-		/*result.SetFloat("_Power1", power1);
-		result.SetFloat("_Power2", power2);
-		result.SetTexture("_1stTex", cubeTexture);
-		
-		if (light)
-			result.SetFloat("_Power5", 1f);*/
 		return result;
 	}
 
 	public void spawnBrick(bool first)
 	{
-		//debugGetPoolStatus();
-
 		if (first) 
 		{
 			_firstBrick = functions.randomBrick();
@@ -169,14 +132,13 @@ public class tetrisMain : MonoBehaviour
 			functions.printNextBrick (briks [_secondBrick], cube);
 	}
 	
-	public void checkRows2()
+	public void checkRowsAsync()
 	{
-		StartCoroutine (checkRows());
+		StartCoroutine (_checkRows());
 	}
 	
-	IEnumerator checkRows()
+	private IEnumerator _checkRows()
 	{
-		//Debug.Log("rows check started!");
 		if (!_checkingRows) 
 		{
 			_checkingRows = true;
@@ -224,11 +186,9 @@ public class tetrisMain : MonoBehaviour
 					cube.AddComponent<Rigidbody>();
 				cube.GetComponent<Collider>().enabled = true;
 				cube.GetComponent<Rigidbody>().velocity = new Vector3(Random.Range(-15, 15), Random.Range(-10, 10), Random.Range(-3, -10));
-				//cube.GetComponent<Rigidbody>().MoveRotation(new Quaternion(Random.Range(-10, 10), Random.Range(-10, 10), Random.Range(-10, 10), Random.Range(-10, 10)));
 				Quaternion rotation = new Quaternion();
 				rotation.eulerAngles = new Vector3(Random.Range(-10, 10), Random.Range(-10, 10), Random.Range(-10, 10));
 				cube.GetComponent<Rigidbody>().MoveRotation(rotation);
-				//Destroy(cube, 4f);
 				StartCoroutine(hideCubeWithPing(cube, 2f));
 			}
 		}
@@ -238,7 +198,7 @@ public class tetrisMain : MonoBehaviour
 	IEnumerator hideCubeWithPing(GameObject cube, float ping)
 	{
 		yield return new WaitForSeconds (ping);
-		poolManager.Instance.returnCubeToPool(cube.transform);//functions.hideCube(cube.transform);
+		poolManager.Instance.returnCubeToPool(cube.transform);
 	}
 
 	IEnumerator fallEnd(Transform[] cubeReferences, int[] cubePositions, int cubesToMove)
@@ -256,7 +216,7 @@ public class tetrisMain : MonoBehaviour
 
 	void addScore(int scoreLvl)
 	{
-		score += 100 * Mathf.Pow (2, scoreLvl) - 100; //миленько, красиво и изящно, спасибо Коляше)
+		score += 100 * Mathf.Pow (2, scoreLvl) - 100; //миленько, красиво и изящно, спасибо Коляше
 		_scoreLvl = 0;
 	}
 
@@ -274,28 +234,12 @@ public class tetrisMain : MonoBehaviour
 		SceneManager.LoadScene("Main");
 	}
 
-	void FixedUpdate()
-	{
-		//if (blockDown) StartCoroutine(checkRows());
-	}
-
-
 	void Update()
 	{
 		if (pause) 
 			Time.timeScale = 0;
 		else
 			Time.timeScale = 1;
-
-		/*for (int i= gameField.Instance.width/maxBlockSize + 1; i<gameField.Instance.width/maxBlockSize + fieldWidth + 1; i++)
-		{
-			if (_field[i,fieldHeight] == true)
-			{
-				//Destroy(this);
-				//Application.LoadLevel(0);
-				SceneManager.LoadScene("Main");
-			}
-		}*/
 	}
 	
 	void Awake() 

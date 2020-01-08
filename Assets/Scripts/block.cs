@@ -5,15 +5,6 @@ public class block : MonoBehaviour
 {
 	public string[] brick;
 	public Color color;
-
-	/*public float mainColorCorrection = 0;
-	
-	public float brightnessCentral = 0;					//1
-	public float brightnessLampInside = 0;				//2
-	public float brightnessLampOutside = 0;				//3
-	public float brightnessLampGradient = 0;			//4
-	public float brightnessReflectorGradient = 0;		//5*/
-
 	public int special = 0;
 	public int rate = 1;
 
@@ -32,11 +23,7 @@ public class block : MonoBehaviour
 	private float _halfSizeFloat;
 	private byte firstFrame = 0;
 	private Transform _brick;
-	//private tetrisMain _main;
 	private borderShaderManager _shaderManager;
-	//private int _count = 1;
-
-	//private float _brightnes = 1.5f;
 	private bool _stopFall = false;
 	
 	
@@ -47,18 +34,6 @@ public class block : MonoBehaviour
 		tetrisMain.Instance.addObserver(BlockObserver);
 
 		_shaderManager = GameObject.FindGameObjectWithTag("border").GetComponent<borderShaderManager>();
-		//_main = tetrisMain.Instance;
-
-		/*if (brightnessCentral != 0)
-			_shaderManager.setCustomBrightness("1", brightnessCentral);
-		if (brightnessLampInside != 0)
-			_shaderManager.setCustomBrightness("2", brightnessLampInside);
-		if (brightnessLampOutside != 0)
-			_shaderManager.setCustomBrightness("3", brightnessLampOutside);
-		if (brightnessLampGradient != 0)
-			_shaderManager.setCustomBrightness("4", brightnessLampGradient);
-		if (brightnessReflectorGradient != 0)
-			_shaderManager.setCustomBrightness("5",brightnessReflectorGradient);*/
 		
 		tetrisMain.Instance.currentBrickColor2 = tetrisMain.Instance.currentBrickColor;
 		tetrisMain.Instance.currentBrickColor = color;
@@ -97,29 +72,9 @@ public class block : MonoBehaviour
 		{
 			_shaderManager.colorChangeCounter = 0;
 			_shaderManager.colorIsSend = false;
-			tetrisMain.Instance.blockDown = false;//_main.blockDown = false;
+			tetrisMain.Instance.blockDown = false;
 			firstFrame++;
 		}
-		/*if (special == 1) 
-		{
-			
-		}*/
-		/*if (special == 1)
-		{
-			if (_count == true)
-			{
-				_brightnes = _brightnes + 0.05f;
-				if (_brightnes > 2.5f)
-					_count = false;
-			} 
-			else 
-			{
-				_brightnes = _brightnes - 0.05f;
-				if (_brightnes < 1f)
-					_count = true;
-			}
-			gameObject.GetComponentInChildren<Renderer> ().material.SetFloat ("_Power2", _brightnes);
-		}*/
 	}
 
 	IEnumerator  Fall ()
@@ -135,23 +90,20 @@ public class block : MonoBehaviour
 			if (((special == 0) && (gameField.Instance.checkBrick(_brickMatrix, _xPosition, _yPosition))) || (((special == 1) && (gameField.Instance.checkBrickSpecial(_brickMatrix, _xPosition, _yPosition)))))
 			{
 				tetrisMain.Instance.blockDown = true;
-				//_shaderManager.coord2 = _yPosition;
 				setBrick(_brickMatrix, _xPosition, _yPosition + 1, color, cubeOnFieldMatherial);
 
 				foreach(Transform cube in gameObject.GetComponentsInChildren<Transform>())
 				{
-					poolManager.Instance.returnCubeToPool(cube);//functions.hideCube(cube);
+					poolManager.Instance.returnCubeToPool(cube);
 				}
 				Destroy(gameObject);
 				if (tetrisMain.Instance.useGhost)
 					Destroy(GameObject.FindGameObjectWithTag("ghost"));
-					//Destroy(GameObject.Find("ghost(Clone)"));
 				break;	
 			}
 			for (float i = _yPosition + 1; i > _yPosition; i -= Time.deltaTime * _fallSpeed) //физика
 			{
 				transform.position = new Vector3 (transform.position.x, i - _halfSizeFloat, 0);
-				//_shaderManager.coord = i;
 				yield return 0;
 			}
 		}
@@ -169,18 +121,10 @@ public class block : MonoBehaviour
 			for (var x = 0; x < size; x++)
 				if (brickMatrix[x, y])
 				{
-					//var cubeOnField = Instantiate(cube, new Vector3(xPosition + x, yPosition - y, 0), Quaternion.identity) as Transform;
-					//pool
 					var cubeOnField = poolManager.Instance.getCubeFromPool();
-					//cubeOnField.gameObject.SetActive(true);
 					cubeOnField.position = new Vector3(xPosition + x, yPosition - y, 0);
-					//\pool
 					cubeOnField.gameObject.isStatic = true; //оптимизация (?)
 					cubeOnField.GetComponent<Renderer>().material = material;
-					//cubeOnField.GetComponent<Renderer>().material.SetColor("_Color1", color);
-					//cubeOnField.GetComponent<Renderer>().material.SetFloat("_Power1", power1 * mainColorCorrection);
-					//cubeOnField.GetComponent<Renderer>().material.SetFloat("_Power2", power2 * mainColorCorrection);
-					//cubeOnField.GetComponent<Renderer>().material.SetFloat("_Power5", cubeOnField.GetComponent<Renderer>().material.GetFloat("_Power5") + 0.2f);
 					cubeOnField.tag = "Cube";
 					gameField.Instance.field[(int) xPosition + x, (int) yPosition - y] = true;		
 				}
@@ -228,7 +172,6 @@ public class block : MonoBehaviour
 	  
 		if ((!gameField.Instance.checkBrick(_brickMatrix, _xPosition+xShift, _yPosition)) && (!gameField.Instance.checkBrick(tempMatrix, _xPosition + xShift, _yPosition)))
 		{
-			//Debug.Log("Rotate start! " + xShift);
 			_xPosition += xShift;
 			System.Array.Copy (tempMatrix, _brickMatrix, _size * _size);
 			transform.Rotate(Vector3.forward * - 90.0f );

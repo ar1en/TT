@@ -56,13 +56,11 @@ public class functions : MonoBehaviour
 
 	public static void printNextBrick(GameObject brick, Transform cube)
 	{
-//		GameObject _border = GameObject.FindGameObjectWithTag("border");
 		tetrisMain _main = GameObject.Find ("main").GetComponent<tetrisMain>();
 		foreach (GameObject _cube in GameObject.FindGameObjectsWithTag("preview")) 
 			Destroy(_cube);
-			//_cube.gameObject.SetActive (false);
+        
 		block _block = brick.GetComponent<block>();
-		//_border.renderer.material.SetColor("_Color4", _block.color);
 		_main.nextBrickColor2 = _main.nextBrickColor;
 		_main.nextBrickColor = _block.color;
 		var _size = _block.brick.Length;
@@ -71,18 +69,10 @@ public class functions : MonoBehaviour
 				if (_block.brick[x][y] == "1"[0])				
 				{
 					var _brick = Instantiate(cube, new Vector3(y - _size*0.5f + _main.previewX, (_size - x) + _size * 0.5f - _size + _main.previewY, -0.3f), Quaternion.identity) as Transform;
-					//var _brick = _main.getCubeFromPool();
-					//_brick.transform.position = new Vector3(y - _size*0.5f + _main.previewX, (_size - x) + _size * 0.5f - _size + _main.previewY, -0.3f);
 					_brick.tag = "preview";
 					//задание цвета
                     _brick.GetComponent<Renderer>().material = _block.cubeMatherial;
 					_brick.gameObject.layer = 8;
-					//_brick.renderer.material.color = _block.color;
-					//_brick.GetComponent<Renderer>().material.SetColor("_Color1", _block.color);
-					//_brick.GetComponent<Renderer>().material.SetFloat("_Power1", _brick.GetComponent<Renderer>().material.GetFloat("_Power1") * _block.mainColorCorrection);
-					//_brick.GetComponent<Renderer>().material.SetFloat("_Power2", _brick.GetComponent<Renderer>().material.GetFloat("_Power2") * _block.mainColorCorrection);
-					//\задание цвета
-					//_brick.parent = _transform;
 				}
 	}
 }
