@@ -69,3 +69,6 @@ ExportedObj/
 Icon?
 ehthumbs.db
 Thumbs.db
+.vscode/
+.vs/
+.idea/

@@ -9,7 +9,7 @@ public class pcControl : MonoBehaviour
     void Update () 
 	{
         _block = GameObject.FindGameObjectWithTag("block").GetComponent<block>();
-        _main = GameObject.Find("main").GetComponent<tetrisMain>();
+        _main = tetrisMain.Instance;
 
 		if (Input.GetKeyDown (KeyCode.RightArrow))
 			_block.horizontalMove (1);

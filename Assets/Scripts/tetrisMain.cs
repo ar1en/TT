@@ -1,19 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
 public class tetrisMain : MonoBehaviour
 {
-    public static tetrisMain Instance { get; private set; }
+	public static tetrisMain Instance;
 
-    [Header("Настройки Блоков")]
+	[Header("Настройки Блоков")]
 	public Transform cube;
 	public int maxBlockSize = 5;
-    [HideInInspector]
-    public int poolSize;
+	[HideInInspector]
+	public int poolSize;
 	public GameObject[] briks;
-    public bool noUseRandomGeneration = false;
-    public int[] blockBuffer = new int[] {8, 8, 8, 0, 0, 0, 0, 7};
+	public bool noUseRandomGeneration = false;
+	public int[] blockBuffer = new int[] {8, 8, 8, 0, 0, 0, 0, 7};
 
 	[Header("Настройки размеров поля")]
 	public int fieldWidth = 10;
@@ -32,46 +33,21 @@ public class tetrisMain : MonoBehaviour
 	public bool useMobileControl = false;
 	public int sensivity = 70;
 
-    /*[Header("Настройки шейдера куба")]
-    //public float fallingCubeLight = 0.56f;					
-    //public float cubeLight = 1.0f;
-    //public Material cubeMaterial;
-    /*public Shader cubeShader;
-    /*public Texture cubeTexture;
-    public float power1 = 1.6f;
-	public float power2 = 1.5f;*/
-
 	[Header("Настройки превью")]
 	public bool usePreview = true;
 	public float previewX = 20;
 	public float previewY = 16;
 	
 	[Header("Настройки шейдера рамки")]
-	/*public float brightnessCentral;
-	public float brightnessLampInside;
-	public float brightnessLampOutside;
-	public float brightnessLampGradient;
-	public float brightnessReflectorGradient;*/
 	public float colorAnimationChangeSpeed = 120;
 
 	[Header("Ограничитель FPS")]
 	[Tooltip("Только для ios, для остального выставить 0")]
-	public int frameRate = 60;		
-
-	[Header("Тестовая рамка из кубиков")]
-	public bool useArea = true;
-	public Transform areaCube;	
-
+	public int frameRate = 60;
 	[HideInInspector]
 	public float score;
 	[HideInInspector]
 	public bool pause;
-	[HideInInspector]
-	public int _fieldWidth;
-	[HideInInspector]
-	public int _fieldHeight;
-	[HideInInspector]
-	public bool[,] _field;
 	[HideInInspector]
 	public Color nextBrickColor;
 	[HideInInspector]
@@ -84,157 +60,116 @@ public class tetrisMain : MonoBehaviour
 	public float currentFallSpeed;
 	[HideInInspector]
 	public bool blockDown = false;
-    //[HideInInspector]
-    //public logicCubesPool cubesPool;
-	//public Transform[] pool;
-    //[HideInInspector]
-    //public Material[] cubeMaterials;
 
 	private int[] _cubePositions;
 	private int[] _rowsForDeleting;
 	private int _firstBrick;
 	private int _secondBrick;
 	private int _scoreLvl;
-	//private GameObject _border;
 	private Transform[] _cubeReferences;
 	private int[] _briksRates;
-    private int _bricksRateSum;
+	private int _bricksRateSum;
+	private bool _checkingRows = false;
+	private List<observer> Observers = new List<observer>();
+	
+	public void notify ()
+     {
+         for (int i=0; i < Observers.Count; i++)
+         {
+             Observers[i].onNotify();
+         }
+     }
+
+     public void addObserver (observer observer)
+     {
+         Observers.Add(observer);
+     }
+
 
 	void Start () 
 	{
-		
-		/*_border = GameObject.FindGameObjectWithTag("border");
-		_border.GetComponent<Renderer>().material.SetFloat ("_Power1", brightnessCentral);
-		_border.GetComponent<Renderer>().material.SetFloat ("_Power2", brightnessLampInside);
-		_border.GetComponent<Renderer>().material.SetFloat ("_Power3", brightnessLampOutside);
-		_border.GetComponent<Renderer>().material.SetFloat ("_Step", brightnessLampGradient);
-		_border.GetComponent<Renderer>().material.SetFloat ("_Step2", brightnessReflectorGradient);*/
-
 		if (useMobileControl)
 			gameObject.AddComponent<mobileControl>();
 		else
 			gameObject.AddComponent<pcControl>();
 
-		_fieldWidth = fieldWidth + maxBlockSize * 2;
-		_fieldHeight = fieldHeight + maxBlockSize;
-		_field = functions.createAreaMatrix (_fieldWidth, _fieldHeight, maxBlockSize);
-
-		if (useArea)
-			functions.generateArea (_field, _fieldWidth, _fieldHeight, areaCube);			//вывод поля для наглядности
-
-		_cubeReferences = new Transform[_fieldWidth * _fieldHeight];
-		_cubePositions = new int[_fieldWidth * _fieldHeight];
+		_cubeReferences = new Transform[fieldWidth * fieldHeight];
+		_cubePositions = new int[fieldWidth * fieldHeight];
 		_scoreLvl = 0;
 
-        for (int i = 0; i < briks.Length; i++)
-        {
-            briks[i].GetComponent<block>().cubeMatherial = createMaterial(briks[i].GetComponent<block>().color, false);
-            briks[i].GetComponent<block>().cubeOnFieldMatherial = createMaterial(briks[i].GetComponent<block>().color, true);
-        }
+		for (int i = 0; i < briks.Length; i++)
+		{
+			briks[i].GetComponent<block>().cubeMatherial = createMaterial(briks[i].GetComponent<block>().color, false);
+			briks[i].GetComponent<block>().cubeOnFieldMatherial = createMaterial(briks[i].GetComponent<block>().color, true);
+		}
 
-        //create pool
-        poolSize = fieldHeight * fieldWidth;
-        poolManager.Instance.createPool(poolSize, cube);
-        //\create pool
-        spawnBrick(true);
+		poolSize = fieldHeight * fieldWidth;
+		poolManager.Instance.createPool(poolSize, cube);
+		spawnBrick(true);
 	}
 
-    public Material createMaterial(Color color, bool light)
-    {
+	public Material createMaterial(Color color, bool light)
+	{
 		var result = new Material(cube.GetComponent<Renderer> ().sharedMaterial);
 		result.SetColor("_MainColorCube", color);
-		//var result = new Material(cubeShader);
-        /*esult.SetColor("_Color1", color);
-		/*result.SetFloat("_Power1", power1);
-		result.SetFloat("_Power2", power2);
-        result.SetTexture("_1stTex", cubeTexture);
-        
-		if (light)
-            result.SetFloat("_Power5", 1f);*/
-        return result;
-    }
+		return result;
+	}
 
-	void spawnBrick(bool first)
+	public void spawnBrick(bool first)
 	{
-        //debugGetPoolStatus();
-
-        if (first) 
+		if (first) 
 		{
-            _firstBrick = functions.randomBrick();
-            _secondBrick = functions.randomBrick();
+			_firstBrick = functions.randomBrick();
+			_secondBrick = functions.randomBrick();
 		}
 		else
 		{
 			_firstBrick = _secondBrick;
-            _secondBrick = functions.randomBrick();
+			_secondBrick = functions.randomBrick();
 		}
 		Instantiate (briks [_firstBrick]);
 		if (usePreview)
 			functions.printNextBrick (briks [_secondBrick], cube);
 	}
 	
-	public void setBrick(bool[,] brickMatrix, int xPosition, int yPosition, Color color, Material material)
+	public void checkRowsAsync()
 	{
-		if (currentFallSpeed > 30)
-			colorAnimationChangeSpeed = 30;
-		else
-			colorAnimationChangeSpeed = 120;
-		blockDown = true;
-		int size = brickMatrix.GetLength (0);
-		for (var y = 0; y < size; y++)
-			for (var x = 0; x < size; x++)
-				if (brickMatrix[x, y])
-				{
-					//var cubeOnField = Instantiate(cube, new Vector3(xPosition + x, yPosition - y, 0), Quaternion.identity) as Transform;
-					//pool
-					var cubeOnField = poolManager.Instance.getCubeFromPool();
-                    //cubeOnField.gameObject.SetActive(true);
-					cubeOnField.position = new Vector3(xPosition + x, yPosition - y, 0);
-					//\pool
-					cubeOnField.gameObject.isStatic = true; //оптимизация (?)
-                    cubeOnField.GetComponent<Renderer>().material = material;
-					//cubeOnField.GetComponent<Renderer>().material.SetColor("_Color1", color);
-					//cubeOnField.GetComponent<Renderer>().material.SetFloat("_Power1", power1 * mainColorCorrection);
-					//cubeOnField.GetComponent<Renderer>().material.SetFloat("_Power2", power2 * mainColorCorrection);
-					//cubeOnField.GetComponent<Renderer>().material.SetFloat("_Power5", cubeOnField.GetComponent<Renderer>().material.GetFloat("_Power5") + 0.2f);
-					cubeOnField.tag = "Cube";
-					_field[(int) xPosition + x, (int) yPosition - y] = true;		
-				}
-		StartCoroutine (checkRows (yPosition - size, size));
-        endGameCheck();
-        spawnBrick (false);
+		StartCoroutine (_checkRows());
 	}
-
-	IEnumerator checkRows(int yStart, int size)
+	
+	private IEnumerator _checkRows()
 	{
-		if (yStart < 1)
-			yStart = 1;																	//исключам пол
-		for (int y = yStart; y < yStart + size; y++) 
+		if (!_checkingRows) 
 		{
-			int cubesInRow = 0;
-			for (int x = maxBlockSize; x < _fieldWidth - maxBlockSize; x++) 
-				if (_field[x, y] == true)
-					cubesInRow++;
-			if (cubesInRow == fieldWidth)
+			_checkingRows = true;
+			for (int y = 1; y < fieldHeight; y++) 
 			{
-				deleteRow(y);
-				yield return new WaitForSeconds(0.13f);
-				y--;
-				_scoreLvl++;
+				int cubesInRow = 0;
+				for (int x = maxBlockSize; x < gameField.Instance.width - maxBlockSize; x++) 
+					if (gameField.Instance.field[x, y] == true)
+						cubesInRow++;
+					if (cubesInRow == fieldWidth)
+					{
+						deleteRow(y);
+						yield return new WaitForSeconds(0.13f);
+						y--;
+						_scoreLvl++;
+					}
 			}
+			addScore (_scoreLvl);
+			_checkingRows = false;
 		}
-		addScore (_scoreLvl);
 	}
 
 	void deleteRow(int yStart)
 	{
 		//Сдвиг массива на 1 строчку вниз
-		for (int y = yStart; y < _fieldHeight -1 ; y++) 
-			for (var x = maxBlockSize; x < _fieldWidth-maxBlockSize; x++) 
-				_field[x, y] = _field[x, y+1];
+		for (int y = yStart; y < gameField.Instance.height -1 ; y++) 
+			for (var x = maxBlockSize; x < gameField.Instance.width - maxBlockSize; x++) 
+				gameField.Instance.field[x, y] = gameField.Instance.field[x, y+1];
 
-		for (int x = maxBlockSize; x < _fieldWidth - maxBlockSize; x++) 
-			_field[x, _fieldHeight-1] = false;
+		for (int x = maxBlockSize; x < gameField.Instance.width - maxBlockSize; x++) 
+			gameField.Instance.field[x, gameField.Instance.height-1] = false;
 		 
 		int cubesToMove = 0;
 		foreach (GameObject cube in GameObject.FindGameObjectsWithTag("Cube")) 
@@ -251,12 +186,10 @@ public class tetrisMain : MonoBehaviour
 					cube.AddComponent<Rigidbody>();
 				cube.GetComponent<Collider>().enabled = true;
 				cube.GetComponent<Rigidbody>().velocity = new Vector3(Random.Range(-15, 15), Random.Range(-10, 10), Random.Range(-3, -10));
-				//cube.GetComponent<Rigidbody>().MoveRotation(new Quaternion(Random.Range(-10, 10), Random.Range(-10, 10), Random.Range(-10, 10), Random.Range(-10, 10)));
 				Quaternion rotation = new Quaternion();
 				rotation.eulerAngles = new Vector3(Random.Range(-10, 10), Random.Range(-10, 10), Random.Range(-10, 10));
 				cube.GetComponent<Rigidbody>().MoveRotation(rotation);
-				//Destroy(cube, 4f);
-				StartCoroutine(hideCubeWithPing(cube, 4f));
+				StartCoroutine(hideCubeWithPing(cube, 2f));
 			}
 		}
 		StartCoroutine(fallEnd(_cubeReferences, _cubePositions, cubesToMove));
@@ -265,7 +198,7 @@ public class tetrisMain : MonoBehaviour
 	IEnumerator hideCubeWithPing(GameObject cube, float ping)
 	{
 		yield return new WaitForSeconds (ping);
-        poolManager.Instance.returnCubeToPool(cube.transform);//functions.hideCube(cube.transform);
+		poolManager.Instance.returnCubeToPool(cube.transform);
 	}
 
 	IEnumerator fallEnd(Transform[] cubeReferences, int[] cubePositions, int cubesToMove)
@@ -283,24 +216,23 @@ public class tetrisMain : MonoBehaviour
 
 	void addScore(int scoreLvl)
 	{
-		score += 100 * Mathf.Pow (2, scoreLvl) - 100; //миленько, красиво и изящно, спасибо Коляше)
+		score += 100 * Mathf.Pow (2, scoreLvl) - 100; //миленько, красиво и изящно, спасибо Коляше
 		_scoreLvl = 0;
 	}
 
-    void endGameCheck()
-    {
-        Debug.Log("1");
-        for (int i = _fieldWidth / maxBlockSize + 1; i < _fieldWidth / maxBlockSize + fieldWidth + 1; i++)
-        {
-            if (_field[i, fieldHeight - maxBlockSize] == true)
-                endGame();
-        }
-    }
+	public void endGameCheck()
+	{
+		for (int i = gameField.Instance.width / maxBlockSize + 1; i < gameField.Instance.width / maxBlockSize + fieldWidth + 1; i++)
+		{
+			if (gameField.Instance.field[i, fieldHeight - maxBlockSize] == true)
+				endGame();
+		}
+	}
 
-    void endGame()
-    {
-        SceneManager.LoadScene("Main");
-    }
+	void endGame()
+	{
+		SceneManager.LoadScene("Main");
+	}
 
 	void Update()
 	{
@@ -308,22 +240,15 @@ public class tetrisMain : MonoBehaviour
 			Time.timeScale = 0;
 		else
 			Time.timeScale = 1;
-
-		/*for (int i= _fieldWidth/maxBlockSize + 1; i<_fieldWidth/maxBlockSize + fieldWidth + 1; i++)
-		{
-			if (_field[i,fieldHeight] == true)
-			{
-				//Destroy(this);
-				//Application.LoadLevel(0);
-                SceneManager.LoadScene("Main");
-			}
-		}*/
 	}
 	
 	void Awake() 
 	{
-        Instance = this;
-        if (frameRate != 0)
+		if (Instance == null)
+			Instance = this;
+		else if (Instance != this)
+			Destroy(gameObject);
+		if (frameRate != 0)
 			Application.targetFrameRate = frameRate;
 	}
 }
