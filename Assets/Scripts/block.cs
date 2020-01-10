@@ -31,7 +31,7 @@ public class block : MonoBehaviour
 	void Start () 
 	{
 		blockObserver BlockObserver = new blockObserver();
-		tetrisMain.Instance.addObserver(BlockObserver);
+		ObserverManager.Instance.addObserver(BlockObserver);
 
 		_shaderManager = GameObject.FindGameObjectWithTag("border").GetComponent<borderShaderManager>();
 		
@@ -128,7 +128,7 @@ public class block : MonoBehaviour
 					cubeOnField.tag = "Cube";
 					gameField.Instance.field[(int) xPosition + x, (int) yPosition - y] = true;		
 				}
-		tetrisMain.Instance.notify();
+		ObserverManager.Instance.notify();
 		tetrisMain.Instance.endGameCheck();
 		tetrisMain.Instance.spawnBrick (false);
 	}

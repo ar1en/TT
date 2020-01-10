@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
 public class tetrisMain : MonoBehaviour
@@ -70,28 +69,15 @@ public class tetrisMain : MonoBehaviour
 	private int[] _briksRates;
 	private int _bricksRateSum;
 	private bool _checkingRows = false;
-	private List<observer> Observers = new List<observer>();
 	
-	public void notify ()
-     {
-         for (int i=0; i < Observers.Count; i++)
-         {
-             Observers[i].onNotify();
-         }
-     }
-
-     public void addObserver (observer observer)
-     {
-         Observers.Add(observer);
-     }
-
-
 	void Start () 
 	{
 		if (useMobileControl)
 			gameObject.AddComponent<mobileControl>();
 		else
 			gameObject.AddComponent<pcControl>();
+
+        ObserverManager.Instance.createObserverManager();
 
 		_cubeReferences = new Transform[fieldWidth * fieldHeight];
 		_cubePositions = new int[fieldWidth * fieldHeight];

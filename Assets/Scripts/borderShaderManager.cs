@@ -4,78 +4,42 @@ public class borderShaderManager : MonoBehaviour
 {
 	public bool colorIsSend = true;
 	public float colorChangeCounter;
-	
-	/*public float coord = 0;
-	public float coord2 = 0;
 
-	private float _downCounter;*/
-	private tetrisMain _main;
-
-	/*public void setCustomBrightness (string parametr, float value)
-	{
-		switch (parametr)
-		{
-			case "1":
-				gameObject.GetComponent<Renderer>().material.SetFloat ("_Power1", value);
-				break;
-			case "2":
-				gameObject.GetComponent<Renderer>().material.SetFloat ("_Power2", value);
-				break;
-			case "3":
-				gameObject.GetComponent<Renderer>().material.SetFloat ("_Power3", value);
-				break;
-			case "4":
-				gameObject.GetComponent<Renderer>().material.SetFloat ("_Step", value);
-				break;
-			case "5":
-				gameObject.GetComponent<Renderer>().material.SetFloat ("_Step2", value);
-				break;
-		}
-	}*/
+    private Material borderMaterial;
+    
 
 	void Start () 
 	{
-		_main = GameObject.Find ("main").GetComponent<tetrisMain>();
+        borderMaterial = gameObject.GetComponent<Renderer>().material;
+
 	}
 	
 	void Update () 
 	{
-		/*//изменение координаты
-		if (_main.blockDown)
-		{
-			_downCounter = coord2;
-		}
-
-		if (_downCounter > 0)
-		{
-			_downCounter -= 0.25f;
-			gameObject.GetComponent<Renderer>().material.SetFloat ("_Coord", _downCounter);
-		}
-		else
-			gameObject.GetComponent<Renderer>().material.SetFloat ("_Coord", coord);
-		//\изменение координаты*/
-
-		if ((colorChangeCounter < _main.colorAnimationChangeSpeed) && !_main.blockDown)
+		if ((colorChangeCounter < tetrisMain.Instance.colorAnimationChangeSpeed) && !tetrisMain.Instance.blockDown)
 		{
 			colorChangeCounter++;
-			gameObject.GetComponent<Renderer>().material.SetFloat ("_BorderColorCounter", colorChangeCounter * (1/_main.colorAnimationChangeSpeed));
+            //setBorderColor();//gameObject.GetComponent<Renderer>().material.SetFloat ("_BorderColorCounter", colorChangeCounter * (1/ tetrisMain.Instance.colorAnimationChangeSpeed));
 		}
-		else if ((colorChangeCounter >= _main.colorAnimationChangeSpeed) && !_main.blockDown)
+		else if ((colorChangeCounter >= tetrisMain.Instance.colorAnimationChangeSpeed) && !tetrisMain.Instance.blockDown)
 		{
 			if (!colorIsSend)
 			{
-				gameObject.GetComponent<Renderer>().material.SetColor("_BorderCurrentColor", _main.currentBrickColor);
-				gameObject.GetComponent<Renderer>().material.SetColor("_BorderNextColor", _main.nextBrickColor);
-				gameObject.GetComponent<Renderer>().material.SetInt("_BorderColorCounter", 0);
+                setBorderColor(tetrisMain.Instance.currentBrickColor, tetrisMain.Instance.nextBrickColor, 0);
 				colorIsSend = true;
 			}
 		}
-		else if (_main.blockDown && (colorChangeCounter < _main.colorAnimationChangeSpeed))
+		else if (tetrisMain.Instance.blockDown && (colorChangeCounter < tetrisMain.Instance.colorAnimationChangeSpeed))
 		{
-			gameObject.GetComponent<Renderer>().material.SetColor("_BorderCurrentColor", _main.currentBrickColor2);
-			gameObject.GetComponent<Renderer>().material.SetColor("_BorderNextColor", _main.nextBrickColor2);
-			gameObject.GetComponent<Renderer>().material.SetInt("_BorderColorCounter", 0);
-			_main.blockDown = false;
+            setBorderColor(tetrisMain.Instance.currentBrickColor2, tetrisMain.Instance.nextBrickColor2, 0);
+            tetrisMain.Instance.blockDown = false;
 		}
 	}
+
+    void setBorderColor(Color currentColor, Color nextColor, int colorChangeCounter)
+    {
+        borderMaterial.SetColor("_BorderCurrentColor", currentColor);
+        borderMaterial.SetColor("_BorderNextColor", nextColor);
+        borderMaterial.SetInt("_BorderColorCounter", 0);
+    }
 }
