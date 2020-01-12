@@ -21,7 +21,6 @@ public class block : MonoBehaviour
 	private int _xPosition;
 	private int _size; 									//размер матрицы кирпичика
 	private float _halfSizeFloat;
-	private byte firstFrame = 0;
 	private Transform _brick;
 	private borderShaderManager _shaderManager;
 	private bool _stopFall = false;
@@ -65,16 +64,6 @@ public class block : MonoBehaviour
 	void Update ()
 	{
 		tetrisMain.Instance.currentFallSpeed = _fallSpeed;
-		
-		if (firstFrame < 3)								//задержка в 3 кадрa для  смены цвета
-			firstFrame++;
-		if(firstFrame == 3)
-		{
-			_shaderManager.colorChangeCounter = 0;
-			_shaderManager.colorIsSend = false;
-			tetrisMain.Instance.blockDown = false;
-			firstFrame++;
-		}
 	}
 
 	IEnumerator  Fall ()
@@ -89,7 +78,6 @@ public class block : MonoBehaviour
 
 			if (((special == 0) && (gameField.Instance.checkBrick(_brickMatrix, _xPosition, _yPosition))) || (((special == 1) && (gameField.Instance.checkBrickSpecial(_brickMatrix, _xPosition, _yPosition)))))
 			{
-				tetrisMain.Instance.blockDown = true;
 				setBrick(_brickMatrix, _xPosition, _yPosition + 1, color, cubeOnFieldMatherial);
 
 				foreach(Transform cube in gameObject.GetComponentsInChildren<Transform>())
@@ -111,11 +99,6 @@ public class block : MonoBehaviour
 
 	public void setBrick(bool[,] brickMatrix, int xPosition, int yPosition, Color color, Material material)
 	{
-		if (tetrisMain.Instance.currentFallSpeed > 30)
-			tetrisMain.Instance.colorAnimationChangeSpeed = 30;
-		else
-			tetrisMain.Instance.colorAnimationChangeSpeed = 120;
-		tetrisMain.Instance.blockDown = true;
 		int size = brickMatrix.GetLength (0);
 		for (var y = 0; y < size; y++)
 			for (var x = 0; x < size; x++)
@@ -144,7 +127,6 @@ public class block : MonoBehaviour
 
 	public void Rotate()
 	{
-
 		_stopFall = true;
 
 		bool[,] tempMatrix = new bool[_size, _size];
@@ -165,7 +147,7 @@ public class block : MonoBehaviour
 				if ((xShift>4) || (xShift < -4)) //Если для разворота требуется сдвиг больше чем на 4, заблокировтаь разваорот
 				{
 					xShift = 0;
-					 break;
+					break;
 				}
 			}
 		}

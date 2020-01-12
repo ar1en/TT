@@ -2,44 +2,46 @@
 
 public class borderShaderManager : MonoBehaviour 
 {
-	public bool colorIsSend = true;
-	public float colorChangeCounter;
-
+	public static borderShaderManager Instance;
+	private float colorChangeCounter;
     private Material borderMaterial;
     
+	public void Awake()
+    {
+        Instance = this;
+    }
 
 	void Start () 
 	{
-        borderMaterial = gameObject.GetComponent<Renderer>().material;
+        borderMaterial = GameObject.FindGameObjectWithTag("border").GetComponent<Renderer>().material;//gameObject.GetComponent<Renderer>().material;
+		
+		borderShaderManagerObserver BorderShaderManagerObserver = new borderShaderManagerObserver();
+		ObserverManager.Instance.addObserver(BorderShaderManagerObserver);
 
+		//setBorderColor(tetrisMain.Instance.currentBrickColor2, tetrisMain.Instance.nextBrickColor2);
 	}
 	
 	void Update () 
 	{
-		if ((colorChangeCounter < tetrisMain.Instance.colorAnimationChangeSpeed) && !tetrisMain.Instance.blockDown)
+		if (colorChangeCounter < 1 - tetrisMain.Instance.colorAnimationChangeSpeed) //уcловие что бы максимальное перекрытие цветаа было <= 1
 		{
-			colorChangeCounter++;
-            //setBorderColor();//gameObject.GetComponent<Renderer>().material.SetFloat ("_BorderColorCounter", colorChangeCounter * (1/ tetrisMain.Instance.colorAnimationChangeSpeed));
-		}
-		else if ((colorChangeCounter >= tetrisMain.Instance.colorAnimationChangeSpeed) && !tetrisMain.Instance.blockDown)
-		{
-			if (!colorIsSend)
-			{
-                setBorderColor(tetrisMain.Instance.currentBrickColor, tetrisMain.Instance.nextBrickColor, 0);
-				colorIsSend = true;
-			}
-		}
-		else if (tetrisMain.Instance.blockDown && (colorChangeCounter < tetrisMain.Instance.colorAnimationChangeSpeed))
-		{
-            setBorderColor(tetrisMain.Instance.currentBrickColor2, tetrisMain.Instance.nextBrickColor2, 0);
-            tetrisMain.Instance.blockDown = false;
+			colorChangeCounter += tetrisMain.Instance.colorAnimationChangeSpeed;
+			setBorderColorMixer(colorChangeCounter);
 		}
 	}
 
-    void setBorderColor(Color currentColor, Color nextColor, int colorChangeCounter)
+    public void setBorderColor(Color currentColor, Color nextColor)
     {
-        borderMaterial.SetColor("_BorderCurrentColor", currentColor);
+        colorChangeCounter = 0f;
+		setBorderColorMixer(colorChangeCounter);
+		borderMaterial.SetColor("_BorderCurrentColor", currentColor);
         borderMaterial.SetColor("_BorderNextColor", nextColor);
-        borderMaterial.SetInt("_BorderColorCounter", 0);
+
     }
-}
+
+	private void setBorderColorMixer(float colorMixer)
+	{
+		borderMaterial.SetFloat("_BorderColorCounter", colorMixer);
+	}
+}	
+

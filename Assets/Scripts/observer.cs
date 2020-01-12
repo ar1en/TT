@@ -1,4 +1,5 @@
-﻿public abstract class observer
+﻿using UnityEngine;
+public abstract class observer
 {
     public abstract void  onNotify();
 }
@@ -15,6 +16,6 @@ public class borderShaderManagerObserver : observer
 {
     public override void onNotify()
     {
-
+        borderShaderManager.Instance.setBorderColor(tetrisMain.Instance.currentBrickColor, tetrisMain.Instance.nextBrickColor);
     }
 }

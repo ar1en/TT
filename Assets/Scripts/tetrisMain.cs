@@ -38,7 +38,7 @@ public class tetrisMain : MonoBehaviour
 	public float previewY = 16;
 	
 	[Header("Настройки шейдера рамки")]
-	public float colorAnimationChangeSpeed = 120;
+	public float colorAnimationChangeSpeed = 0.02f;
 
 	[Header("Ограничитель FPS")]
 	[Tooltip("Только для ios, для остального выставить 0")]
@@ -57,8 +57,6 @@ public class tetrisMain : MonoBehaviour
 	public Color currentBrickColor2;
 	[HideInInspector]
 	public float currentFallSpeed;
-	[HideInInspector]
-	public bool blockDown = false;
 
 	private int[] _cubePositions;
 	private int[] _rowsForDeleting;
@@ -69,16 +67,26 @@ public class tetrisMain : MonoBehaviour
 	private int[] _briksRates;
 	private int _bricksRateSum;
 	private bool _checkingRows = false;
-	
+
+	void Awake() 
+	{
+		if (Instance == null)
+			Instance = this;
+		else if (Instance != this)
+			Destroy(gameObject);
+		if (frameRate != 0)
+			Application.targetFrameRate = frameRate;
+	}
 	void Start () 
 	{
+		gameObject.AddComponent<ObserverManager>();
+		gameObject.AddComponent<borderShaderManager>();
+		
 		if (useMobileControl)
 			gameObject.AddComponent<mobileControl>();
 		else
 			gameObject.AddComponent<pcControl>();
-
-        ObserverManager.Instance.createObserverManager();
-
+      
 		_cubeReferences = new Transform[fieldWidth * fieldHeight];
 		_cubePositions = new int[fieldWidth * fieldHeight];
 		_scoreLvl = 0;
@@ -94,6 +102,14 @@ public class tetrisMain : MonoBehaviour
 		spawnBrick(true);
 	}
 
+	void Update()
+	{
+		if (pause) 
+			Time.timeScale = 0;
+		else
+			Time.timeScale = 1;
+	}
+	
 	public Material createMaterial(Color color, bool light)
 	{
 		var result = new Material(cube.GetComponent<Renderer> ().sharedMaterial);
@@ -218,23 +234,5 @@ public class tetrisMain : MonoBehaviour
 	void endGame()
 	{
 		SceneManager.LoadScene("Main");
-	}
-
-	void Update()
-	{
-		if (pause) 
-			Time.timeScale = 0;
-		else
-			Time.timeScale = 1;
-	}
-	
-	void Awake() 
-	{
-		if (Instance == null)
-			Instance = this;
-		else if (Instance != this)
-			Destroy(gameObject);
-		if (frameRate != 0)
-			Application.targetFrameRate = frameRate;
 	}
 }

@@ -8,6 +8,12 @@ public class ObserverManager : MonoBehaviour
     public static ObserverManager Instance;
     private List<observer> observers;
 
+    public void Awake()
+    {
+        Instance = this;
+        createObserverManager();
+    }
+
     public void createObserverManager()
     {
         observers = new List<observer>();
@@ -24,10 +30,5 @@ public class ObserverManager : MonoBehaviour
     public void addObserver(observer observer)
     {
         observers.Add(observer);
-    }
-
-    public void Awake()
-    {
-        Instance = this;
     }
 }
