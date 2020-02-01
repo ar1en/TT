@@ -118,11 +118,9 @@ public class block : MonoBehaviour
 
 	public void horizontalMove (int dir)
 	{
-		if (!gameField.Instance.checkBrick(_brickMatrix, _xPosition + dir, _yPosition))
-		{
-			transform.position = new Vector3 (transform.position.x + dir, _brick.transform.position.y, 0);
-			_xPosition += dir;
-		}
+		if (gameField.Instance.checkBrick(_brickMatrix, _xPosition + dir, _yPosition)) return;
+		transform.position = new Vector3 (transform.position.x + dir, _brick.transform.position.y, 0);
+		_xPosition += dir;
 	}
 
 	public void Rotate()

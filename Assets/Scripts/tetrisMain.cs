@@ -150,13 +150,13 @@ public class tetrisMain : MonoBehaviour
 				for (int x = maxBlockSize; x < gameField.Instance.width - maxBlockSize; x++) 
 					if (gameField.Instance.field[x, y] == true)
 						cubesInRow++;
-					if (cubesInRow == fieldWidth)
-					{
-						deleteRow(y);
-						yield return new WaitForSeconds(0.13f);
-						y--;
-						_scoreLvl++;
-					}
+				if (cubesInRow == fieldWidth)
+				{
+					deleteRow(y);
+					yield return new WaitForSeconds(0.13f);
+					y--;
+					_scoreLvl++;
+				}
 			}
 			addScore (_scoreLvl);
 			_checkingRows = false;
@@ -233,6 +233,7 @@ public class tetrisMain : MonoBehaviour
 
 	void endGame()
 	{
-		SceneManager.LoadScene("Main");
+		PlayerPrefs.SetFloat("score", score);
+		SceneManager.LoadScene("mainMenu");
 	}
 }
